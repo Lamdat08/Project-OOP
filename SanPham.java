@@ -1,4 +1,4 @@
-package SGU_OOP_Excercises.OOP_Project;
+package Project_OOP;
 
 import java.util.Scanner;
 
@@ -55,7 +55,7 @@ public class SanPham implements IThaoTac {
         this.tienVon = tienVon;
     }
 
-    public void nhap(){
+    public void Nhap(){
         System.out.println("Nhap ma san pham: ");
         setMaSP(sc.nextLine());
         System.out.println("Nhap ten san pham: ");
@@ -78,11 +78,11 @@ public class SanPham implements IThaoTac {
                 ", tienVon=" + tienVon +
                 '}';
     }
-    public void xuat(){
+    public void Xuat(){
         System.out.println(toString());
     }
 
-    public void sua(){
+    public void Sua(){
         System.out.println("Nhap ma san pham moi: ");
         this.setMaSP(sc.nextLine());
         System.out.println("Nhap ten san pham moi: ");
@@ -95,7 +95,7 @@ public class SanPham implements IThaoTac {
         this.setTienVon(Double.parseDouble(sc.nextLine()));
     }
 
-    public double loiNhuan(){
+    public double LoiNhuan(){
         return getGiaTien() - getTienVon();
     }
 }

@@ -1,6 +1,6 @@
-package SGU_OOP_Excercises.OOP_Project;
+package Project_OOP;
 
-public class ThucAn extends SanPham implements IThaoTac{
+public class ThucAn extends SanPham {
 
     private String loaiThucAn;
 
@@ -16,8 +16,8 @@ public class ThucAn extends SanPham implements IThaoTac{
     }
 
     @Override
-    public void nhap(){
-        super.nhap();
+    public void Nhap(){
+        super.Nhap();
         System.out.println("Nhap loai thuc an: ");
         setLoaiThucAn(sc.nextLine());
     }
@@ -30,18 +30,19 @@ public class ThucAn extends SanPham implements IThaoTac{
     }
 
     @Override
-    public void xuat(){
+    public void Xuat(){
         System.out.println(toString());
     }
 
     @Override
-    public void sua(){
-        super.sua();
+    public void Sua(){
+        super.Sua();
         System.out.println("Nhap loai thuc an moi: ");
         this.setLoaiThucAn(sc.nextLine());
     }
 
-    public double tinhLoiNhuan(){
+    @Override
+    public double LoiNhuan(){
         return getGiaTien() - getTienVon();
     }
 }

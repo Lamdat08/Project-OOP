@@ -1,6 +1,6 @@
-package SGU_OOP_Excercises.OOP_Project;
+package Project_OOP;
 
-public class NuocUong extends SanPham implements IThaoTac {
+public class NuocUong extends SanPham{
 
     private String loaiNuoc;
 
@@ -16,8 +16,8 @@ public class NuocUong extends SanPham implements IThaoTac {
     }
 
     @Override
-    public void nhap(){
-        super.nhap();
+    public void Nhap(){
+        super.Nhap();
         System.out.println("Nhap loai nuoc: ");
         setLoaiNuoc(sc.nextLine());
     }
@@ -29,18 +29,19 @@ public class NuocUong extends SanPham implements IThaoTac {
                 '}';
     }
     @Override
-    public void xuat(){
+    public void Xuat(){
         System.out.println(toString());
     }
 
     @Override
-    public void sua(){
-        super.sua();
+    public void Sua(){
+        super.Sua();
         System.out.println("Nhap loai nuoc moi: ");
         this.setLoaiNuoc(sc.nextLine());
     }
 
-    public double tinhLoiNhuan(){
+    @Override
+    public double LoiNhuan(){
         return getGiaTien() - getTienVon();
     }
 }

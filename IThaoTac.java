@@ -1,8 +1,8 @@
-package SGU_OOP_Excercises.OOP_Project;
+package Project_OOP;
 
 public interface IThaoTac {
 
-    public abstract void nhap();
-    public abstract void xuat();
-    public abstract void sua();
+    public abstract void Nhap();
+    public abstract void Xuat();
+    public abstract void Sua();
 }
