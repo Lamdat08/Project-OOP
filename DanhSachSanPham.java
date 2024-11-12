@@ -172,6 +172,10 @@ public class DanhSachSanPham {
     }
 
     public void Xuat() {
+        if (danhSachSanPham == null || danhSachSanPham.length == 0) {
+            System.out.println("Danh sach san pham trong.");
+            return;
+        }
         for(int i = 0;i<danhSachSanPham.length;i++){
             danhSachSanPham[i].Xuat();
         }
