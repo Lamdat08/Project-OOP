@@ -94,4 +94,11 @@ public class QuanLy extends NhanVien{
     public double tinhLuong() {
         return this.phuCap + this.getLuongCoBan();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + phuCap;
+    }
+
+
 }

@@ -94,4 +94,8 @@ public class NhanVienPartTime extends NhanVien{
     }
 
 
+    @Override
+    public String toString() {
+        return super.toString() + " " + gioLam;
+    }
 }

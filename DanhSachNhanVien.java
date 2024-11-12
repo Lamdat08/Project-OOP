@@ -156,49 +156,93 @@ public class DanhSachNhanVien implements IThaoTac_2{
         }
     }
 
+//    @Override
+//    public void ghiFile() {
+//
+//        try(BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))){
+//
+//            System.out.println("00- neu nhap nhan vien");
+//            System.out.println("10- neu nhap quan ly");
+//            System.out.println("11- thoat");
+//
+//
+//            while (true) {
+//                String maXacDinh = sc.nextLine();
+//                if (maXacDinh.equals("11")) break;
+//                if (maXacDinh.equals("00")) {
+//                    NhanVienPartTime nvpt = new NhanVienPartTime();
+//                    nvpt.Nhap();
+//                    writer.write(nvpt.getMaNhanVien()+ " ,");
+//                    writer.write(nvpt.getTenNhanVien()+ " ,");
+//                    writer.write(nvpt.getSoDienThoai()+ " ,");
+//                    writer.write(nvpt.getGioiTinh()+" ,");
+//                    writer.write(String.valueOf(nvpt.getLuongCoBan())+" ,");
+//                    writer.write(String.valueOf(nvpt.getGioLam())+ ",");
+//                    writer.newLine();
+//                }
+//                if (maXacDinh.equals("10")) {
+//                    QuanLy ql = new QuanLy();
+//                    ql.Nhap();
+//                    writer.write(ql.getMaNhanVien() + " ,");
+//                    writer.write(ql.getTenNhanVien() + " ,");
+//                    writer.write(ql.getSoDienThoai() + " ,");
+//                    writer.write(ql.getGioiTinh() + " ,");
+//                    writer.write(String.valueOf(ql.getLuongCoBan()) + " ,");
+//                    writer.write(String.valueOf(ql.getPhuCap()) + " ,");
+//                    writer.newLine();
+//                }
+//
+//            }
+//            System.out.println("file written successful");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @Override
     public void ghiFile() {
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))){
 
-            System.out.println("00- neu nhap nhan vien");
-            System.out.println("10- neu nhap quan ly");
-            System.out.println("11- thoat");
 
 
-            while (true) {
-                String maXacDinh = sc.nextLine();
-                if (maXacDinh.equals("11")) break;
-                if (maXacDinh.equals("00")) {
-                    NhanVienPartTime nvpt = new NhanVienPartTime();
-                    nvpt.Nhap();
-                    writer.write(nvpt.getMaNhanVien()+ " ,");
-                    writer.write(nvpt.getTenNhanVien()+ " ,");
-                    writer.write(nvpt.getSoDienThoai()+ " ,");
-                    writer.write(nvpt.getGioiTinh()+" ,");
-                    writer.write(String.valueOf(nvpt.getLuongCoBan())+" ,");
-                    writer.write(String.valueOf(nvpt.getGioLam())+ ",");
-                    writer.newLine();
-                }
-                if (maXacDinh.equals("10")) {
-                    QuanLy ql = new QuanLy();
-                    ql.Nhap();
-                    writer.write(ql.getMaNhanVien() + " ,");
-                    writer.write(ql.getTenNhanVien() + " ,");
-                    writer.write(ql.getSoDienThoai() + " ,");
-                    writer.write(ql.getGioiTinh() + " ,");
-                    writer.write(String.valueOf(ql.getLuongCoBan()) + " ,");
-                    writer.write(String.valueOf(ql.getPhuCap()) + " ,");
-                    writer.newLine();
-                }
 
+//            while (true) {
+//                String maXacDinh = sc.nextLine();
+//                if (maXacDinh.equals("11")) break;
+//                if (maXacDinh.equals("00")) {
+//                    NhanVienPartTime nvpt = new NhanVienPartTime();
+//                    nvpt.Nhap();
+//                    writer.write(nvpt.getMaNhanVien()+ " ,");
+//                    writer.write(nvpt.getTenNhanVien()+ " ,");
+//                    writer.write(nvpt.getSoDienThoai()+ " ,");
+//                    writer.write(nvpt.getGioiTinh()+" ,");
+//                    writer.write(String.valueOf(nvpt.getLuongCoBan())+" ,");
+//                    writer.write(String.valueOf(nvpt.getGioLam())+ ",");
+//                    writer.newLine();
+//                }
+//                if (maXacDinh.equals("10")) {
+//                    QuanLy ql = new QuanLy();
+//                    ql.Nhap();
+//                    writer.write(ql.getMaNhanVien() + " ,");
+//                    writer.write(ql.getTenNhanVien() + " ,");
+//                    writer.write(ql.getSoDienThoai() + " ,");
+//                    writer.write(ql.getGioiTinh() + " ,");
+//                    writer.write(String.valueOf(ql.getLuongCoBan()) + " ,");
+//                    writer.write(String.valueOf(ql.getPhuCap()) + " ,");
+//                    writer.newLine();
+//                }
+//
+//            }
+
+            for(NhanVien x : arrNhanVien){
+               writer.write(x.toString() + "\n");
             }
             System.out.println("file written successful");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void Nhap() {
