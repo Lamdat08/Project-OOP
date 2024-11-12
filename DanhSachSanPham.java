@@ -3,7 +3,7 @@ package Project_OOP;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class DanhSachSanPham {
+public class DanhSachSanPham implements IThaoTac_2 {
 
     static Scanner sc = new Scanner(System.in);
 
