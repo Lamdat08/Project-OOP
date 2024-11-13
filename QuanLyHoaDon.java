@@ -2,7 +2,7 @@ package Project_OOP;
 
 import java.util.Scanner;
 
-public class QLHoaDon {
+public class QuanLyHoaDon {
 
     static Scanner sc = new Scanner(System.in);
 
