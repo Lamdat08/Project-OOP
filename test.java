@@ -38,7 +38,7 @@ public class test {
                 break;
 
             case 4 :
-                qlnv.Menu();    // Tạo phương thức Menu trong QLNV đê :D
+                //qlnv.Menu();    // Tạo phương thức Menu trong QLNV đê :D
                 break;
 
             case 5 :
