@@ -38,9 +38,9 @@ public class QuanLyNhanVien{
 //            x.ghiFile();
 //            x.docFile();
 
-
         Scanner sc = new Scanner(System.in);
         DanhSachNhanVien dsnv = new DanhSachNhanVien();
+
         dsnv.Nhap();
         while(true){
             System.out.println("1 - chon xuat");
