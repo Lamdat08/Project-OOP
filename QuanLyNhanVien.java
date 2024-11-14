@@ -3,7 +3,7 @@ package Project_OOP;
 import java.util.Scanner;
 
 public class QuanLyNhanVien{
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //       NhanVienPartTime nvpt = new NhanVienPartTime();
 //       nvpt.nhap();
 //       nvpt.xuat();
@@ -41,7 +41,10 @@ public class QuanLyNhanVien{
 
         Scanner sc = new Scanner(System.in);
         DanhSachNhanVien dsnv = new DanhSachNhanVien();
+        public void Menu(){
+
         dsnv.Nhap();
+
         while(true){
             System.out.println("1 - chon xuat");
             System.out.println("2 -  chon sua");

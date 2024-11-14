@@ -143,11 +143,11 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void docFile() {
         try{
-            BufferedReader reader = new BufferedReader(new FileReader("output.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("NhanVien.txt"));
             String line;
 
             while((line = reader.readLine()) != null){
-                System.out.println(line);
+//                System.out.println(line);
                 String arr[] = line.split(";");
                 if(arr[0].substring(0,2).equals("NV")){
                     System.out.println("Ma Nhan Vien : " + arr[0]);
@@ -222,7 +222,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void ghiFile() {
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("NhanVien.txt"))){
 
 
 
