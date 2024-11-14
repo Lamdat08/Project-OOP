@@ -23,10 +23,17 @@ public class NhanVienPartTime extends NhanVien{
 
 
 
+
     public void Nhap() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("nhap ma nhan vien");
-        setMaNhanVien(sc.nextLine());
+//        System.out.println("nhap ma nhan vien");
+//        setMaNhanVien(sc.nextLine());
+       String maNhanVien;
+        do{
+            System.out.println("nhap ma nhan vien va ma nhan vien phai bat dau voi NV");
+            maNhanVien = sc.nextLine();
+        }while(!maNhanVien.startsWith("NV"));
+        setMaNhanVien(maNhanVien);
         System.out.println("Nhap ten nhan vien");
         setTenNhanVien(sc.nextLine());
         System.out.println("nhap so dien thoai nhan vien");
@@ -96,6 +103,6 @@ public class NhanVienPartTime extends NhanVien{
 
     @Override
     public String toString() {
-        return super.toString() + " " + gioLam;
+        return super.toString() + ";" + String.format("%.2f",gioLam) + ";" + String.format("%.2f",tinhLuong());
     }
 }

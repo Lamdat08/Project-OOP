@@ -15,7 +15,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
     @Override
     public void Xoa() {
-        System.out.println("Nhap Ma De Xoa");
+            System.out.println("Nhap Ma De Xoa");
         String maXoa = sc.nextLine();
         boolean find = false;
         for(int i = 0;i< arrNhanVien.length;i++){
@@ -148,6 +148,26 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
             while((line = reader.readLine()) != null){
                 System.out.println(line);
+                String arr[] = line.split(";");
+                if(arr[0].substring(0,2).equals("NV")){
+                    System.out.println("Ma Nhan Vien : " + arr[0]);
+                    System.out.println("Ten Nhan Vien : " + arr[1]);
+                    System.out.println("So dien thoai nhan vien : " +  arr[2]);
+                    System.out.println("gioi tinh : " + arr[3]);
+                    System.out.println("luong co ban : " + arr[4]);
+                    System.out.println("gio lam : " + arr[5]);
+                    System.out.println("tong luong : " + arr[6]);
+                }
+                if(arr[0].substring(0,2).equals("QL")){
+                    System.out.println("Ma Quan ly : " + arr[0]);
+                    System.out.println("Ten Quan ly : " + arr[1]);
+                    System.out.println("So dien thoai Quan ly : " + arr[2]);
+                    System.out.println("gioi tinh Quan ly : " + arr[3]);
+                    System.out.println("luong co ban Quan ly : " + arr[4]);
+                    System.out.println("Phu cap quan ly : " + arr[5]);
+                    System.out.println("tong luong quan ly : " + arr[6]);
+
+                }
             }
 
             reader.close();

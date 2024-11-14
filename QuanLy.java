@@ -18,8 +18,15 @@ public class QuanLy extends NhanVien{
 
     public void Nhap() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nhap ma quan ly");
-        setMaNhanVien(sc.nextLine());
+//        System.out.println("Nhap ma quan ly");
+//        setMaNhanVien(sc.nextLine());
+        String maql;
+        do{
+            System.out.println("nhap ma Quan ly va ma quan ly phai bat dau voi QL");
+            maql = sc.nextLine();
+
+        }while(!maql.startsWith("QL"));
+        setMaNhanVien(maql);
         System.out.println("Nhap ten quan ly");
         setTenNhanVien(sc.nextLine());
         System.out.println("Nhap so dien thoai quan ly");
@@ -97,7 +104,7 @@ public class QuanLy extends NhanVien{
 
     @Override
     public String toString() {
-        return super.toString() + " " + phuCap;
+        return super.toString() + ";" + String.format("%.2f",phuCap) + ";" + String.format("%.2f",tinhLuong());
     }
 
 

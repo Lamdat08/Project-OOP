@@ -63,12 +63,6 @@ public abstract class NhanVien implements IThaoTac{
 
     @Override
     public String toString() {
-        return "NhanVien{" +
-                "maNhanVien='" + maNhanVien + '\'' +
-                ", tenNhanVien='" + tenNhanVien + '\'' +
-                ", soDienThoai='" + soDienThoai + '\'' +
-                ", gioiTinh='" + gioiTinh + '\'' +
-                ", luongCoBan=" + luongCoBan +
-                '}';
+        return String.format("%s;%s;%s;%s;%.2f",maNhanVien,tenNhanVien,soDienThoai,gioiTinh,luongCoBan);
     }
 }
