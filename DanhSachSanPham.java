@@ -1,5 +1,6 @@
 package Project_OOP;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -198,9 +199,58 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void docFile(){
-
+        try{
+            FileReader fr = new FileReader("SanPham.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String st;
+            while((st = br.readLine()) != null){
+                String[] phan = st.split(",");
+                if(phan[0] == "Thuc An"){
+                    ThucAn sp = new ThucAn();
+                    sp.setMaSP(phan[1]);
+                    sp.setTenSP(phan[2]);
+                    sp.setSoLuong(Integer.parseInt(phan[3]));
+                    sp.setGiaTien(Double.parseDouble(phan[4]));
+                    sp.setTienVon(Double.parseDouble(phan[5]));
+                    sp.setLoaiThucAn(phan[6]);
+                    //Them Thuc An vao danh sach san pham
+                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
+                    danhSachSanPham[danhSachSanPham.length - 1] = sp;
+                }
+                if(phan[0] == "Nuoc uong"){
+                    NuocUong sp = new NuocUong();
+                    sp.setMaSP(phan[1]);
+                    sp.setTenSP(phan[2]);
+                    sp.setSoLuong(Integer.parseInt(phan[3]));
+                    sp.setGiaTien(Double.parseDouble(phan[4]));
+                    sp.setTienVon(Double.parseDouble(phan[5]));
+                    sp.setLoaiNuoc(phan[6]);
+                    //Them Nuoc uong vao danh sach san pham
+                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
+                    danhSachSanPham[danhSachSanPham.length - 1] = sp;
+                }
+            }
+            br.close();
+            fr.close();
+            System.out.println("Doc file SanPham.txt thanh cong");
+        }
+        catch(IOException ioException){
+            ioException.printStackTrace();
+        }
     }
     public void ghiFile(){
-
+        try{
+            FileWriter fw = new FileWriter("SanPham.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(int i = 0; i < danhSachSanPham.length; i++){
+                bw.write(danhSachSanPham[i].toString() + "\n");
+            }
+            bw.close();
+            fw.close();
+            System.out.println("Ghi file SanPham.txt thanh cong");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
