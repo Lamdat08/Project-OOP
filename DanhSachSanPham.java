@@ -21,6 +21,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         System.out.println("3 - Tim kiem theo so luong");
         System.out.println("4 - Tim kiem theo gia tien");
         System.out.println("5 - Tim kiem theo tien von");
+        System.out.println("6 - Thoat tim kiem");
     }
 
     public void Nhap(){
@@ -92,84 +93,95 @@ public class DanhSachSanPham implements IThaoTac_2 {
             danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length - 1);
         }
     }
+
     public void TimKiem(){
-        menuTimKiem();
-        int luaChon = Integer.parseInt(sc.nextLine());
-        while(luaChon != 1 && luaChon != 2){
-            menuNhap();
-            System.out.println("Khong co lua chon nay, moi nhap lai: ");
-            luaChon = Integer.parseInt(sc.nextLine());
-        }
-        boolean kq;
-        switch(luaChon){
-            case 1:
-                System.out.println("Nhap ma san pham can tim: ");
-                String maSP_TimKiem = sc.nextLine();
-                kq = false;
-                for(int i = 0; i < danhSachSanPham.length; i++){
-                    if(danhSachSanPham[i].getMaSP().equals(maSP_TimKiem)){
-                        danhSachSanPham[i].Xuat();
-                        kq = true;
+        while(true){
+            menuTimKiem();
+            int luaChon = Integer.parseInt(sc.nextLine());
+            boolean kq;
+            switch(luaChon){
+                case 1:
+                    System.out.println("Nhap ma san pham can tim: ");
+                    String maSP_TimKiem = sc.nextLine();
+                    kq = false;
+                    for(int i = 0; i < danhSachSanPham.length; i++){
+                        if(danhSachSanPham[i].getMaSP().equals(maSP_TimKiem)){
+                            danhSachSanPham[i].Xuat();
+                            kq = true;
+                        }
                     }
-                }
-                if(!kq){
-                    System.out.println("Khong tim thay ma san pham muon xoa");
-                }
-            case 2:
-                System.out.println("Nhap ten san pham can tim: ");
-                String tenSP_TimKiem = sc.nextLine();
-                kq = false;
-                for(int i = 0; i < danhSachSanPham.length; i++){
-                    if(danhSachSanPham[i].getTenSP().equals(tenSP_TimKiem)){
-                        danhSachSanPham[i].Xuat();
-                        kq = true;
+                    if(!kq){
+                        System.out.println("Khong tim thay ma san pham: " + maSP_TimKiem);
                     }
-                }
-                if(!kq){
-                    System.out.println("Khong tim thay ma san pham muon xoa");
-                }
-            case 3:
-                System.out.println("Nhap so luong cua san pham can tim: ");
-                int soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
-                kq = false;
-                for(int i = 0; i < danhSachSanPham.length; i++){
-                    if(danhSachSanPham[i].getSoLuong() == soLuongSP_TimKiem){
-                        danhSachSanPham[i].Xuat();
-                        kq = true;
+                    break;
+                case 2:
+                    System.out.println("Nhap ten san pham can tim: ");
+                    String tenSP_TimKiem = sc.nextLine();
+                    kq = false;
+                    for(int i = 0; i < danhSachSanPham.length; i++){
+                        if(danhSachSanPham[i].getTenSP().equals(tenSP_TimKiem)){
+                            danhSachSanPham[i].Xuat();
+                            kq = true;
+                        }
                     }
-                }
-                if(!kq){
-                    System.out.println("Khong tim thay ma san pham muon xoa");
-                }
-            case 4:
-                System.out.println("Nhap gia tien san pham can tim: ");
-                double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
-                kq = false;
-                for(int i = 0; i < danhSachSanPham.length; i++){
-                    if(danhSachSanPham[i].getGiaTien() == giaTienSP_TimKiem){
-                        danhSachSanPham[i].Xuat();
-                        kq = true;
+                    if(!kq){
+                        System.out.println("Khong tim thay ten san pham: " + tenSP_TimKiem);
                     }
-                }
-                if(!kq){
-                    System.out.println("Khong tim thay ma san pham muon xoa");
-                }
-            case 5:
-                System.out.println("Nhap tien von cua san pham can tim: ");
-                double tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
-                kq = false;
-                for(int i = 0; i < danhSachSanPham.length; i++){
-                    if(danhSachSanPham[i].getTienVon() == tienVonSP_TimKiem){
-                        danhSachSanPham[i].Xuat();
-                        kq = true;
+                    break;
+                case 3:
+                    System.out.println("Nhap so luong cua san pham can tim: ");
+                    int soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                    kq = false;
+                    for(int i = 0; i < danhSachSanPham.length; i++){
+                        if(danhSachSanPham[i].getSoLuong() == soLuongSP_TimKiem){
+                            danhSachSanPham[i].Xuat();
+                            kq = true;
+                        }
                     }
-                }
-                if(!kq){
-                    System.out.println("Khong tim thay ma san pham muon xoa");
-                }
-            default:
+                    if(!kq){
+                        System.out.println("Khong tim thay san pham co so luong: " + soLuongSP_TimKiem);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Nhap gia tien san pham can tim: ");
+                    double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
+                    kq = false;
+                    for(int i = 0; i < danhSachSanPham.length; i++){
+                        if(danhSachSanPham[i].getGiaTien() == giaTienSP_TimKiem){
+                            danhSachSanPham[i].Xuat();
+                            kq = true;
+                        }
+                    }
+                    if(!kq){
+                        System.out.println("Khong tim thay san pham co gia tien: " + giaTienSP_TimKiem);
+                    }
+                    break;
+                case 5:
+                    System.out.println("Nhap tien von cua san pham can tim: ");
+                    double tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
+                    kq = false;
+                    for(int i = 0; i < danhSachSanPham.length; i++){
+                        if(danhSachSanPham[i].getTienVon() == tienVonSP_TimKiem){
+                            danhSachSanPham[i].Xuat();
+                            kq = true;
+                        }
+                    }
+                    if(!kq){
+                        System.out.println("Khong tim thay san pham co tien von: " + tienVonSP_TimKiem);
+                    }
+                    break;
+                case 6:
+                    System.out.println("Thoat chuong trinh");
+                    return;
+                default:
+                    System.out.println("Khong co lua chon tim kiem nay. Moi nhap 6 de thoat tim kiem hoac nhap 1 - 5 de tim kiem");
+                    break;
+            }
+            if(luaChon == 6){
                 break;
+            }
         }
+
     }
 
     public void Xuat() {
