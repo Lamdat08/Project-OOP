@@ -376,23 +376,63 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             return;
         }
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt"))) {
-            for (SuKien sk : DSSK) {
-                bw.write(sk.toString());
-                bw.newLine();
+        int c;
+        System.out.println("1.Ghi đè lên file. ");
+        System.out.println("2.Ghi thêm vào file. ");
+        System.out.println("3.Thoát.");
+        do{
+            c = Integer.parseInt(sc.nextLine());
+            if ( c < 1 || c > 3 )
+                System.out.println("Vui lòng chọn từ 1 -> 3");
+        }while (c < 1 || c > 3);
+
+        if (c == 1 ){
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt"))) {
+                for (SuKien sk : DSSK) {
+                    bw.write(sk.toString());
+                    bw.newLine();
+                }
+                System.out.println("Ghi dữ liệu vào file thành công!");
+            } catch (IOException e) {
+                System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
             }
-            System.out.println("Ghi dữ liệu vào file thành công!");
-        } catch (IOException e) {
-            System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
         }
+
+        else if ( c == 2 ){
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt",true))){
+                for (SuKien sk : DSSK ){
+                    bw.write(sk.toString());
+                    bw.newLine();
+                }
+            } catch (IOException e) {
+                System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
+            }
+        }
+        else
+            return;
+
     }
 
     @Override
     public void docFile() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("SuKien.txt"))) {
             String line;
+            String[] list = new String[6];
+
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                list = line.split(";");
+                try {
+                    Date NBD = formatter.parse(list[2]);
+                    Date NKT = formatter.parse(list[3]);
+                    SuKien sk = new SuKien(list[0], list[1], NBD, NKT, Double.parseDouble(list[4]), Double.parseDouble(list[5]));
+                    sk.Xuat();
+                    System.out.println("--------------------------------\n");
+                }catch (Exception e) {
+                    System.out.println("Không đọc được file !\n");
+                }
+
             }
         } catch (IOException e) {
             System.out.println("Lỗi khi đọc file: " + e.getMessage());
