@@ -261,8 +261,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
             fw.close();
             System.out.println("Ghi file SanPham.txt thanh cong");
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 }
