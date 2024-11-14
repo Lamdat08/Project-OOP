@@ -7,7 +7,7 @@ public class ThucAn extends SanPham {
     public ThucAn() {
     }
 
-    public String getLoaiNuoc() {
+    public String getLoaiThucAn() {
         return loaiThucAn;
     }
 
@@ -31,7 +31,7 @@ public class ThucAn extends SanPham {
 
     @Override
     public void Xuat(){
-        System.out.println(toString());
+        System.out.println(toString());;
     }
 
     @Override
