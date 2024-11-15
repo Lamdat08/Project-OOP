@@ -2,12 +2,17 @@ package Project_OOP;
 
 import java.util.Scanner;
 
-public class ThanhVien extends KhachHang{
+public class ThanhVien extends KhachHang {
 
     private int diemTichLuy;
 
     public ThanhVien() {
 
+    }
+
+    public ThanhVien(String maKH, String tenKH, String SDT, String diaChi, String gioiTinh, int DiemTichLuy) {
+        super(maKH, tenKH, SDT, diaChi, gioiTinh);
+        this.diemTichLuy = DiemTichLuy;
     }
 
     public int getDiemTichLuy() {
@@ -21,7 +26,7 @@ public class ThanhVien extends KhachHang{
     @Override
     public void Nhap() {
         super.Nhap();
-        System.out.println("Nhap diem tich luy: ");
+        System.out.println("Nhập điểm tích lũy: ");
         setDiemTichLuy(Integer.parseInt(sc.nextLine()));
     }
 

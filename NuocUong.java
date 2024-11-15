@@ -7,6 +7,11 @@ public class NuocUong extends SanPham{
     public NuocUong() {
     }
 
+    public NuocUong(String maSP, String tenSP, int soLuong, double giaTien, double tienVon, String loaiNuoc) {
+        super(maSP, tenSP, soLuong, giaTien, tienVon);
+        this.loaiNuoc = loaiNuoc;
+    }
+
     public String getLoaiNuoc() {
         return loaiNuoc;
     }
@@ -18,14 +23,14 @@ public class NuocUong extends SanPham{
     @Override
     public void Nhap(){
         super.Nhap();
-        System.out.println("Nhap loai nuoc: ");
+        System.out.println("Nhập loại nước: ");
         setLoaiNuoc(sc.nextLine());
     }
 
     @Override
     public String toString() {
         return super.toString() + "NuocUong{" +
-                "loaiNuoc='" + loaiNuoc + '\'' +
+                "Loại Nước: '" + loaiNuoc + '\'' +
                 '}';
     }
     @Override
@@ -36,12 +41,7 @@ public class NuocUong extends SanPham{
     @Override
     public void Sua(){
         super.Sua();
-        System.out.println("Nhap loai nuoc moi: ");
+        System.out.println("Nhập loại nước mới: ");
         this.setLoaiNuoc(sc.nextLine());
-    }
-
-    @Override
-    public double LoiNhuan(){
-        return getGiaTien() - getTienVon();
     }
 }

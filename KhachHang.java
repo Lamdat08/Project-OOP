@@ -2,7 +2,8 @@ package Project_OOP;
 
 import java.util.Scanner;
 
-public class KhachHang implements IThaoTac{
+public class KhachHang implements IThaoTac {
+
     static Scanner sc = new Scanner(System.in);
 
     private String maKH;
@@ -13,6 +14,14 @@ public class KhachHang implements IThaoTac{
 
     public KhachHang() {
 
+    }
+
+    public KhachHang(String maKH, String tenKH, String SDT, String diaChi, String gioiTinh) {
+        this.maKH = maKH;
+        this.tenKH = tenKH;
+        this.SDT = SDT;
+        this.diaChi = diaChi;
+        this.gioiTinh = gioiTinh;
     }
 
     public String getMaKH() {
@@ -56,15 +65,15 @@ public class KhachHang implements IThaoTac{
     }
 
     public void Nhap() {
-        System.out.println("Nhap ma khach hang: ");
+        System.out.println("Nhập mã khách hàng: ");
         setMaKH(sc.nextLine());
-        System.out.println("Nhap ten khach hang: ");
+        System.out.println("Nhập tên khách hàng: ");
         setTenKH(sc.nextLine());
-        System.out.println("Nhap so dien thoai khach hang: ");
+        System.out.println("Nhập số điện thoại khách hàng: ");
         setSDT(sc.nextLine());
-        System.out.println("Nhap dia chi khach hang: ");
+        System.out.println("Nhập đia chỉ khách hàng: ");
         setDiaChi(sc.nextLine());
-        System.out.println("Nhap gioi tinh khach hang: ");
+        System.out.println("Nhập giới tính khách hàng: ");
         setGioiTinh(sc.nextLine());
     }
 
@@ -84,15 +93,15 @@ public class KhachHang implements IThaoTac{
     }
 
     public void Sua() {
-        System.out.println("Nhap ma khach hang moi: ");
+        System.out.println("Nhập mã khách hàng mới: ");
         this.setMaKH(sc.nextLine());
-        System.out.println("Nhap ten khach hang moi: ");
+        System.out.println("Nhập tên khách hàng mới: ");
         this.setTenKH(sc.nextLine());
-        System.out.println("Nhap so dien thoai moi: ");
+        System.out.println("Nhập số điện thoại mới: ");
         this.setSDT(sc.nextLine());
-        System.out.println("Nhap dia chi moi: ");
+        System.out.println("Nhập địa chỉ mới: ");
         this.setDiaChi(sc.nextLine());
-        System.out.println("Nhap gioi tinh moi: ");
+        System.out.println("Nhập giới tính: ");
         this.setGioiTinh(sc.nextLine());
     }
 }

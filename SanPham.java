@@ -15,6 +15,14 @@ public class SanPham implements IThaoTac {
     public SanPham() {
     }
 
+    public SanPham(String maSP, String tenSP, int soLuong, double giaTien, double tienVon) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.soLuong = soLuong;
+        this.giaTien = giaTien;
+        this.tienVon = tienVon;
+    }
+
     public String getMaSP() {
         return maSP;
     }
@@ -56,26 +64,26 @@ public class SanPham implements IThaoTac {
     }
 
     public void Nhap(){
-        System.out.println("Nhap ma san pham: ");
+        System.out.println("Nhập mã sản phẩm: ");
         setMaSP(sc.nextLine());
-        System.out.println("Nhap ten san pham: ");
+        System.out.println("Nhập tên sản phẩm: ");
         setTenSP(sc.nextLine());
-        System.out.println("Nhap so luong: ");
+        System.out.println("Nhập số lượng: ");
         setSoLuong(Integer.parseInt(sc.nextLine()));
-        System.out.println("Nhap gia tien: ");
+        System.out.println("Nhập giá tiền: ");
         setGiaTien(Double.parseDouble(sc.nextLine()));
-        System.out.println("Nhap tien von: ");
+        System.out.println("Nhập tiền vốn: ");
         setTienVon(Double.parseDouble(sc.nextLine()));
     }
 
     @Override
     public String toString() {
         return "SanPham{" +
-                "maSP='" + maSP + '\'' +
-                ", tenSP='" + tenSP + '\'' +
-                ", soLuong=" + soLuong +
-                ", giaTien=" + giaTien +
-                ", tienVon=" + tienVon +
+                "Mã Sản Phầm: '" + maSP + '\'' +
+                ", Tên Sản Phầm='" + tenSP + '\'' +
+                ", Số lương=" + soLuong +
+                ", Giá tiền=" + giaTien +
+                ", Tiền vốn=" + tienVon +
                 '}';
     }
     public void Xuat(){
@@ -83,15 +91,15 @@ public class SanPham implements IThaoTac {
     }
 
     public void Sua(){
-        System.out.println("Nhap ma san pham moi: ");
+        System.out.println("Nhập mã sản phẩm mới: ");
         this.setMaSP(sc.nextLine());
-        System.out.println("Nhap ten san pham moi: ");
+        System.out.println("Nhập tên sản phẩm mới: ");
         this.setTenSP(sc.nextLine());
-        System.out.println("Nhap so luong moi: ");
+        System.out.println("Nhập số lượng mới: ");
         this.setSoLuong(Integer.parseInt(sc.nextLine()));
-        System.out.println("Nhap gia tien moi: ");
+        System.out.println("Nhập giá tiền mới: ");
         this.setGiaTien(Double.parseDouble(sc.nextLine()));
-        System.out.println("Nhap tien von moi: ");
+        System.out.println("Nhập tiền vốn mới: ");
         this.setTienVon(Double.parseDouble(sc.nextLine()));
     }
 

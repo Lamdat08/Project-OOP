@@ -12,30 +12,30 @@ public class DanhSachSanPham implements IThaoTac_2 {
     private int soLuongSanPham;
 
     public void menuNhap(){
-        System.out.println("1 - Nhap danh sach thuc an");
-        System.out.println("1 - Nhap danh sach nuoc uong");
+        System.out.println("1 - Nhập danh sách thức ăn");
+        System.out.println("2 - Nhập danh sách nước uống");
     }
     public void menuTimKiem(){
-        System.out.println("1 - Tim kiem theo ma san pham");
-        System.out.println("2 - Tim kiem theo ten san pham");
-        System.out.println("3 - Tim kiem theo so luong");
-        System.out.println("4 - Tim kiem theo gia tien");
-        System.out.println("5 - Tim kiem theo tien von");
-        System.out.println("6 - Thoat tim kiem");
+        System.out.println("1 - Tìm kiếm theo mã sản phầm");
+        System.out.println("2 - Tìm kiếm theo tên sản phẩm");
+        System.out.println("3 - Tìm kiếm theo số lượng");
+        System.out.println("4 - Tìm kiếm theo giá tiền");
+        System.out.println("5 - Tìm kiếm theo tiền vốn");
+        System.out.println("6 - Thoát tìm kiếm");
     }
 
     public void Nhap(){
-        System.out.println("Nhap so luong san pham: ");
+        System.out.println("Nhập số lượng sản phẩm muốn tạo của danh sách: ");
         soLuongSanPham = Integer.parseInt(sc.nextLine());
         danhSachSanPham = new SanPham[soLuongSanPham];
         for(int i = 0; i < soLuongSanPham; i++){
             SanPham sp;
             menuNhap();
-            System.out.println("Nhap lua chon loai san pham muon them: ");
+            System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
             while(luaChon != 1 && luaChon != 2){
                 menuNhap();
-                System.out.println("Khong co lua chon nay, moi nhap lai: ");
+                System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
             }
 
@@ -55,11 +55,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
         danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
         SanPham sp;
         menuNhap();
-        System.out.println("Nhap lua chon loai san pham muon them: ");
+        System.out.println("Nhập loại sản phẩm muốn thêm: ");
         int luaChon = Integer.parseInt(sc.nextLine());
         while(luaChon != 1 && luaChon != 2){
             menuNhap();
-            System.out.println("Khong co lua chon nay, moi nhap lai: ");
+            System.out.println("Không có loại sản phẩm này, mời nhập lại: ");
             luaChon = Integer.parseInt(sc.nextLine());
         }
 
@@ -75,7 +75,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
     }
     public void Xoa(){
-        System.out.println("Nhap ma san pham muon xoa: ");
+        System.out.println("Nhập mã sản phẩm muốn xoá: ");
         String maSP_Xoa = sc.nextLine();
         boolean kq = false;
         for(int i = 0; i < danhSachSanPham.length; i++){
@@ -87,7 +87,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         if(!kq){
-            System.out.println("Khong tim thay ma san pham muon xoa");
+            System.out.println("Không tìm thấy mã sản phẩm muốn xoá");
         }
         else{
             danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length - 1);
@@ -101,7 +101,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             boolean kq;
             switch(luaChon){
                 case 1:
-                    System.out.println("Nhap ma san pham can tim: ");
+                    System.out.println("Nhập mã sản phẩm cần tìm: ");
                     String maSP_TimKiem = sc.nextLine();
                     kq = false;
                     for(int i = 0; i < danhSachSanPham.length; i++){
@@ -111,11 +111,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Khong tim thay ma san pham: " + maSP_TimKiem);
+                        System.out.println("Không tìm thấy mã sản phẩm: " + maSP_TimKiem);
                     }
                     break;
                 case 2:
-                    System.out.println("Nhap ten san pham can tim: ");
+                    System.out.println("Nhập tên sản phẩm cần tìm: ");
                     String tenSP_TimKiem = sc.nextLine();
                     kq = false;
                     for(int i = 0; i < danhSachSanPham.length; i++){
@@ -125,11 +125,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Khong tim thay ten san pham: " + tenSP_TimKiem);
+                        System.out.println("Không tìm thấy tên sản phẩm: " + tenSP_TimKiem);
                     }
                     break;
                 case 3:
-                    System.out.println("Nhap so luong cua san pham can tim: ");
+                    System.out.println("Nhập số lượng của sản phẩm cần tìm: ");
                     int soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
                     kq = false;
                     for(int i = 0; i < danhSachSanPham.length; i++){
@@ -139,11 +139,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Khong tim thay san pham co so luong: " + soLuongSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có số lượng: " + soLuongSP_TimKiem);
                     }
                     break;
                 case 4:
-                    System.out.println("Nhap gia tien san pham can tim: ");
+                    System.out.println("Nhập giá tiền của san phẩm cần tìm: ");
                     double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
                     kq = false;
                     for(int i = 0; i < danhSachSanPham.length; i++){
@@ -153,11 +153,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Khong tim thay san pham co gia tien: " + giaTienSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có giá tiền: " + giaTienSP_TimKiem);
                     }
                     break;
                 case 5:
-                    System.out.println("Nhap tien von cua san pham can tim: ");
+                    System.out.println("Nhập tiền vốn của sản phẩm cần tìm: ");
                     double tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
                     kq = false;
                     for(int i = 0; i < danhSachSanPham.length; i++){
@@ -167,14 +167,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Khong tim thay san pham co tien von: " + tienVonSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có tiền vốn: " + tienVonSP_TimKiem);
                     }
                     break;
                 case 6:
-                    System.out.println("Thoat chuong trinh");
+                    System.out.println("Thoát tìm kiếm");
                     return;
                 default:
-                    System.out.println("Khong co lua chon tim kiem nay. Moi nhap 6 de thoat tim kiem hoac nhap 1 - 5 de tim kiem");
+                    System.out.println("Không có lựa chọn tìm kiếm này");
                     break;
             }
             if(luaChon == 6){
@@ -186,7 +186,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
     public void Xuat() {
         if (danhSachSanPham == null || danhSachSanPham.length == 0) {
-            System.out.println("Danh sach san pham trong.");
+            System.out.println("Danh sách sản phẩm trống.");
             return;
         }
         for(int i = 0;i<danhSachSanPham.length;i++){
@@ -195,7 +195,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Sua(){
-        System.out.println("Nhap ma san pham cua san pham can sua: ");
+        System.out.println("Nhập mã của sản phẩm cần sửa: ");
         String maSP_Sua = sc.nextLine();
         boolean kq = false;
         for(int i = 0; i < danhSachSanPham.length; i++){
@@ -206,7 +206,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         if(!kq){
-            System.out.println("Khong tim thay ma san pham muon sua");
+            System.out.println("Không tìm thấy sản phầm cần sửa");
         }
     }
 
@@ -217,7 +217,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             String st;
             while((st = br.readLine()) != null){
                 String[] phan = st.split(",");
-                if(phan[0] == "Thuc An"){
+                if(phan[0] == "Thức ăn"){
                     ThucAn sp = new ThucAn();
                     sp.setMaSP(phan[1]);
                     sp.setTenSP(phan[2]);
@@ -225,11 +225,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     sp.setGiaTien(Double.parseDouble(phan[4]));
                     sp.setTienVon(Double.parseDouble(phan[5]));
                     sp.setLoaiThucAn(phan[6]);
-                    //Them Thuc An vao danh sach san pham
+                    //Thêm thức ăn vào danh sách sản phầm
                     danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
                     danhSachSanPham[danhSachSanPham.length - 1] = sp;
                 }
-                if(phan[0] == "Nuoc uong"){
+                if(phan[0] == "Nước uống"){
                     NuocUong sp = new NuocUong();
                     sp.setMaSP(phan[1]);
                     sp.setTenSP(phan[2]);
@@ -237,14 +237,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     sp.setGiaTien(Double.parseDouble(phan[4]));
                     sp.setTienVon(Double.parseDouble(phan[5]));
                     sp.setLoaiNuoc(phan[6]);
-                    //Them Nuoc uong vao danh sach san pham
+                    //Thêm nước uống vào danh sách sản phầm
                     danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
                     danhSachSanPham[danhSachSanPham.length - 1] = sp;
                 }
             }
             br.close();
             fr.close();
-            System.out.println("Doc file SanPham.txt thanh cong");
+            System.out.println("Đọc File SanPham.txt thành công");
         }
         catch(IOException ioException){
             ioException.printStackTrace();
@@ -259,10 +259,19 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
             bw.close();
             fw.close();
-            System.out.println("Ghi file SanPham.txt thanh cong");
+            System.out.println("Ghi File SanPham.txt thành công");
         }
         catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
+
+//    public void thongKeSanPham(){
+//        System.out.println("\n --------Thống Kê Sản Phẩm--------");
+//        for(int i = 0; i < danhSachSanPham.length; i++){
+//            int n = soLuongSP[i];
+//            int conlai = danhSachSanPham[i].getSoLuong() - soLuongSP[i];
+//            System.out.println("Số lượng " + danhSachSanPham[i].getTenSP() + " còn lại: ");
+//        }
+//    }
 }
