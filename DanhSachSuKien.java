@@ -10,35 +10,55 @@ import java.util.Date;
 
 
 public class DanhSachSuKien implements  IThaoTac_2 {
+    static int sl = 0;
     private SuKien[] DSSK;
+    private SuKien[] DSSK_File;
+
     Scanner sc = new Scanner(System.in);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     DanhSachSuKien() {
+        this.DSSK = new SuKien[5];
+        this.Nhap();
     }
 
     @Override
-    public void Nhap() {
+    public void Nhap() {  // Lay du lieu tu file !.
+        String line;
+        String[] list = new String[6];
+        try (BufferedReader br = new BufferedReader(new FileReader("SuKien.txt"))) {
+            while ( (line = br.readLine()) != null ){
 
-        if (DSSK != null){
-            System.out.println("Danh sách đã được tạo rồi !! ");
-            return;
+                if (sl == DSSK.length) {
+                    DSSK = Arrays.copyOf(DSSK, DSSK.length + 5);
+                }
+
+                list = line.split(";");
+                try {
+                    Date NBD = formatter.parse(list[2]);
+                    Date NKT = formatter.parse(list[3]);
+                    SuKien sk = new SuKien(list[0], list[1], NBD, NKT, Double.parseDouble(list[4]), Double.parseDouble(list[5]) );
+                    DSSK[sl] = sk;
+                    sl++;
+                }catch (Exception e){}
+
+            }
+        }catch (Exception e) {
+            System.out.println("Không đọc được file !\n ");
         }
 
-        System.out.printf("Nhập số lượng phần tử đầu tiên thêm vào : ");
-        int sl = sc.nextInt();
-        sc.nextLine();
-        DSSK = new SuKien[sl];
-
-        for (int i = 0; i < DSSK.length; i++) {
-            DSSK[i] = new SuKien();
-            DSSK[i].Nhap();
-            System.out.println("Nhập thành công \n \t---------------------");
+        if ( sl < DSSK.length){
+            DSSK = Arrays.copyOf(DSSK, sl);
         }
+
+        DSSK_File = Arrays.copyOf(DSSK,DSSK.length);
 
     }
 
     @Override
     public void Xuat() {
+        System.out.println("\n \t \t---------Xuất danh sách---------");
+
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
@@ -54,10 +74,14 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
     @Override
     public void Them() {
+        System.out.println("\n \t \t---------Thêm---------");
+
+
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
         }
+
         int x;
         do {
             System.out.printf("Nhập số lượng phần tử thêm vào : ");
@@ -66,6 +90,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             if (x <= 0)
                 System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
         } while (x <= 0);
+        sl+= x;
 
         int prevLength = DSSK.length;
         DSSK = Arrays.copyOf(DSSK, DSSK.length + x);
@@ -79,6 +104,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
     @Override
     public void Sua(){
+        System.out.println("\n \t \t---------Sửa---------");
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
@@ -103,6 +129,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
     @Override
     public void Xoa() {
+        System.out.println("\n---------Xóa---------");
 
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
@@ -134,6 +161,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             // Giảm kích thước mảng
             DSSK = Arrays.copyOf(DSSK, DSSK.length - 1);
             System.out.println("Xóa sự kiện thành công!\n-------------------");
+            sl--;
         } else {
             System.out.println("Không tìm thấy mã '" + x + "' để xóa!\n------------------");
         }
@@ -141,6 +169,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
     @Override
     public void TimKiem() {
+        System.out.println("\n---------Tìm kiếm---------");
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
@@ -371,52 +400,28 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
     @Override
     public void ghiFile() {
+        System.out.println("\n---------Ghi file---------");
         if (DSSK == null ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
         }
 
-        int c;
-        System.out.println("1.Ghi đè lên file. ");
-        System.out.println("2.Ghi thêm vào file. ");
-        System.out.println("3.Thoát.");
-        do{
-            c = Integer.parseInt(sc.nextLine());
-            if ( c < 1 || c > 3 )
-                System.out.println("Vui lòng chọn từ 1 -> 3");
-        }while (c < 1 || c > 3);
-
-        if (c == 1 ){
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt"))) {
-                for (SuKien sk : DSSK) {
-                    bw.write(sk.toString());
-                    bw.newLine();
-                }
-                System.out.println("Ghi dữ liệu vào file thành công!");
-            } catch (IOException e) {
-                System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt"))) {
+            for (SuKien sk : DSSK) {
+                bw.write(sk.toString());
+                bw.newLine();
             }
+            System.out.println("Ghi dữ liệu vào file thành công!");
+            DSSK_File = Arrays.copyOf(DSSK,DSSK.length);
+        }catch (IOException e) {
+            System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
         }
-
-        else if ( c == 2 ){
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt",true))){
-                for (SuKien sk : DSSK ){
-                    bw.write(sk.toString());
-                    bw.newLine();
-                }
-            } catch (IOException e) {
-                System.out.println("Lỗi khi ghi vào file: " + e.getMessage());
-            }
-        }
-        else
-            return;
-
     }
+
 
     @Override
     public void docFile() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader("SuKien.txt"))) {
             String line;
             String[] list = new String[6];
@@ -429,14 +434,134 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                     SuKien sk = new SuKien(list[0], list[1], NBD, NKT, Double.parseDouble(list[4]), Double.parseDouble(list[5]));
                     sk.Xuat();
                     System.out.println("--------------------------------\n");
-                }catch (Exception e) {
-                    System.out.println("Không đọc được file !\n");
-                }
+                }catch (Exception e) {}
 
             }
         } catch (IOException e) {
             System.out.println("Lỗi khi đọc file: " + e.getMessage());
         }
+    }
+
+    public void ThongKe(int choice){
+        if (choice == 1) {
+            SuKien minSK = DSSK[0];
+            SuKien maxSK = DSSK[0];
+            double sum = 0;
+            SuKien[] minList = new SuKien[1];
+            int indexMin = 0;
+            SuKien[] maxList = new SuKien[1];
+            int indexMax = 0;
+
+            // <----------- Phan tinh toan
+            for (int i = 0; i < DSSK.length; i++) {
+                sum += DSSK[i].LoiNhuan();
+                if (DSSK[i].LoiNhuan() > maxSK.LoiNhuan())
+                    maxSK = DSSK[i];
+
+                if (DSSK[i].LoiNhuan() < minSK.LoiNhuan())
+                    minSK = DSSK[i];
+            }
+
+
+            for (int i = 0; i < DSSK.length; i++) {
+                //Cac su kien = maxSK;
+                if (DSSK[i].LoiNhuan() == maxSK.LoiNhuan()) {       // Tim thay su kien co loi nhuan = maxSK.
+                    if (indexMax == maxList.length)   // Mo rong maxList neu index = chieu dai mang? .
+                        maxList = Arrays.copyOf(maxList, maxList.length + 1);
+                    maxList[indexMax] = DSSK[i];
+                    indexMax++;
+                }
+                //Cac su kien = minSK :
+                if (DSSK[i].LoiNhuan() == minSK.LoiNhuan()) {
+                    if (indexMin == minList.length)
+                        minList = Arrays.copyOf(minList, minList.length + 1);
+                    minList[indexMin] = DSSK[i];
+                    indexMin++;
+                }
+            }
+            //-------------->
+            //Phan output :
+            System.out.println("\n---------Thống kê---------");
+            System.out.println("1.Số lượng sự kiện hiện tại : " + sl);
+
+            System.out.println("2.Các sự kiện có lợi nhuận cao nhất : " );
+            for ( int i = 0 ; i < maxList.length ; i++ ){
+                maxList[i].Xuat();
+                System.out.println("-------------------------------------");
+            }
+            System.out.println("\t \t -----xxxxx----- ");
+
+            System.out.println("3.Các sự kiện có lợi nhuận thấp nhất : ");
+            for ( int i = 0 ; i < minList.length ; i++ ){
+                minList[i].Xuat();
+                System.out.println("-------------------------------------");
+            }
+            System.out.println("\t \t -----xxxxx----- ");
+
+            System.out.println("4.Tổng lợi nhuận : " + sum );
+            System.out.println("5.Lợi nhuận trung bình : " + sum/sl);
+            System.out.println("-------------------------------------");
+        }
+
+
+        else {
+            SuKien minSK = DSSK[0];
+            SuKien maxSK = DSSK[0];
+            double sum = 0;
+            SuKien[] minList = new SuKien[1];
+            int indexMin = 0;
+            SuKien[] maxList = new SuKien[1];
+            int indexMax = 0;
+
+            for (int i = 0; i < DSSK_File.length; i++) {
+                sum += DSSK_File[i].LoiNhuan();
+                if (DSSK_File[i].LoiNhuan() > maxSK.LoiNhuan())
+                    maxSK = DSSK_File[i];
+
+                if (DSSK_File[i].LoiNhuan() < minSK.LoiNhuan())
+                    minSK = DSSK_File[i];
+            }
+
+            for (int i = 0; i < DSSK_File.length; i++) {
+                //Cac su kien = maxSK;
+                if (DSSK_File[i].LoiNhuan() == maxSK.LoiNhuan()) {       // Tim thay su kien co loi nhuan = maxSK.
+                    if (indexMax == maxList.length)             // Mo rong maxList neu index = chieu dai mang? .
+                        maxList = Arrays.copyOf(maxList, maxList.length + 1);
+                    maxList[indexMax] = DSSK_File[i];
+                    indexMax++;
+                }
+                //Cac su kien = minSK :
+                if (DSSK_File[i].LoiNhuan() == minSK.LoiNhuan()) {
+                    if (indexMin == minList.length)
+                        minList = Arrays.copyOf(minList, minList.length + 1);
+                    minList[indexMin] = DSSK_File[i];
+                    indexMin++;
+                }
+            }
+            //Phan output :
+            System.out.println("\n---------Thống kê---------");
+            System.out.println("1.Số lượng sự kiện hiện tại : " + DSSK_File.length);
+
+            System.out.println("2.Các sự kiện có lợi nhuận cao nhất : " );
+            for ( int i = 0 ; i < maxList.length ; i++ ){
+                maxList[i].Xuat();
+                System.out.println("-------------------------------------");
+            }
+            System.out.println("\t \t -----xxxxx----- ");
+
+            System.out.println("3.Các sự kiện có lợi nhuận thấp nhất : ");
+            for ( int i = 0 ; i < minList.length ; i++ ){
+                minList[i].Xuat();
+                System.out.println("-------------------------------------");
+            }
+            System.out.println("\t \t -----xxxxx----- ");
+
+            System.out.println("4.Tổng lợi nhuận : " + sum );
+            System.out.println("5.Lợi nhuận trung bình : " + sum/sl);
+            System.out.println("-------------------------------------");
+        }
+
+
     }
 
 }
