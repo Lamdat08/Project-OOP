@@ -6,6 +6,10 @@ public class ThucAn extends SanPham {
 
     public ThucAn() {
     }
+    public ThucAn(String maSP, String tenSP, int soLuong, double giaTien, double tienVon, String loaiThucAn) {
+        super(maSP, tenSP, soLuong, giaTien, tienVon);
+        this.loaiThucAn = loaiThucAn;
+    }
 
     public String getLoaiThucAn() {
         return loaiThucAn;
@@ -18,31 +22,26 @@ public class ThucAn extends SanPham {
     @Override
     public void Nhap(){
         super.Nhap();
-        System.out.println("Nhap loai thuc an: ");
+        System.out.println("Nhập loại thức ăn: ");
         setLoaiThucAn(sc.nextLine());
     }
 
     @Override
     public String toString() {
         return super.toString() + "ThucAn{" +
-                "loaiThucAn='" + loaiThucAn + '\'' +
+                "Loại thức ăn: '" + loaiThucAn + '\'' +
                 '}';
     }
 
     @Override
     public void Xuat(){
-        System.out.println(toString());;
+        System.out.println(toString());
     }
 
     @Override
     public void Sua(){
         super.Sua();
-        System.out.println("Nhap loai thuc an moi: ");
+        System.out.println("Nhập loại thức ăn mới: ");
         this.setLoaiThucAn(sc.nextLine());
-    }
-
-    @Override
-    public double LoiNhuan(){
-        return getGiaTien() - getTienVon();
     }
 }

@@ -6,51 +6,67 @@ public class QuanLySanPham {
 
     static Scanner sc = new Scanner(System.in);
 
+    DanhSachSanPham dssp = new DanhSachSanPham();
+
     public void menuSanPham(){
-        System.out.println("1 - Xuat san pham");
-        System.out.println("2 - Sua san pham");
-        System.out.println("3 - Ghi file san pham");
-        System.out.println("4 - Doc file san pham");
-        System.out.println("5 - Tim kiem san pham");
-        System.out.println("6 - Them san pham");
-        System.out.println("7 - Xoa san pham");
-        System.out.println("8 - Thoat");
+        System.out.println("\n --------Quản lý danh sách sản phẩm---------");
+        System.out.println("1.Tạo danh sách mới và nhập");
+        System.out.println("2.Xuất danh sách.");
+        System.out.println("3.Thêm sản phẩm vào danh sách.");
+        System.out.println("4.Sửa sản phẩm theo mã.");
+        System.out.println("5.Xóa sản phẩm theo mã.");
+        System.out.println("6.Tìm sản phẩm.");
+        System.out.println("7.Đọc file.");
+        System.out.println("8.Ghi file.");
+        System.out.println("9.Thoát.");
     }
 
     public void menuQuanLySanPham(){
-        menuSanPham();
-        DanhSachSanPham dssp = new DanhSachSanPham();
-        dssp.Nhap();
         while(true){
+            menuSanPham();
+            System.out.printf("Nhập lựa chọn : ");
             int luaChon = Integer.parseInt(sc.nextLine());
-            while(luaChon < 1 || luaChon > 8){
+            while(luaChon < 1 || luaChon > 9){
                 menuSanPham();
-                System.out.println("Khong co lua chon nay, moi nhap lai: ");
+                System.out.println("Không có lựa chọn này, mời nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
             }
-            if(luaChon == 1){
-                dssp.Xuat();
-            }
-            if(luaChon == 2){
-                dssp.Sua();
-            }
-            if(luaChon == 3){
-                dssp.ghiFile();
-            }
-            if(luaChon == 4){
-                dssp.docFile();
-            }
-            if(luaChon == 5){
-                dssp.TimKiem();
-            }
-            if(luaChon == 6){
-                dssp.Them();
-            }
-            if(luaChon == 7){
-                dssp.Xoa();
-            }
-            if(luaChon == 8){
-                break;
+            switch (luaChon) {
+                case 1:
+                    dssp.Nhap();
+                    break;
+
+                case 2:
+                    dssp.Xuat();
+                    break;
+
+                case 3:
+                    dssp.Them();
+                    break;
+
+                case 4:
+                    dssp.Sua();
+                    break;
+
+                case 5:
+                    dssp.Xoa();
+                    break;
+
+                case 6 :
+                    dssp.TimKiem();
+                    break;
+
+                case 7 :
+                    dssp.docFile();
+                    break;
+
+                case 8 :
+                    dssp.ghiFile();
+                    break;
+
+                case 9 :
+                    System.out.println("Thoát quản lý sản phầm.");
+                    return;
             }
         }
     }
