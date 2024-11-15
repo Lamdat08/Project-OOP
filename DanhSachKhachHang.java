@@ -14,20 +14,20 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     private int soLuongKhachHang;
 
     public void menuNhap() {
-        System.out.println("Nhap danh sach khach hang: ");
+        System.out.println("Nhập danh sách khách hàng: ");
     }
 
     public void menuTimKiem() {
-        System.out.println("1 - Tiem kiem theo ma khach hang");
-        System.out.println("2 - Tim kiem theo ten khach hang");
-        System.out.println("3 - Tim kiem theo so dien thoai");
-        System.out.println("4 - Tim kiem theo dia chi");
-        System.out.println("5 - Tim kiem gioi tinh");
-        System.out.println("6 - Thoat tim kiem");
+        System.out.println("1 - Tìm kiếm theo mã khách hàng.");
+        System.out.println("2 - Tìm kiếm theo tên khách hàng.");
+        System.out.println("3 - Tìm kiếm theo số điện thoại.");
+        System.out.println("4 - Tìm kiếm theo địa chỉ.");
+        System.out.println("5 - Tìm kiếm theo giới tính.");
+        System.out.println("6 - Thoát tìm kiếm.");
     }
 
     public void Nhap() {
-        System.out.println("Nhap so luong khach hang: ");
+        System.out.println("Nhập số lượng khách hàng để tạo danh sách: ");
         soLuongKhachHang = Integer.parseInt(sc.nextLine());
         danhSachKhachHang = new KhachHang[soLuongKhachHang];
         for (int i = 0; i < soLuongKhachHang; i++) {
@@ -45,7 +45,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     }
 
     public void Xoa() {
-        System.out.println("Nhap ma khach hang muon xoa: ");
+        System.out.println("Nhập mã khách hàng muốn xóa: ");
         String maKH_Xoa = sc.nextLine();
         boolean kq = false;
         for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -57,7 +57,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
         }
         if (!kq) {
-            System.out.println("Khong tim thay ma khach hang muon xoa");
+            System.out.println("Không tìm thấy mã khách hàng muốn xóa.");
         }
         else {
             danhSachKhachHang = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length - 1);
@@ -71,7 +71,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             boolean kq;
             switch (luachon) {
                 case 1:
-                    System.out.println("Nhap ma khach hang can tim: ");
+                    System.out.println("Nhập mã khách hàng cần tìm: ");
                     String maKH_TimKiem = sc.nextLine();
                     kq = false;
                     for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -81,11 +81,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         }
                     }
                     if (!kq) {
-                        System.out.println("Khong tim thay ma khach hang: " + maKH_TimKiem);
+                        System.out.println("Không tìm thấy mã khách hàng: " + maKH_TimKiem);
                     }
                     break;
                 case 2:
-                    System.out.println("Nhap ten khach hang can tim: ");
+                    System.out.println("Nhập tên khách hàng cần tìm: ");
                     String tenKhachHang_TimKiem = sc.nextLine();
                     kq = false;
                     for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -95,11 +95,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         }
                     }
                     if (!kq) {
-                        System.out.println("Khong tim thay khach hang nao co ten: " + tenKhachHang_TimKiem);
+                        System.out.println("Không tìm thấy khách hàng có tên: " + tenKhachHang_TimKiem);
                     }
                     break;
                 case 3:
-                    System.out.println("Nhap so dien thoai khach hang can tim: ");
+                    System.out.println("Nhập số điện thoại của khách hàng cần tìm: ");
                     String soDienKhachHang_TimKiem = sc.nextLine();
                     kq = false;
                     for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -109,11 +109,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         }
                     }
                     if (!kq) {
-                        System.out.println("Khong tim thay khach hang co SDT: " + soDienKhachHang_TimKiem);
+                        System.out.println("Không tìm thấy khách hàng có số điện thoại: " + soDienKhachHang_TimKiem);
                     }
                     break;
                 case 4:
-                    System.out.println("Nhap dia chi khach hang can tim: ");
+                    System.out.println("Nhập địa chỉ khách hàng cần tìm: ");
                     String diaChiKhachHang_TimKiem = sc.nextLine();
                     kq = false;
                     for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -123,11 +123,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         }
                     }
                     if (!kq) {
-                        System.out.println("Khong tim thay khach hang nao co dia chi: " + diaChiKhachHang_TimKiem);
+                        System.out.println("Không tìm thấy khách hàng có địa chỉ: " + diaChiKhachHang_TimKiem);
                     }
                     break;
                 case 5:
-                    System.out.println("Nhap gioi tinh khach hang can tim: ");
+                    System.out.println("Nhập giới tính khách hàng cần tìm: ");
                     String gioiTinhKhachHang_TimKiem = sc.nextLine();
                     kq = false;
                     for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -137,13 +137,14 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         }
                     }
                     if (!kq) {
-                        System.out.println("Khong tim thay khach hang nao co gioi tinh: " + gioiTinhKhachHang_TimKiem);
+                        System.out.println("Không tìm thấy khách hàng nào có giới tính: " + gioiTinhKhachHang_TimKiem);
                     }
                     break;
                 case 6:
-                    System.out.println("Thoat tim kiem");
+                    System.out.println("Thoát tìm kiếm.");
+                    return;
                 default:
-                    System.out.println("Khong co lua chon tim kiem nay. Moi nhap lai lua chon !");
+                    System.out.println("Không có lựa chọn tìm kiếm này !");
                     break;
             }
             if (luachon == 6) {
@@ -154,7 +155,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
     public void Xuat() {
         if (danhSachKhachHang == null || danhSachKhachHang.length == 0) {
-            System.out.println("Danh sach khach hang trong.");
+            System.out.println("Danh sách khách hàng trống.");
             return;
         }
         for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -163,7 +164,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     }
 
     public void Sua() {
-        System.out.println("Nhap ma khach hang cua khach hang can sua doi thong tin: ");
+        System.out.println("Nhập mã của khách hàng cần sửa đổi thông tin: ");
         String maKH_Sua = sc.nextLine();
         boolean kq = false;
         for (int i = 0; i < danhSachKhachHang.length; i++) {
@@ -174,7 +175,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
         }
         if (!kq) {
-            System.out.println("Khong tim thay ma khach hang can sua");
+            System.out.println("Không tìm thấy mã của khách hàng cần sửa đổi thông tin");
         }
     }
 
@@ -196,7 +197,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
             br.close();
             fr.close();
-            System.out.println("Doc file KhachHang.txt thanh cong.");
+            System.out.println("Doc file KhachHang.txt thành công.");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -211,7 +212,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
             bw.close();
             fw.close();
-            System.out.println("Ghi file KhachHang.txt thanh cong.");
+            System.out.println("Ghi file KhachHang.txt thành công.");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
