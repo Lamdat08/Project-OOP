@@ -1,6 +1,5 @@
 package Project_OOP;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class HoaDon implements IThaoTac {
@@ -9,12 +8,19 @@ public class HoaDon implements IThaoTac {
 
     private String maHD;
     private String thoiGian;
-    private DanhSachKhachHang dskh;
-    private KhachHang khachHang;
-    private DanhSachSanPham dssp;
-    private SanPham[] sanpham;
-    private int[] soLuongSP;
-    private String phuongThucThanhToan;
+    private DanhSachKhachHang dskh;  // Danh sách khách hàng
+    private KhachHang khachHang;  // Khách hàng cho hóa đơn
+    private DanhSachSanPham dssp;  // Danh sách sản phẩm
+    private SanPham[] sanpham;  // Mảng sản phẩm trong hóa đơn
+    private int[] soLuongSP;  // Mảng số lượng sản phẩm
+    private String phuongThucThanhToan;  // Phương thức thanh toán
+
+    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+        this.dssp = dssp;
+        this.dskh = dskh;
+        this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
+        this.soLuongSP = new int[10];    // Khởi tạo mảng số lượng sản phẩm với kích thước ban đầu
+    }
 
     public String getMaHD() {
         return maHD;
@@ -48,6 +54,14 @@ public class HoaDon implements IThaoTac {
         this.dssp = dssp;
     }
 
+    public SanPham[] getSanpham() {
+        return sanpham;
+    }
+
+    public void setSanpham(SanPham[] sanpham) {
+        this.sanpham = sanpham;
+    }
+
     public int[] getSoLuongSP() {
         return soLuongSP;
     }
@@ -64,29 +78,6 @@ public class HoaDon implements IThaoTac {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
-    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-        this.dssp = dssp;
-        this.dskh = dskh;
-        this.sanpham = new SanPham[10];
-        this.soLuongSP = new int[10];
-    }
-
-    public KhachHang getKhachHang() {
-        return khachHang;
-    }
-
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
-    }
-
-    public SanPham[] getSanpham() {
-        return sanpham;
-    }
-
-    public void setSanpham(SanPham[] sanpham) {
-        this.sanpham = sanpham;
-    }
-
     @Override
     public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
@@ -95,7 +86,7 @@ public class HoaDon implements IThaoTac {
         System.out.print("Nhập thời gian: ");
         this.thoiGian = sc.nextLine();
 
-        System.out.println("Nhập SDT: ");
+        System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
         for (KhachHang x : dskh.getDSKH()) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
@@ -106,8 +97,8 @@ public class HoaDon implements IThaoTac {
         int i = 0;
         while (i < sanpham.length) {
             System.out.println("Nhập tên sản phẩm: ");
-            boolean timSP = false;
             String tenSP = sc.nextLine();
+            boolean timSP = false;
             System.out.println("Nhập số lượng sản phẩm: ");
             int sl = Integer.parseInt(sc.nextLine());
 
@@ -119,6 +110,7 @@ public class HoaDon implements IThaoTac {
                     break;
                 }
             }
+
             if (!timSP) {
                 System.out.println("Không tìm thấy sản phẩm.");
             }
@@ -128,7 +120,15 @@ public class HoaDon implements IThaoTac {
             System.out.println("2. Không");
             int luaChon = Integer.parseInt(sc.nextLine());
             if (luaChon == 2) break;
+
+            // Tăng chỉ số sản phẩm
             i++;
+
+            // Nếu hết chỗ trong mảng, thoát vòng lặp
+            if (i == sanpham.length) {
+                System.out.println("Danh sách sản phẩm đã đầy.");
+                break;
+            }
         }
 
         System.out.print("Nhập phương thức thanh toán: ");
@@ -140,12 +140,28 @@ public class HoaDon implements IThaoTac {
         String result = "Hóa đơn: ";
         result += "Mã hóa đơn: " + getMaHD() + ", Thời gian: " + getThoiGian();
         result += ", Khách hàng: " + khachHang.Xuat();
+
         for (int i = 0; i < sanpham.length; i++) {
             if (sanpham[i] != null) {
-                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].Xuat() + ", Số lượng: " + soLuongSP[i]
-                        + ", Giá: " + sanpham[i].getGia() + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGia();
+                String loai;
+                // Kiểm tra loại sản phẩm
+                if (sanpham[i] instanceof NuocUong) {
+                    loai = "Nước uống";
+                } else if (sanpham[i] instanceof ThucAn) {
+                    loai = "Thực ăn";
+                } else {
+                    loai = "Không xác định";  // Trường hợp khác, nếu có
+                }
+
+                // Thêm thông tin sản phẩm vào chuỗi kết quả
+                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].Xuat() 
+                        + ", Loại: " + loai 
+                        + ", Số lượng: " + soLuongSP[i]
+                        + ", Giá: " + sanpham[i].getGia() 
+                        + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGia();
             }
         }
+
         result += ", Phương thức thanh toán: " + getPhuongThucThanhToan();
         return result;
     }
@@ -202,6 +218,7 @@ public class HoaDon implements IThaoTac {
                 }
                 break;
             case 4:
+                // Thêm sản phẩm vào hóa đơn
                 boolean themSP = false;
                 for (int i = 0; i < sanpham.length; i++) {
                     if (sanpham[i] == null) {
@@ -229,6 +246,7 @@ public class HoaDon implements IThaoTac {
                 }
                 break;
             case 5:
+                // Xóa sản phẩm từ hóa đơn
                 System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanpham.length - 1) + "): ");
                 int chiSoXoa = Integer.parseInt(sc.nextLine());
                 if (chiSoXoa >= 0 && chiSoXoa < sanpham.length && sanpham[chiSoXoa] != null) {
@@ -236,8 +254,8 @@ public class HoaDon implements IThaoTac {
                         sanpham[i] = sanpham[i + 1];
                         soLuongSP[i] = soLuongSP[i + 1];
                     }
-                    sanpham = Arrays.copyOf(sanpham, sanpham.length - 1);
-                    soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length - 1);
+                    sanpham[9] = null;  // Xóa sản phẩm cuối cùng
+                    soLuongSP[9] = 0;  // Reset số lượng sản phẩm cuối cùng
                     System.out.println("Sản phẩm đã được xóa.");
                 } else {
                     System.out.println("Chỉ số sản phẩm không hợp lệ.");
