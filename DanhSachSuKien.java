@@ -10,17 +10,18 @@ import java.util.Date;
 
 
 public class DanhSachSuKien implements  IThaoTac_2 {
-    static int sl = 0;
+    private static int sl = 0;
     private SuKien[] DSSK;
     private SuKien[] DSSK_File;
 
-    Scanner sc = new Scanner(System.in);
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    static Scanner sc = new Scanner(System.in);
+    static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     DanhSachSuKien() {
         this.DSSK = new SuKien[5];
         this.Nhap();
     }
+
 
     @Override
     public void Nhap() {  // Lay du lieu tu file !.
@@ -59,8 +60,8 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void Xuat() {
         System.out.println("\n \t \t---------Xuất danh sách---------");
 
-        if (DSSK == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
+        if ( DSSK.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
 
@@ -76,11 +77,6 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void Them() {
         System.out.println("\n \t \t---------Thêm---------");
 
-
-        if (DSSK == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
-            return;
-        }
 
         int x;
         do {
@@ -105,8 +101,8 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void Sua(){
         System.out.println("\n \t \t---------Sửa---------");
-        if (DSSK == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
+        if ( DSSK.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
 
@@ -131,8 +127,8 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void Xoa() {
         System.out.println("\n---------Xóa---------");
 
-        if (DSSK == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
+        if ( DSSK.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
 
@@ -170,8 +166,8 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void TimKiem() {
         System.out.println("\n---------Tìm kiếm---------");
-        if (DSSK == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
+        if ( DSSK.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
 
@@ -419,8 +415,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     }
 
 
-    @Override
-    public void docFile() {
+    public static void docFile() {
 
         try (BufferedReader br = new BufferedReader(new FileReader("SuKien.txt"))) {
             String line;
@@ -442,8 +437,15 @@ public class DanhSachSuKien implements  IThaoTac_2 {
         }
     }
 
+
     public void ThongKe(int choice){
-        if (choice == 1) {
+        //Thong ke theo mang danh sach hien tai.
+        if (choice == 1) {       //Kiem tra neu DSSK trong.
+            if ( DSSK.length == 0){
+                System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
+                return;
+            }
+
             SuKien minSK = DSSK[0];
             SuKien maxSK = DSSK[0];
             double sum = 0;
@@ -503,10 +505,14 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.println("-------------------------------------");
         }
 
-
+        //Thong ke tu file
         else {
-            SuKien minSK = DSSK[0];
-            SuKien maxSK = DSSK[0];
+            if ( DSSK_File.length == 0){                            //Kiem tra neu DSSK_File trong.
+                System.out.println("File đang trống, vui lòng ghi File");
+                return;
+            }
+            SuKien minSK = DSSK_File[0];
+            SuKien maxSK = DSSK_File[0];
             double sum = 0;
             SuKien[] minList = new SuKien[1];
             int indexMin = 0;

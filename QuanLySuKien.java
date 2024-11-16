@@ -24,7 +24,7 @@ public class QuanLySuKien {
             } while (x < 1 || x > 4);
 
             if (x == 1)
-                DSsk.docFile();
+                DanhSachSuKien.docFile();
 
             else if ( x == 2 )
                 DSsk.ThongKe(2);
