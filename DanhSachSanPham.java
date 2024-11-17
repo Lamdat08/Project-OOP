@@ -24,10 +24,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void menuTimKiem(){
         System.out.println("1 - Tìm kiếm theo mã sản phầm");
         System.out.println("2 - Tìm kiếm theo tên sản phẩm");
-        System.out.println("3 - Tìm kiếm theo số lượng");
-        System.out.println("4 - Tìm kiếm theo giá tiền");
-        System.out.println("5 - Tìm kiếm theo tiền vốn");
-        System.out.println("6 - Thoát tìm kiếm");
+        System.out.println("3 - Tìm kiếm theo số lượng sản phẩm");
+        System.out.println("4 - Tìm kiếm theo giá tiền sản phẩm");
+        System.out.println("5 - Tìm kiếm theo tiền vốn sản phẩm");
+        System.out.println("6 - Thoát tìm kiếm sản phẩm");
     }
 
 //    public void Nhap(){
@@ -86,7 +86,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         catch (Exception e){
-            System.out.println("Không đọc được file SanPham.txt\n");
+            System.out.println("Lỗi đọc file SanPham.txt: ");
+            e.printStackTrace();
         }
         if(soLuongSanPham < danhSachSanPham.length){
             danhSachSanPham = Arrays.copyOf(danhSachSanPham, soLuongSanPham);
@@ -95,7 +96,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         danhSachSanPham_File = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length);
     }
     public void Them(){
-        System.out.println("\n \t \t---------Thêm---------");
+        System.out.println("\n \t \t---------Thêm sản phẩm---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
@@ -143,7 +144,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
     }
     public void Xoa(){
-        System.out.println("\n---------Xóa---------");
+        System.out.println("\n---------Xóa sản phẩm---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
@@ -170,13 +171,13 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
         else{
             danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length - 1);
-            System.out.println("Xóa sản ph thành công!\n-------------------");
+            System.out.println("Xóa sản phẩm thành công!\n-------------------");
             soLuongSanPham--;
         }
     }
 
     public void TimKiem(){
-        System.out.println("\n---------Tìm kiếm---------");
+        System.out.println("\n---------Tìm kiếm sản phẩm---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Vui lòng tạo danh sách sản phẩm trước !!");
@@ -194,7 +195,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             int luaChon = Integer.parseInt(sc.nextLine());
             while(luaChon < 1 || luaChon > 6){
                 menuNhap();
-                System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
+                System.out.println("Không có loại sản phẩm này, mời nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
             }
 
@@ -271,10 +272,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     break;
                 case 6:
-                    System.out.println("Thoát tìm kiếm");
+                    System.out.println("Thoát tìm kiếm sản phẩm");
                     return;
                 default:
-                    System.out.println("Không có lựa chọn tìm kiếm này");
+                    System.out.println("Không có lựa chọn tìm kiếm sản phẩm này");
                     break;
             }
             if(luaChon == 6){
@@ -285,10 +286,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Xuat() {
-        System.out.println("\n \t \t---------Xuất danh sách---------");
+        System.out.println("\n \t \t---------Xuất danh sách sản phẩm---------");
 
         if (danhSachSanPham == null ){
-            System.out.println("Vui lòng tạo danh sách sản phâ trước !!");
+            System.out.println("Vui lòng tạo danh sách sản phẩm trước !!");
             return;
         }
         if (danhSachSanPham.length == 0){
@@ -296,7 +297,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             return;
         }
 
-        System.out.println("\t   Thông tin của danh sách sản phẩm \n--------------------------");
+        System.out.println("\tThông tin của danh sách sản phẩm \n--------------------------");
         for(int i = 0;i<danhSachSanPham.length;i++){
             danhSachSanPham[i].Xuat();
             System.out.println("\t--------------");
@@ -304,14 +305,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Sua(){
-        System.out.println("\n \t \t---------Sửa---------");
+        System.out.println("\n \t \t---------Sửa sản phẩm---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
             return;
         }
         if (danhSachSanPham.length == 0){
-            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
             return;
         }
 
@@ -324,11 +325,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 danhSachSanPham[i].Sua();
                 danhSachSanPham[i].Xuat();
                 kq = true;
-                System.out.println("Sửa thành công ! \n -------------------");
+                System.out.println("Sửa sản phẩm " + maSP_Sua + " thành công ! \n -------------------");
             }
         }
         if(!kq){
-            System.out.println("Không tìm thấy mã ' \" + s + \" ' cần sửa trong danh sách sản phẩm! \\n------------------\"");
+            System.out.println("Không tìm thấy mã " + maSP_Sua + " cần sửa trong danh sách sản phẩm! \\n------------------\"");
         }
     }
 
@@ -364,13 +365,13 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
     }
     public void ghiFile(){
-        System.out.println("\n---------Ghi file---------");
+        System.out.println("\n---------Ghi file sản phẩm---------");
         if (danhSachSanPham == null ){
-            System.out.println("Vui lòng tạo danh sách trước !!");
+            System.out.println("Vui lòng tạo danh sách sản phẩm trước !!");
             return;
         }
         if (danhSachSanPham.length == 0){
-            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
             return;
         }
 
@@ -387,7 +388,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             danhSachSanPham_File = Arrays.copyOf(danhSachSanPham,danhSachSanPham.length);
         }
         catch (IOException ioException) {
-            System.out.printf("Lỗi ghi file: ");
+            System.out.printf("Lỗi ghi file SanPham.txt: ");
             ioException.printStackTrace();
         }
     }
