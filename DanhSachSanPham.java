@@ -6,14 +6,20 @@ import java.util.Scanner;
 
 public class DanhSachSanPham implements IThaoTac_2 {
 
+    private static int soLuongSanPham;
+    private SanPham[] danhSachSanPham;
+    private SanPham[] danhSachSanPham_File;
+
     static Scanner sc = new Scanner(System.in);
 
-    private SanPham[] danhSachSanPham;
-    private int soLuongSanPham;
+    public DanhSachSanPham(){
+        this.danhSachSanPham = new SanPham[5];
+        this.Nhap();
+    }
 
     public void menuNhap(){
-        System.out.println("1 - Nhập danh sách thức ăn");
-        System.out.println("2 - Nhập danh sách nước uống");
+        System.out.println("1 - Nhập thức ăn");
+        System.out.println("2 - Nhập nước uống");
     }
     public void menuTimKiem(){
         System.out.println("1 - Tìm kiếm theo mã sản phầm");
@@ -24,12 +30,97 @@ public class DanhSachSanPham implements IThaoTac_2 {
         System.out.println("6 - Thoát tìm kiếm");
     }
 
+//    public void Nhap(){
+//        System.out.println("Nhập số lượng sản phẩm muốn tạo của danh sách: ");
+//        soLuongSanPham = Integer.parseInt(sc.nextLine());
+//        danhSachSanPham = new SanPham[soLuongSanPham];
+//        for(int i = 0; i < soLuongSanPham; i++){
+//            SanPham sp;
+//            menuNhap();
+//            System.out.println("Nhập loại sản phẩm muốn thêm: ");
+//            int luaChon = Integer.parseInt(sc.nextLine());
+//            while(luaChon != 1 && luaChon != 2){
+//                menuNhap();
+//                System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
+//                luaChon = Integer.parseInt(sc.nextLine());
+//            }
+//
+//            if(luaChon == 1){
+//                sp = new ThucAn();
+//                sp.Nhap();
+//                danhSachSanPham[i] = sp;
+//            }
+//            if(luaChon == 2){
+//                sp = new NuocUong();
+//                sp.Nhap();
+//                danhSachSanPham[i] = sp;
+//            }
+//        }
+//    }
     public void Nhap(){
-        System.out.println("Nhập số lượng sản phẩm muốn tạo của danh sách: ");
-        soLuongSanPham = Integer.parseInt(sc.nextLine());
-        danhSachSanPham = new SanPham[soLuongSanPham];
-        for(int i = 0; i < soLuongSanPham; i++){
-            SanPham sp;
+        String line;
+        String[] strings = new String[6];
+        try{
+            FileReader fr = new FileReader("SanPham.txt");
+            BufferedReader br = new BufferedReader(fr);
+            while((line = br.readLine()) != null){
+                if(soLuongSanPham == danhSachSanPham.length){
+                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 6);
+                }
+
+                strings = line.split(";");
+                try{
+                    SanPham sp = new SanPham();
+                    if(strings[0].startsWith("TA")){
+                        sp = new ThucAn(strings[0], strings[1], Integer.parseInt(strings[2]), Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    }
+                    if(strings[0].startsWith("NU")){
+                        sp = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]), Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    }
+                    danhSachSanPham[soLuongSanPham] = sp;
+                    soLuongSanPham++;
+                }
+                catch (Exception e){
+
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.println("Không đọc được file SanPham.txt\n");
+        }
+        if(soLuongSanPham < danhSachSanPham.length){
+            danhSachSanPham = Arrays.copyOf(danhSachSanPham, soLuongSanPham);
+        }
+
+        danhSachSanPham_File = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length);
+    }
+    public void Them(){
+        System.out.println("\n \t \t---------Thêm---------");
+
+        if (danhSachSanPham == null) {
+            System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
+            return;
+        }
+        if(danhSachSanPham.length == 0){
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
+        }
+
+        int n;
+        do{
+            System.out.println("Nhập số lượng sản phẩm muốn thêm: ");
+            n = Integer.parseInt(sc.nextLine());
+            if(n <= 0){
+                System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0: ");
+            }
+        } while(n <= 0);
+
+        soLuongSanPham += n;
+        danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + n);
+        SanPham sp;
+
+        int slSPBanDau = danhSachSanPham.length - n;
+        for(int i = slSPBanDau; i < danhSachSanPham.length; i++){
             menuNhap();
             System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
@@ -51,34 +142,22 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
     }
-    public void Them(){
-        danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
-        SanPham sp;
-        menuNhap();
-        System.out.println("Nhập loại sản phẩm muốn thêm: ");
-        int luaChon = Integer.parseInt(sc.nextLine());
-        while(luaChon != 1 && luaChon != 2){
-            menuNhap();
-            System.out.println("Không có loại sản phẩm này, mời nhập lại: ");
-            luaChon = Integer.parseInt(sc.nextLine());
+    public void Xoa(){
+        System.out.println("\n---------Xóa---------");
+
+        if (danhSachSanPham == null) {
+            System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
+            return;
+        }
+        if(danhSachSanPham.length == 0){
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
         }
 
-        if(luaChon == 1){
-            sp = new ThucAn();
-            sp.Nhap();
-            danhSachSanPham[danhSachSanPham.length - 1] = sp;
-        }
-        if(luaChon == 2){
-            sp = new NuocUong();
-            sp.Nhap();
-            danhSachSanPham[danhSachSanPham.length - 1] = sp;
-        }
-    }
-    public void Xoa(){
         System.out.println("Nhập mã sản phẩm muốn xoá: ");
         String maSP_Xoa = sc.nextLine();
         boolean kq = false;
-        for(int i = 0; i < danhSachSanPham.length; i++){
+        for(int i = 0; i < danhSachSanPham.length - 1; i++){
             if(danhSachSanPham[i].getMaSP().equals(maSP_Xoa)){
                 for(int j = i + 1; j < danhSachSanPham.length; j++){
                     danhSachSanPham[i] = danhSachSanPham[j];
@@ -87,18 +166,38 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         if(!kq){
-            System.out.println("Không tìm thấy mã sản phẩm muốn xoá");
+            System.out.println("Không tìm thấy mã sản phẩm" + maSP_Xoa + " muốn xoá");
         }
         else{
             danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length - 1);
+            System.out.println("Xóa sản ph thành công!\n-------------------");
+            soLuongSanPham--;
         }
     }
 
     public void TimKiem(){
+        System.out.println("\n---------Tìm kiếm---------");
+
+        if (danhSachSanPham == null) {
+            System.out.println("Vui lòng tạo danh sách sản phẩm trước !!");
+            return;
+        }
+        if (danhSachSanPham.length == 0){
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
+        }
+
         while(true){
-            menuTimKiem();
-            int luaChon = Integer.parseInt(sc.nextLine());
             boolean kq;
+            menuTimKiem();
+            System.out.println("Nhập loại sản phẩm muốn thêm: ");
+            int luaChon = Integer.parseInt(sc.nextLine());
+            while(luaChon < 1 && luaChon > 6){
+                menuNhap();
+                System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
+                luaChon = Integer.parseInt(sc.nextLine());
+            }
+
             switch(luaChon){
                 case 1:
                     System.out.println("Nhập mã sản phẩm cần tìm: ");
@@ -108,10 +207,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         if(danhSachSanPham[i].getMaSP().equals(maSP_TimKiem)){
                             danhSachSanPham[i].Xuat();
                             kq = true;
+                            System.out.println("\n \t--------------------");
                         }
                     }
                     if(!kq){
-                        System.out.println("Không tìm thấy mã sản phẩm: " + maSP_TimKiem);
+                        System.out.println("Không tìm thấy mã sản phẩm: " + maSP_TimKiem + " trong danh sách sản phẩm!");
                     }
                     break;
                 case 2:
@@ -125,7 +225,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Không tìm thấy tên sản phẩm: " + tenSP_TimKiem);
+                        System.out.println("Không tìm thấy tên sản phẩm: " + tenSP_TimKiem + " trong danh sách sản phẩm!");
                     }
                     break;
                 case 3:
@@ -139,7 +239,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Không tìm thấy sản phẩm có số lượng: " + soLuongSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có số lượng: " + soLuongSP_TimKiem + " trong danh sách sản phẩm!");
                     }
                     break;
                 case 4:
@@ -153,7 +253,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Không tìm thấy sản phẩm có giá tiền: " + giaTienSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có giá tiền: " + giaTienSP_TimKiem + " trong danh sách sản phẩm!");
                     }
                     break;
                 case 5:
@@ -167,7 +267,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         }
                     }
                     if(!kq){
-                        System.out.println("Không tìm thấy sản phẩm có tiền vốn: " + tienVonSP_TimKiem);
+                        System.out.println("Không tìm thấy sản phẩm có tiền vốn: " + tienVonSP_TimKiem + " trong danh sách sản phẩm!");
                     }
                     break;
                 case 6:
@@ -185,83 +285,109 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Xuat() {
-        if (danhSachSanPham == null || danhSachSanPham.length == 0) {
-            System.out.println("Danh sách sản phẩm trống.");
+        System.out.println("\n \t \t---------Xuất danh sách---------");
+
+        if (danhSachSanPham == null ){
+            System.out.println("Vui lòng tạo danh sách sản phâ trước !!");
             return;
         }
+        if (danhSachSanPham.length == 0){
+            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
+        }
+
+        System.out.println("\t   Thông tin của danh sách sản phẩm \n--------------------------");
         for(int i = 0;i<danhSachSanPham.length;i++){
             danhSachSanPham[i].Xuat();
+            System.out.println("\t--------------");
         }
     }
 
     public void Sua(){
+        System.out.println("\n \t \t---------Sửa---------");
+
+        if (danhSachSanPham == null) {
+            System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
+            return;
+        }
+        if (danhSachSanPham.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
+        }
+
         System.out.println("Nhập mã của sản phẩm cần sửa: ");
         String maSP_Sua = sc.nextLine();
         boolean kq = false;
+
         for(int i = 0; i < danhSachSanPham.length; i++){
             if(danhSachSanPham[i].getMaSP().equals(maSP_Sua)){
                 danhSachSanPham[i].Sua();
                 danhSachSanPham[i].Xuat();
                 kq = true;
+                System.out.println("Sửa thành công ! \n -------------------");
             }
         }
         if(!kq){
-            System.out.println("Không tìm thấy sản phầm cần sửa");
+            System.out.println("Không tìm thấy mã ' \" + s + \" ' cần sửa trong danh sách sản phẩm! \\n------------------\"");
         }
     }
 
     public void docFile(){
+        String line;
+        String[] strings = new String[6];
         try{
             FileReader fr = new FileReader("SanPham.txt");
             BufferedReader br = new BufferedReader(fr);
-            String st;
-            while((st = br.readLine()) != null){
-                String[] phan = st.split(",");
-                if(phan[0] == "Thức ăn"){
-                    ThucAn sp = new ThucAn();
-                    sp.setMaSP(phan[1]);
-                    sp.setTenSP(phan[2]);
-                    sp.setSoLuong(Integer.parseInt(phan[3]));
-                    sp.setGiaTien(Double.parseDouble(phan[4]));
-                    sp.setTienVon(Double.parseDouble(phan[5]));
-                    sp.setLoaiThucAn(phan[6]);
-                    //Thêm thức ăn vào danh sách sản phầm
-                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
-                    danhSachSanPham[danhSachSanPham.length - 1] = sp;
+            while((line = br.readLine()) != null){
+                strings = line.split(";");
+                try{
+                    SanPham sp = new SanPham();
+                    if(strings[0].startsWith("TA")){
+                        sp = new ThucAn(strings[0], strings[1], Integer.parseInt(strings[2]), Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    }
+                    if(strings[0].startsWith("NU")){
+                        sp = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]), Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    }
+                    sp.Xuat();
+                    System.out.println("--------------------------------\n");
+                    br.close();
+                    fr.close();
                 }
-                if(phan[0] == "Nước uống"){
-                    NuocUong sp = new NuocUong();
-                    sp.setMaSP(phan[1]);
-                    sp.setTenSP(phan[2]);
-                    sp.setSoLuong(Integer.parseInt(phan[3]));
-                    sp.setGiaTien(Double.parseDouble(phan[4]));
-                    sp.setTienVon(Double.parseDouble(phan[5]));
-                    sp.setLoaiNuoc(phan[6]);
-                    //Thêm nước uống vào danh sách sản phầm
-                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 1);
-                    danhSachSanPham[danhSachSanPham.length - 1] = sp;
+                catch (Exception e){
+                    e.printStackTrace();
                 }
             }
-            br.close();
-            fr.close();
-            System.out.println("Đọc File SanPham.txt thành công");
         }
-        catch(IOException ioException){
-            ioException.printStackTrace();
+        catch (Exception e) {
+            System.out.println("Lỗi đọc file SanPham.txt\n");
+            e.printStackTrace();
         }
     }
     public void ghiFile(){
+        System.out.println("\n---------Ghi file---------");
+        if (danhSachSanPham == null ){
+            System.out.println("Vui lòng tạo danh sách trước !!");
+            return;
+        }
+        if (danhSachSanPham.length == 0){
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
+            return;
+        }
+
         try{
             FileWriter fw = new FileWriter("SanPham.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             for(int i = 0; i < danhSachSanPham.length; i++){
-                bw.write(danhSachSanPham[i].toString() + "\n");
+                bw.write(danhSachSanPham[i].toString());
+                bw.newLine();
             }
             bw.close();
             fw.close();
-            System.out.println("Ghi File SanPham.txt thành công");
+            System.out.println("Ghi dữ liệu vào SanPham.txt thành công");
+            danhSachSanPham_File = Arrays.copyOf(danhSachSanPham,danhSachSanPham.length);
         }
         catch (IOException ioException) {
+            System.out.printf("Lỗi ghi file: ");
             ioException.printStackTrace();
         }
     }
@@ -273,5 +399,12 @@ public class DanhSachSanPham implements IThaoTac_2 {
 //            int conlai = danhSachSanPham[i].getSoLuong() - soLuongSP[i];
 //            System.out.println("Số lượng " + danhSachSanPham[i].getTenSP() + " còn lại: ");
 //        }
+//    }
+//
+//    public static void tinhTongDoanhThu(SanPham[] danhSachSanPham){
+//        for(int i = 0; i < danhSachSanPham.length; i++){
+//            doanhThu = doanhThu + danhSachSanPham[i].LoiNhuan();
+//        }
+//
 //    }
 }

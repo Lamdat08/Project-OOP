@@ -11,10 +11,14 @@ public class ThucAn extends SanPham {
         this.loaiThucAn = loaiThucAn;
     }
 
+    public void menuSua(){
+        System.out.println("Chọn thông tin cần sửa : ");
+        System.out.println("0.Sửa loại thức ăn");
+        super.Sua();
+    }
     public String getLoaiThucAn() {
         return loaiThucAn;
     }
-
     public void setLoaiThucAn(String loaiThucAn) {
         this.loaiThucAn = loaiThucAn;
     }
@@ -28,20 +32,29 @@ public class ThucAn extends SanPham {
 
     @Override
     public String toString() {
-        return super.toString() + "ThucAn{" +
-                "Loại thức ăn: '" + loaiThucAn + '\'' +
-                '}';
+        return super.toString() + String.format(";%s", getLoaiThucAn());
     }
 
     @Override
     public void Xuat(){
-        System.out.println(toString());
+        super.Xuat();
+        System.out.println("Loại thức ăn: " + getLoaiThucAn());
     }
 
     @Override
     public void Sua(){
-        super.Sua();
-        System.out.println("Nhập loại thức ăn mới: ");
-        this.setLoaiThucAn(sc.nextLine());
+        while(true){
+            menuSua();
+            System.out.print("Nhập lựa chọn sửa sản phẩm: ");
+            int luaChon = Integer.parseInt(sc.nextLine());
+            if(luaChon == 0){
+                System.out.println("Nhập loại thức ăn mới: ");
+                setLoaiThucAn(sc.nextLine());
+            }
+            else{
+                super.Sua();
+            }
+            break;
+        }
     }
 }

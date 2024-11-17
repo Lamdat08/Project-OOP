@@ -12,6 +12,12 @@ public class NuocUong extends SanPham{
         this.loaiNuoc = loaiNuoc;
     }
 
+    public void menuSua(){
+        System.out.println("Chọn thông tin cần sửa : ");
+        System.out.println("0.Sửa loại nước uống");
+        super.Sua();
+    }
+
     public String getLoaiNuoc() {
         return loaiNuoc;
     }
@@ -29,19 +35,28 @@ public class NuocUong extends SanPham{
 
     @Override
     public String toString() {
-        return super.toString() + "NuocUong{" +
-                "Loại Nước: '" + loaiNuoc + '\'' +
-                '}';
+        return super.toString() + String.format(";%s", getLoaiNuoc());
     }
     @Override
     public void Xuat(){
-        System.out.println(toString());
+        super.Xuat();
+        System.out.println("Loại thức ăn: " + getLoaiNuoc());
     }
 
     @Override
     public void Sua(){
-        super.Sua();
-        System.out.println("Nhập loại nước mới: ");
-        this.setLoaiNuoc(sc.nextLine());
+        while(true){
+            menuSua();
+            System.out.print("Nhập lựa chọn sửa sản phẩm: ");
+            int luaChon = Integer.parseInt(sc.nextLine());
+            if(luaChon == 0){
+                System.out.println("Nhập loại nước uống mới: ");
+                setLoaiNuoc(sc.nextLine());
+            }
+            else{
+                super.Sua();
+            }
+            break;
+        }
     }
 }
