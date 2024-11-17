@@ -192,7 +192,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             menuTimKiem();
             System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
-            while(luaChon < 1 && luaChon > 6){
+            while(luaChon < 1 || luaChon > 6){
                 menuNhap();
                 System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
