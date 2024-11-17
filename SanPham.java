@@ -107,12 +107,13 @@ public class SanPham implements IThaoTac {
                 getGiaTien(), getTienVon(), LoiNhuan());
     }
     public void Xuat(){
-        System.out.println("Mã sự kiện : " + getMaSP());
-        System.out.println("Tên sự kiện : " + getTenSP());
-        System.out.println("Thời gian bắt đầu : " + getSoLuong());
-        System.out.println("Thời gian kết thúc : " + getGiaTien());
-        System.out.println("Tiền vốn : " + getTienVon());
-        System.out.println("Lợi nhuận : " + LoiNhuan());
+        System.out.println("Mã sản phẩm : " + getMaSP());
+        System.out.println("Tên sản phẩm : " + getTenSP());
+        System.out.println("Số lượng của sản phẩm : " + getSoLuong());
+        System.out.println("Giá tiền của sản phẩm : " + getGiaTien());
+        System.out.println("Tiền vốn của sản phẩm : " + getTienVon());
+        System.out.println("Lợi nhuận của sản phẩm : " + LoiNhuan());
+        System.out.println("\\n-------------------\"");
     }
 
     public void Sua(){
