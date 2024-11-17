@@ -15,6 +15,12 @@ public class ThanhVien extends KhachHang {
         this.diemTichLuy = DiemTichLuy;
     }
 
+    public void menuSua() {
+        System.out.println("Chọn thông tin cần sửa: ");
+        System.out.println("0. Sửa điểm tích lũy");
+        super.Sua();
+    }
+
     public int getDiemTichLuy() {
         return diemTichLuy;
     }
@@ -32,20 +38,19 @@ public class ThanhVien extends KhachHang {
 
     @Override
     public String toString() {
-        return super.toString() + "ThanhVien{" +
-                "diemTichLuy=" + diemTichLuy +
-                '}';
+        return super.toString() + String.format(";%d", diemTichLuy);
     }
 
     @Override
     public void Xuat() {
-        System.out.println(toString());
+        super.Xuat();
+        System.out.println("Điểm tích lũy: " + getDiemTichLuy());
     }
 
     @Override
     public void Sua() {
         super.Sua();
-        System.out.println("Nhap diem tich luy moi: ");
+        System.out.println("Nhập điểm tích lũy mới: ");
         this.setDiemTichLuy(Integer.parseInt(sc.nextLine()));
     }
 
