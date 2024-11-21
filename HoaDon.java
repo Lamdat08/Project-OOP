@@ -157,8 +157,8 @@ public class HoaDon implements IThaoTac {
                 result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].Xuat() 
                         + ", Loại: " + loai 
                         + ", Số lượng: " + soLuongSP[i]
-                        + ", Giá: " + sanpham[i].getGia() 
-                        + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGia();
+                        + ", Giá: " + sanpham[i].getGiaTien()
+                        + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGiaTien();
             }
         }
 
@@ -176,7 +176,7 @@ public class HoaDon implements IThaoTac {
         double tongTien = 0;
         for (int i = 0; i < sanpham.length; i++) {
             if (sanpham[i] != null) {
-                tongTien += sanpham[i].getGia() * soLuongSP[i];
+                tongTien += sanpham[i].getGiaTien() * soLuongSP[i];
             }
         }
         return tongTien;
