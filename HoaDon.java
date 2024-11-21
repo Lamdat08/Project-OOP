@@ -88,7 +88,7 @@ public class HoaDon implements IThaoTac {
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
-        for (KhachHang x : dskh.getDSKH()) {
+        for (KhachHang x : dskh.getDanhSachKhachHang()) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
                 this.khachHang = x;
             }
@@ -102,7 +102,7 @@ public class HoaDon implements IThaoTac {
             System.out.println("Nhập số lượng sản phẩm: ");
             int sl = Integer.parseInt(sc.nextLine());
 
-            for (SanPham x : dssp.getDSKP()) {
+            for (SanPham x : dssp.getDanhSachSanPham()) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
                     sanpham[i] = x;
                     soLuongSP[i] = sl;
@@ -139,7 +139,7 @@ public class HoaDon implements IThaoTac {
     public String toString() {
         String result = "Hóa đơn: ";
         result += "Mã hóa đơn: " + getMaHD() + ", Thời gian: " + getThoiGian();
-        result += ", Khách hàng: " + khachHang.Xuat();
+        result += ", Khách hàng: " + khachHang.toString();
 
         for (int i = 0; i < sanpham.length; i++) {
             if (sanpham[i] != null) {
@@ -154,8 +154,8 @@ public class HoaDon implements IThaoTac {
                 }
 
                 // Thêm thông tin sản phẩm vào chuỗi kết quả
-                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].Xuat() 
-                        + ", Loại: " + loai 
+                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].toString()
+                        + ", Loại: " + loai
                         + ", Số lượng: " + soLuongSP[i]
                         + ", Giá: " + sanpham[i].getGiaTien()
                         + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGiaTien();
@@ -171,7 +171,7 @@ public class HoaDon implements IThaoTac {
         System.out.println(toString());
     }
 
-    @Override
+
     public double TongTien() {
         double tongTien = 0;
         for (int i = 0; i < sanpham.length; i++) {
@@ -206,7 +206,7 @@ public class HoaDon implements IThaoTac {
                 System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
                 String sdtKH = sc.nextLine();
                 boolean timKhachHang = false;
-                for (KhachHang kh : dskh.getDSKH()) {
+                for (KhachHang kh : dskh.getDanhSachKhachHang()) {
                     if (sdtKH.equalsIgnoreCase(kh.getSDT())) {
                         this.khachHang = kh;
                         timKhachHang = true;
@@ -225,7 +225,7 @@ public class HoaDon implements IThaoTac {
                         System.out.println("Nhập tên sản phẩm: ");
                         String tenSP = sc.nextLine();
                         boolean timSP = false;
-                        for (SanPham sp : dssp.getDSKP()) {
+                        for (SanPham sp : dssp.getDanhSachSanPham()) {
                             if (tenSP.equalsIgnoreCase(sp.getTenSP())) {
                                 sanpham[i] = sp;
                                 System.out.println("Nhập số lượng sản phẩm: ");
