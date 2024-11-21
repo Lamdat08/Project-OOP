@@ -97,7 +97,7 @@ public class HoaDon implements IThaoTac {
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
-        for (KhachHang x : dskh.getDanhSachKhachHang()) {
+        for (KhachHang x : dskh.getDSKH()) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
                 this.khachHang = x;
             }
@@ -215,7 +215,7 @@ public class HoaDon implements IThaoTac {
                 System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
                 String sdtKH = sc.nextLine();
                 boolean timKhachHang = false;
-                for (KhachHang kh : dskh.getDanhSachKhachHang()) {
+                for (KhachHang kh : dskh.getDSKH()) {
                     if (sdtKH.equalsIgnoreCase(kh.getSDT())) {
                         this.khachHang = kh;
                         timKhachHang = true;
