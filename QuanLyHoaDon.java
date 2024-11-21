@@ -5,10 +5,11 @@ import java.util.Scanner;
 public class QuanLyHoaDon {
 
     private DanhSachHoaDon DShd;  // Đối tượng DanhSachHoaDon
-
+    private DanhSachSanPham dssp; // For creating HoaDon objects
+    private DanhSachKhachHang dskh;
     // Phương thức khởi tạo
     public QuanLyHoaDon() {
-        DShd = new DanhSachHoaDon();  // Khởi tạo đối tượng DanhSachHoaDon
+        DShd = new DanhSachHoaDon(dssp, dskh);  // Khởi tạo đối tượng DanhSachHoaDon
     }
 
     // Phương thức hiển thị menu cho người dùng
