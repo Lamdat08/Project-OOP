@@ -6,6 +6,7 @@ public abstract class NhanVien implements IThaoTac{
     private String soDienThoai;
     private String gioiTinh;
     private double luongCoBan;
+    private boolean trangThai;
 
 
 
@@ -49,9 +50,28 @@ public abstract class NhanVien implements IThaoTac{
         this.luongCoBan = luongCoBan;
     }
 
+    public NhanVien() {
+        this.trangThai = true;
+    }
 
+    public boolean isTrangThai() {
+        return trangThai;
+    }
 
-//    public abstract void nhap();
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public NhanVien(String maNhanVien, String tenNhanVien, String soDienThoai, String gioiTinh, double luongCoBan) {
+        this.maNhanVien = maNhanVien;
+        this.tenNhanVien = tenNhanVien;
+        this.soDienThoai = soDienThoai;
+        this.gioiTinh = gioiTinh;
+        this.luongCoBan = luongCoBan;
+        this.trangThai = true;
+    }
+
+    //    public abstract void nhap();
 //
 //    public abstract void xuat();
 //

@@ -14,6 +14,16 @@ public class QuanLy extends NhanVien{
         this.phuCap = phuCap;
     }
 
+    public QuanLy(){
+
+    }
+
+    public QuanLy(String maNhanVien, String tenNhanVien, String soDienThoai, String gioiTinh, double luongCoBan,double phuCap) {
+        super(maNhanVien,tenNhanVien,soDienThoai,gioiTinh,luongCoBan);
+
+        this.phuCap = phuCap;
+    }
+
 
 
     public void Nhap() {
@@ -94,6 +104,9 @@ public class QuanLy extends NhanVien{
         }
 
     }
+
+
+
 
 
 

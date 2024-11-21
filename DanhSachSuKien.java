@@ -146,8 +146,9 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 isFound = true;
                 DSSK[i].setStatus(false);
                 sl--;
-                break;
+
                 System.out.println("Xóa thành công ! \n ");
+                break;
             }
         }
 

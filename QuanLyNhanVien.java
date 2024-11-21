@@ -43,9 +43,10 @@ public class QuanLyNhanVien{
         DanhSachNhanVien dsnv = new DanhSachNhanVien();
         public void Menu(){
 
-        dsnv.Nhap();
+
 
         while(true){
+            System.out.println("0 - tao moi va nhap");
             System.out.println("1 - chon xuat");
             System.out.println("2 -  chon sua");
             System.out.println("3 - chon ghi file");
@@ -53,10 +54,13 @@ public class QuanLyNhanVien{
             System.out.println("5 - chon tim kiem");
             System.out.println("6 - chon them");
             System.out.println("7 - chon xoa");
-            System.out.println("8 - chon thoat");
+            System.out.println("8 - Thong Ke");
+            System.out.println("9 - chon thoat");
             int n = Integer.parseInt(sc.nextLine());
 
-
+            if(n == 0){
+                dsnv.Nhap();
+            }
             if(n == 1){
                 dsnv.Xuat();
             }
@@ -79,6 +83,9 @@ public class QuanLyNhanVien{
                 dsnv.Xoa();
             }
             if(n == 8){
+                dsnv.thongKe();
+            }
+            if(n == 9){
                 break;
             }
         }

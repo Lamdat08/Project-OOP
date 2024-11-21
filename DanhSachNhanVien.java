@@ -6,31 +6,41 @@ import java.util.Scanner;
 
 public class DanhSachNhanVien implements IThaoTac_2{
     Scanner sc = new Scanner(System.in);
-    private int soLuongPhanTuThemVao;
+//    private int soLuongPhanTuThemVao;
     private NhanVien[] arrNhanVien;
+    private static int soLuong;
+//    public DanhSachNhanVien() {
+//        arrNhanVien = new NhanVien[0];
+//    }
+
+    private NhanVien[]arrNhanVienFile;
+
 
     public DanhSachNhanVien() {
-        arrNhanVien = new NhanVien[0];
+        soLuong = 0;
+        this.arrNhanVien = new NhanVien[5];
+        this.Nhap();
     }
 
     @Override
     public void Xoa() {
-            System.out.println("Nhap Ma De Xoa");
+        if(soLuong == 0){
+            System.out.println("Danh sach trong \n");
+            return;
+        }
+        System.out.println("Nhap Ma De Xoa");
         String maXoa = sc.nextLine();
         boolean find = false;
+
         for(int i = 0;i< arrNhanVien.length;i++){
-            if(arrNhanVien[i].getMaNhanVien().equals(maXoa)){
-              for(int j = i+1;j<arrNhanVien.length;j++){
-                 arrNhanVien[j-1] = arrNhanVien[j];
-              }
-              find = true;
+            if(arrNhanVien[i].getMaNhanVien().equals(maXoa) && arrNhanVien[i].isTrangThai() == true){
+                arrNhanVien[i].setTrangThai(false);
+                soLuong--;
+                find = true;
             }
         }
         if(!find){
             System.out.println("khong tim thay");
-        }
-        else{
-            arrNhanVien = Arrays.copyOf(arrNhanVien,arrNhanVien.length-1);
         }
     }
 
@@ -63,6 +73,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
     @Override
     public void TimKiem() {
+        if(soLuong == 0){
+            System.out.println("Danh sach trong \n");
+            return;
+        }
         while(true){
             System.out.println("1-Tim kiem theo ma");
             System.out.println("2-Tim kiem theo ten");
@@ -77,7 +91,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String maTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i< arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getMaNhanVien().equals(maTimKiem)){
+                    if(arrNhanVien[i].getMaNhanVien().equals(maTimKiem) && arrNhanVien[i].isTrangThai() == true){
                        arrNhanVien[i].Xuat();
                        find = true;
                     }
@@ -89,7 +103,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String tenTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(tenTimKiem)){
+                    if(arrNhanVien[i].getTenNhanVien().equals(tenTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }
@@ -101,7 +115,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String soDienThoaiTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(soDienThoaiTimKiem)){
+                    if(arrNhanVien[i].getTenNhanVien().equals(soDienThoaiTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }
@@ -113,7 +127,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String gioiTinhTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(gioiTinhTimKiem)){
+                    if(arrNhanVien[i].getTenNhanVien().equals(gioiTinhTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }
@@ -125,7 +139,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String luongCoBanTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(luongCoBanTimKiem)){
+                    if(arrNhanVien[i].getTenNhanVien().equals(luongCoBanTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }
@@ -140,8 +154,9 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
     }
 
-    @Override
+//    @Override
     public void docFile() {
+
         try{
             BufferedReader reader = new BufferedReader(new FileReader("NhanVien.txt"));
             String line;
@@ -221,7 +236,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
     @Override
     public void ghiFile() {
-
+        if(soLuong == 0){
+            System.out.println("Danh sach trong \n");
+            return;
+        }
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("NhanVien.txt"))){
 
 
@@ -266,34 +284,74 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
     @Override
     public void Nhap() {
-        System.out.println("Nhap so luong phan tu khoi tao ban dau");
-        soLuongPhanTuThemVao = Integer.parseInt(sc.nextLine());
-        arrNhanVien = new NhanVien[soLuongPhanTuThemVao];
+//        if(arrNhanVien == null){
+//            System.out.println("Nhap so luong phan tu khoi tao ban dau");
 
-        for(int i = 0;i<soLuongPhanTuThemVao;i++){
-            System.out.println("1-Nhap danh sach nhan vien");
-            System.out.println("2-Nhap danh sach quan ly");
+//            soLuongPhanTuThemVao = Integer.parseInt(sc.nextLine());
+//            arrNhanVien = new NhanVien[soLuongPhanTuThemVao];
 
-            int luaChon;
+//            for(int i = 0;i<soLuongPhanTuThemVao;i++){
+//                System.out.println("1-Nhap danh sach nhan vien");
+//                System.out.println("2-Nhap danh sach quan ly");
 
-            do{
+//                int luaChon;
 
-                luaChon = Integer.parseInt(sc.nextLine());
+//                do{
 
-            }while(luaChon != 1 && luaChon != 2);
+//                    luaChon = Integer.parseInt(sc.nextLine());
 
-            if(luaChon == 1){
-                NhanVienPartTime x = new NhanVienPartTime();
-                x.Nhap();
-                arrNhanVien[i] = x;
+//                }while(luaChon != 1 && luaChon != 2);
+//
+//                if(luaChon == 1){
+//                    NhanVienPartTime x = new NhanVienPartTime();
+//                    x.Nhap();
+//                    arrNhanVien[i] = x;
+//                }
+//                if(luaChon == 2){
+//                    QuanLy x = new QuanLy();
+//                    x.Nhap();
+//                    arrNhanVien[i] = x;
+//                }
+//
+//            }
+//        }
+//        else{
+//            System.out.println("Danh sach tao roi");
+//        }
+        try{
+            BufferedReader reader =  new BufferedReader(new FileReader("NhanVien.txt"));
+            String line;
+//            int i = 0;
+            while((line =reader.readLine())!=null){
+                    if(soLuong == arrNhanVien.length){
+                        arrNhanVien = Arrays.copyOf(arrNhanVien,arrNhanVien.length+1);
+                    }
+                    String arr[] = line.split(";");
+                    if(arr[0].substring(0,2).equals("NV")){
+                        NhanVienPartTime nvpt = new NhanVienPartTime();
+                           nvpt.setMaNhanVien(arr[0]);
+                           nvpt.setTenNhanVien(arr[1]);
+                           nvpt.setSoDienThoai(arr[2]);
+                           nvpt.setGioiTinh(arr[3]);
+                           nvpt.setLuongCoBan(Double.parseDouble(arr[4]));
+                           nvpt.setGioLam(Double.parseDouble(arr[5]));
+
+                           arrNhanVien[soLuong++] = nvpt;
+                    }
+                    if(arr[0].substring(0,2).equals("QL")){
+                         QuanLy ql = new QuanLy(arr[0],arr[1],arr[2],arr[3],Double.parseDouble(arr[4]),Double.parseDouble(arr[5]));
+                         arrNhanVien[soLuong++] = ql;
+                    }
+
+
+
             }
-            if(luaChon == 2){
-                QuanLy x = new QuanLy();
-                x.Nhap();
-                arrNhanVien[i] = x;
-            }
-
+            arrNhanVienFile = Arrays.copyOf(arrNhanVien,arrNhanVien.length);
+        }catch(IOException e){
+            e.printStackTrace();
         }
+
+
     }
 
 
@@ -306,17 +364,23 @@ public class DanhSachNhanVien implements IThaoTac_2{
             return;
         }
         for(int i = 0;i<arrNhanVien.length;i++){
-            arrNhanVien[i].Xuat();
+           if(arrNhanVien[i].isTrangThai() == true){
+               arrNhanVien[i].Xuat();
+           }
         }
     }
 
     @Override
     public void Sua() {
+        if(soLuong == 0){
+            System.out.println("Danh sach trong \n");
+            return;
+        }
         System.out.println("Vui Long Nhap Vao Ma De Sua");
         String maSua = sc.nextLine();
         boolean find = false;
         for(int i = 0;i< arrNhanVien.length;i++){
-            if(arrNhanVien[i].getMaNhanVien().equals(maSua)){
+            if(arrNhanVien[i].getMaNhanVien().equals(maSua) && arrNhanVien[i].isTrangThai() == true){
                 arrNhanVien[i].Sua();
                 arrNhanVien[i].Xuat();
                 find = true;
@@ -325,5 +389,83 @@ public class DanhSachNhanVien implements IThaoTac_2{
         if(!find) System.out.println("khong tim thay");
     }
 
+
+    public void thongKe(){
+        int soLuongQuanLy = 0;
+        int soLuongNhanVien = 0;
+        double luongLonNhatCuaQuanLy = (int)Integer.MIN_VALUE;
+        double luongNhoNhatCuaQuanLy = (int)Integer.MAX_VALUE;
+        double luongLonNhatCuaNhanVien = (int)Integer.MIN_VALUE;
+        double luongNhoNhatCuaNhanVien = (int)Integer.MAX_VALUE;
+        double tongLuongNhanVien = 0;
+        double tongLuongQuanLy = 0;
+        for(int i = 0;i<arrNhanVienFile.length;i++){
+            if(arrNhanVienFile[i] instanceof QuanLy){
+                soLuongQuanLy++;
+            }
+            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
+                soLuongNhanVien++;
+            }
+        }
+
+        for(int i =0;i<arrNhanVienFile.length;i++){
+
+            if(arrNhanVienFile[i] instanceof QuanLy){
+                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
+                tongLuongQuanLy += currentLuong;
+                luongLonNhatCuaQuanLy = Math.max(luongLonNhatCuaQuanLy,currentLuong);
+                luongNhoNhatCuaQuanLy = Math.min(luongNhoNhatCuaQuanLy,currentLuong);
+            }
+
+            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
+                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
+                tongLuongNhanVien+= currentLuong;
+                luongLonNhatCuaNhanVien = Math.max(luongLonNhatCuaNhanVien,currentLuong);
+                luongNhoNhatCuaNhanVien = Math.max(luongNhoNhatCuaNhanVien,currentLuong);
+            }
+
+        }
+        System.out.println("So Luong Nhan Vien" + soLuongNhanVien);
+        System.out.println("So Luong Quan Ly" + soLuongQuanLy);
+
+        System.out.println("Quan Ly va nhan vien co luong lon nhat: \n");
+
+        for(int i = 0;i<arrNhanVienFile.length;i++){
+            if(arrNhanVienFile[i] instanceof QuanLy){
+                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
+                if(currentLuong == luongLonNhatCuaQuanLy){
+                   arrNhanVienFile[i].Xuat();
+                }
+            }
+            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
+                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
+                if(currentLuong == luongLonNhatCuaNhanVien){
+                    arrNhanVienFile[i].Xuat();
+                }
+            }
+        }
+
+        System.out.println("Quan ly va nhan vien co luong lon nhat va nho nhat: \n");
+
+        for(int i = 0;i<arrNhanVienFile.length;i++){
+            if(arrNhanVienFile[i] instanceof QuanLy){
+                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
+                if(currentLuong == luongNhoNhatCuaQuanLy){
+                    arrNhanVienFile[i].Xuat();
+                }
+            }
+            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
+                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
+                if(currentLuong == luongNhoNhatCuaNhanVien){
+                    arrNhanVienFile[i].Xuat();
+                }
+            }
+        }
+
+        System.out.println("Tong Luong Cua Quan Ly : " + tongLuongQuanLy + "\n");
+        System.out.println("Tong Luong Cua Nhan Vien : " + tongLuongNhanVien + "\n");
+        System.out.println("Tong Luong Trung Binh Cua Quan Ly : " + tongLuongQuanLy/soLuongQuanLy + "\n");
+        System.out.println("Tong Luong Trung Binh Cua Nhan Vien : " + tongLuongNhanVien/soLuongNhanVien + "\n");
+    }
 
 }

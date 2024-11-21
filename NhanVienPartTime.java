@@ -21,6 +21,16 @@ public class NhanVienPartTime extends NhanVien{
         return this.gioLam * this.getLuongCoBan();
     }
 
+    public NhanVienPartTime() {
+        super();
+    }
+
+    //    public NhanVienPartTime(double gioLam) {
+//        this.gioLam = gioLam;
+//    }
+
+
+
 
 
 
