@@ -4,7 +4,7 @@ public interface IThaoTac_2 extends IThaoTac{
        public void Xoa();
        public void Them();
        public void TimKiem();
-       public void docFile();
+       public static void docFile();
        public void ghiFile();
 
 
