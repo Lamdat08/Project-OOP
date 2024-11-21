@@ -237,6 +237,18 @@ public class DanhSachHoaDon implements IThaoTac_2 {
         }
     }
 
+    // Phương thức thống kê
+    public void ThongKe() {
+        System.out.println("\n---------Thống kê hóa đơn---------");
+        if (DSHD == null) {
+            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
+            return;
+        }
+
+        // Giả sử thống kê tổng số hóa đơn
+        System.out.println("Tổng số hóa đơn: " + DSHD.length);
+    }
+
     @Override
     public void ghiFile() {
         System.out.println("\n---------Ghi file hóa đơn---------");
@@ -257,16 +269,21 @@ public class DanhSachHoaDon implements IThaoTac_2 {
         }
     }
 
-    @Override
-    public void docFile() {
+    // Phương thức đọc file đã được sửa thành static
+    public static void docFile() {
         System.out.println("\n---------Đọc file hóa đơn---------");
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
-            return;
-        }
-
-        for (HoaDon hd : DSHD_File) {
-            hd.Xuat();
+        
+        // Đọc dữ liệu từ file
+        try (BufferedReader br = new BufferedReader(new FileReader("HoaDon.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(";");
+                // Giả sử có cách tạo đối tượng HoaDon từ dữ liệu file
+                HoaDon hd = new HoaDon(data[0], data[1], Double.parseDouble(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
+                hd.Xuat();
+            }
+        } catch (IOException e) {
+            System.out.println("Không đọc được file hóa đơn!");
         }
     }
 }
