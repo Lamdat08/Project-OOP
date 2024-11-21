@@ -198,8 +198,9 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
                         maSP_TimKiem = sc.nextLine().trim();
                     }
-                    while(!maSP_TimKiem.startsWith("TA") && !maSP_TimKiem.startsWith("NU")){
-                        System.out.println("Mã sản phẩm phải bắt đầu với TA(nếu là thức ăn) hoặc NU(nếu là nước uống), vui lòng nhập lại mã sản phẩm cần tìm: ");
+                    String regexMaSP = "^(TA|NU)[0-9]{3}$";
+                    while(!maSP_TimKiem.matches(regexMaSP)){
+                        System.out.println("Mã sản phẩm phải bắt đầu với TA hoặc NU, vui lòng nhập lại: ");
                         maSP_TimKiem = sc.nextLine();
                     }
                     kq = false;
@@ -221,8 +222,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         System.out.println("Tên sản phẩm không được để trống, vui lòng nhập lại: ");
                         tenSP_TimKiem = sc.nextLine().trim();
                     }
-                    String regexTen = "^[A-Za-zÀ-ỹ\\s]+$";
-                    while(!Pattern.matches(regexTen, tenSP_TimKiem)){
+                    String regexTenSP = "^[A-Za-zÀ-ỹ\\s]+$";
+                    while(!tenSP_TimKiem.matches(regexTenSP)){
                         System.out.println("Tên sản phẩm không hợp lệ, vui lòng nhập lại: ");
                         tenSP_TimKiem = sc.nextLine().trim();
                     }
@@ -241,21 +242,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     System.out.println("Nhập số lượng của sản phẩm cần tìm: ");
                     int soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
                     String inputSoLuong = Integer.toString(soLuongSP_TimKiem);
-                    while(inputSoLuong == null || inputSoLuong.trim().isEmpty()){
-                        System.out.println("Số lượng không được để trống, vui lòng nhập lại: ");
-                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                    while(inputSoLuong.trim().isEmpty()){
+                        System.out.println("Số lượng sản phẩm không được để trống, vui lòng nhập lại: ");
+                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine().trim());
                         inputSoLuong = Integer.toString(soLuongSP_TimKiem);
                     }
-
-                    String regexSoLuong = "^[0-9]$";
-                    while(!Pattern.matches(regexSoLuong, inputSoLuong)){
-                        System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại: ");
-                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
-                        inputSoLuong = Integer.toString(soLuongSP_TimKiem);
-                    }
-                    while(soLuongSP_TimKiem < 0){
-                        System.out.println("Số lượng của sản phẩm phải là số > 0, vui lòng nhập lại số lượng của sản phẩm cần tìm: ");
-                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                    while (soLuongSP_TimKiem < 0) {
+                        System.out.println("Số lượng sản phẩm không hợp lệ (phải >= 0). Vui lòng nhập lại: ");
+                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine().trim());
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
@@ -272,14 +266,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     System.out.println("Nhập giá tiền của san phẩm cần tìm: ");
                     double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
                     String inputGiaTien = Double.toString(giaTienSP_TimKiem);
-                    while(inputGiaTien == null || inputGiaTien.trim().isEmpty()){
+                    while(inputGiaTien.trim().isEmpty()){
                         System.out.println("Giá tiền không được để trống, vui lòng nhập lại: ");
-                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine().trim());
                         inputGiaTien = Double.toString(giaTienSP_TimKiem);
                     }
                     while(giaTienSP_TimKiem < 0){
-                        System.out.println("Giá tiền của sản phẩm phải > 0, vui lòng nhập lại: ");
-                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine().trim());
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
@@ -296,14 +290,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     System.out.println("Nhập tiền vốn của sản phẩm cần tìm: ");
                     double tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
                     String inputTienVon = Double.toString(tienVonSP_TimKiem);
-                    while(inputTienVon == null || inputTienVon.trim().isEmpty()){
+                    while(inputTienVon.trim().isEmpty()){
                         System.out.println("Tiền vốn không được để trống, vui lòng nhập lại: ");
-                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine().trim());
                         inputTienVon = Double.toString(tienVonSP_TimKiem);
                     }
                     while(tienVonSP_TimKiem < 0){
-                        System.out.println("Tiền vốn của sản phẩm phải > 0, vui lòng nhập lại: ");
-                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine().trim());
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
@@ -452,14 +446,22 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 return;
             }
 
-            SanPham minSP_LoiNhuan = DSSP[0];
-            SanPham maxSP_LoiNhuan = DSSP[0];
+            //Tìm vị trí sản phẩm đầu tiên không bị xoá
+            int viTri = 0;
+            for ( int i = 0 ; i < DSSP.length ; i++ ){
+                if (DSSP[i].getStatus()){
+                    viTri = i;
+                    break;
+                }
+            }
+            SanPham minSP_LoiNhuan = DSSP[viTri];
+            SanPham maxSP_LoiNhuan = DSSP[viTri];
             double tongLoiNhuan = 0;
             SanPham[] minDSSP_LoiNhuan = new SanPham[1];
             SanPham[] maxDSSP_LoiNhuan = new SanPham[1];
 
-            SanPham minSP_SoLuong = DSSP[0];
-            SanPham maxSP_SoLuong = DSSP[0];
+            SanPham minSP_SoLuong = DSSP[viTri];
+            SanPham maxSP_SoLuong = DSSP[viTri];
             int tongSoLuong = 0;
             SanPham[] minDSSP_SoLuong = new SanPham[1];
             SanPham[] maxDSSP_SoLuong = new SanPham[1];

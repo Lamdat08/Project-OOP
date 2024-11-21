@@ -56,7 +56,7 @@ public class QuanLySanPham {
                         menuSanPham();
                         System.out.print("Nhập lựa chọn : ");
                         int luaChon2 = Integer.parseInt(sc.nextLine());
-                        while(luaChon2 < 1 || luaChon2 > 4){
+                        while(luaChon2 < 1 || luaChon2 > 10){
                             menuQLSP();
                             System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
                             luaChon2 = Integer.parseInt(sc.nextLine());

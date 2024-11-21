@@ -31,7 +31,7 @@ public class NuocUong extends SanPham{
             loaiNuoc = sc.nextLine().trim();
         }
         String regex = "^[A-Za-zÀ-ỹ\\s]+$";
-        while(!Pattern.matches(regex, loaiNuoc)){
+        while(!loaiNuoc.matches(regex)){
             System.out.println("Loại nước uống không hợp lệ, vui lòng nhập lại: ");
             loaiNuoc = sc.nextLine().trim();
         }

@@ -28,7 +28,7 @@ public class ThucAn extends SanPham {
             loaiThucAn = sc.nextLine().trim();
         }
         String regex = "^[A-Za-zÀ-ỹ\\s]+$";
-        while(!Pattern.matches(regex, loaiThucAn)){
+        while(!loaiThucAn.matches(regex)){
             System.out.println("Loại thức ăn không hợp lệ, vui lòng nhập lại: ");
             loaiThucAn = sc.nextLine().trim();
         }
