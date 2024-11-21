@@ -1,4 +1,5 @@
 package Project_OOP;
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class SuKien implements  IThaoTac{
     private Date ThoiGianKetThuc;
     private double DoanhThu;
     private double TienVon;
+    private boolean Status;
 
     Scanner sc = new Scanner(System.in);
     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -22,13 +24,20 @@ public class SuKien implements  IThaoTac{
         this.ThoiGianKetThuc = NKT;
         this.DoanhThu = doanhthu;
         this.TienVon = von;
+        this.Status = true;
     }
 
-    SuKien(){}
+    SuKien(){
+        this.setStatus(true);
+    }
 
     public void setMaSK() {
         System.out.printf("Nhập vào mã sự kiện : ");
         MaSK = sc.nextLine();
+    }
+
+    public void setStatus(boolean status){
+        this.Status = status;
     }
 
     public void setTenSK() {
@@ -102,7 +111,9 @@ public class SuKien implements  IThaoTac{
         return TienVon;
     }
 
-
+    public boolean getStatus(){
+        return Status;
+    }
 
 
     @Override

@@ -60,16 +60,21 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void Xuat() {
         System.out.println("\n \t \t---------Xuất danh sách---------");
 
-        if ( DSSK.length == 0){
+        if ( DSSK== null || sl == 0){
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
 
+        int count = 0;
         System.out.println("\t   Thông tin của danh sách \n--------------------------");
         for (int i = 0; i < DSSK.length; i++) {
-            DSSK[i].Xuat();
-            System.out.println("\t--------------");
+            if (DSSK[i].getStatus() == true) {
+                count++;
+                DSSK[i].Xuat();
+                System.out.println("\t--------------");
+            }
         }
+
     }
 
 
@@ -101,7 +106,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void Sua(){
         System.out.println("\n \t \t---------Sửa---------");
-        if ( DSSK.length == 0){
+        if ( DSSK == null || sl == 0){
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
@@ -127,38 +132,26 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void Xoa() {
         System.out.println("\n---------Xóa---------");
 
-        if ( DSSK.length == 0){
+        if (DSSK == null || sl == 0) {
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
-            return;
-        }
-
-        if (DSSK == null || DSSK.length == 0) {
-            System.out.println("Danh sách sự kiện trống.");
             return;
         }
 
         System.out.print("Nhập vào mã cần xóa: ");
         String x = sc.nextLine();
         boolean isFound = false;
-        int index = -1;
 
         for (int i = 0; i < DSSK.length; i++) {
             if (DSSK[i].getMaSK().equals(x)) {
-                index = i;
                 isFound = true;
+                DSSK[i].setStatus(false);
+                sl--;
                 break;
+                System.out.println("Xóa thành công ! \n ");
             }
         }
 
-        if (isFound) {
-            for (int i = index; i < DSSK.length - 1; i++) {
-                DSSK[i] = DSSK[i + 1];
-            }
-            // Giảm kích thước mảng
-            DSSK = Arrays.copyOf(DSSK, DSSK.length - 1);
-            System.out.println("Xóa sự kiện thành công!\n-------------------");
-            sl--;
-        } else {
+        if (!isFound) {
             System.out.println("Không tìm thấy mã '" + x + "' để xóa!\n------------------");
         }
     }
@@ -166,7 +159,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void TimKiem() {
         System.out.println("\n---------Tìm kiếm---------");
-        if ( DSSK.length == 0){
+        if ( sl == 0){
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
@@ -397,15 +390,17 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void ghiFile() {
         System.out.println("\n---------Ghi file---------");
-        if (DSSK == null ){
+        if (DSSK == null | sl == 0 ){
             System.out.println("Vui lòng tạo danh sách trước !!");
             return;
         }
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("SuKien.txt"))) {
             for (SuKien sk : DSSK) {
-                bw.write(sk.toString());
-                bw.newLine();
+                if (sk.getStatus()) {
+                    bw.write(sk.toString());
+                    bw.newLine();
+                }
             }
             System.out.println("Ghi dữ liệu vào file thành công!");
             DSSK_File = Arrays.copyOf(DSSK,DSSK.length);
@@ -441,13 +436,22 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     public void ThongKe(int choice){
         //Thong ke theo mang danh sach hien tai.
         if (choice == 1) {       //Kiem tra neu DSSK trong.
-            if ( DSSK.length == 0){
+            if ( DSSK == null || sl == 0){
                 System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
                 return;
             }
 
-            SuKien minSK = DSSK[0];
-            SuKien maxSK = DSSK[0];
+
+            int j = 0;
+            for ( int i = 0 ; i < DSSK.length ; i++ ){
+                if (DSSK[i].getStatus()){
+                    j = i;
+                    break;
+                }
+            }
+            SuKien minSK = DSSK[j];
+            SuKien maxSK = DSSK[j];
+
             double sum = 0;
             SuKien[] minList = new SuKien[1];
             int indexMin = 0;
@@ -455,30 +459,33 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             int indexMax = 0;
 
             // <----------- Phan tinh toan
-            for (int i = 0; i < DSSK.length; i++) {
-                sum += DSSK[i].LoiNhuan();
-                if (DSSK[i].LoiNhuan() > maxSK.LoiNhuan())
-                    maxSK = DSSK[i];
+            for (int i = 0; i < DSSK.length; i++) {         //Tim max min
+                if (DSSK[i].getStatus()) {
+                    sum += DSSK[i].LoiNhuan();
+                    if (DSSK[i].LoiNhuan() > maxSK.LoiNhuan())
+                        maxSK = DSSK[i];
 
-                if (DSSK[i].LoiNhuan() < minSK.LoiNhuan())
-                    minSK = DSSK[i];
+                    if (DSSK[i].LoiNhuan() < minSK.LoiNhuan())
+                        minSK = DSSK[i];
+                }
             }
-
 
             for (int i = 0; i < DSSK.length; i++) {
                 //Cac su kien = maxSK;
-                if (DSSK[i].LoiNhuan() == maxSK.LoiNhuan()) {       // Tim thay su kien co loi nhuan = maxSK.
-                    if (indexMax == maxList.length)   // Mo rong maxList neu index = chieu dai mang? .
-                        maxList = Arrays.copyOf(maxList, maxList.length + 1);
-                    maxList[indexMax] = DSSK[i];
-                    indexMax++;
-                }
-                //Cac su kien = minSK :
-                if (DSSK[i].LoiNhuan() == minSK.LoiNhuan()) {
-                    if (indexMin == minList.length)
-                        minList = Arrays.copyOf(minList, minList.length + 1);
-                    minList[indexMin] = DSSK[i];
-                    indexMin++;
+                if (DSSK[i].getStatus()) {
+                    if (DSSK[i].LoiNhuan() == maxSK.LoiNhuan()) {       // Tim thay su kien co loi nhuan = maxSK.
+                        if (indexMax == maxList.length)   // Mo rong maxList neu index = chieu dai mang? .
+                            maxList = Arrays.copyOf(maxList, maxList.length + 1);
+                        maxList[indexMax] = DSSK[i];
+                        indexMax++;
+                    }
+                    //Cac su kien = minSK :
+                    if (DSSK[i].LoiNhuan() == minSK.LoiNhuan()) {
+                        if (indexMin == minList.length)
+                            minList = Arrays.copyOf(minList, minList.length + 1);
+                        minList[indexMin] = DSSK[i];
+                        indexMin++;
+                    }
                 }
             }
             //-------------->
