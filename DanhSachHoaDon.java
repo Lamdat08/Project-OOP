@@ -12,7 +12,12 @@ public class DanhSachHoaDon {
 
     static Scanner sc = new Scanner(System.in);
 
-    public DanhSachHoaDon() {
+    private DanhSachSanPham dssp; // For creating HoaDon objects
+    private DanhSachKhachHang dskh; // For creating HoaDon objects
+
+    public DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+        this.dssp = dssp;
+        this.dskh = dskh;
         this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
         this.Nhap();
     }
@@ -44,7 +49,7 @@ public class DanhSachHoaDon {
                 try {
                     // Code để tạo HoaDon từ dữ liệu file
                     // Bạn cần điều chỉnh phần này dựa trên cách bạn implement HoaDon
-                    HoaDon hd = new HoaDon();
+                    HoaDon hd = new HoaDon(dssp,dskh);
                     DSHD[soLuongHoaDon] = hd;
                     soLuongHoaDon++;
                 } catch (Exception e) {
@@ -91,7 +96,7 @@ public class DanhSachHoaDon {
 
         int slHDBanDau = DSHD.length - slHD;
         for (int i = slHDBanDau; i < DSHD.length; i++) {
-            HoaDon hd = new HoaDon();
+            HoaDon hd = new HoaDon(dssp, dskh);
             hd.Nhap(); // Giả sử HoaDon có phương thức Nhap()
             DSHD[i] = hd;
         }
@@ -233,7 +238,7 @@ public class DanhSachHoaDon {
 
         boolean timThay = false;
         for (HoaDon hd : DSHD) {
-            if (hd.khachHang.getSDT().equalsIgnoreCase(sdt)) {
+            if (hd.getKhachHang().getSDT().equalsIgnoreCase(sdt)) {
                 hd.Xuat();
                 timThay = true;
                 break;
