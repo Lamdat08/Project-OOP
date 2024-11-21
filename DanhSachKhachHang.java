@@ -11,35 +11,35 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     static Scanner sc = new Scanner(System.in);
 
     private int soLuongKhachHang;
-    private KhachHang[] danhSachKhachHang;
-    private KhachHang[] danhSachKhachHang_File;
-    
+    private KhachHang[] DSKH;
+    private KhachHang[] DSKH_File;
+
     public int getSoLuongKhachHang() {
-    return soLuongKhachHang;
+        return soLuongKhachHang;
     }
 
     public void setSoLuongKhachHang(int soLuongKhachHang) {
         this.soLuongKhachHang = soLuongKhachHang;
     }
 
-    public KhachHang[] getDanhSachKhachHang() {
-        return danhSachKhachHang;
+    public KhachHang[] getDSKH() {
+        return DSKH;
     }
 
-    public void setDanhSachKhachHang(KhachHang[] danhSachKhachHang) {
-        this.danhSachKhachHang = danhSachKhachHang;
+    public void setDSKH(KhachHang[] DSKH) {
+        this.DSKH = DSKH;
     }
 
-    public KhachHang[] getDanhSachKhachHang_File() {
-        return danhSachKhachHang_File;
+    public KhachHang[] getDSKH_File() {
+        return DSKH_File;
     }
 
-    public void setDanhSachKhachHang_File(KhachHang[] danhSachKhachHang_File) {
-        this.danhSachKhachHang_File = danhSachKhachHang_File;
+    public void setDSKH_File(KhachHang[] DSKH_File) {
+        this.DSKH_File = DSKH_File;
     }
-    
+
     public DanhSachKhachHang() {
-        this.danhSachKhachHang = new KhachHang[5];
+        this.DSKH = new KhachHang[5];
         this.Nhap();
     }
 
@@ -55,11 +55,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 //    public void Nhap() {
 //        System.out.println("Nhập số lượng khách hàng để tạo danh sách: ");
 //        soLuongKhachHang = Integer.parseInt(sc.nextLine());
-//        danhSachKhachHang = new KhachHang[soLuongKhachHang];
+//        DSKH = new KhachHang[soLuongKhachHang];
 //        for (int i = 0; i < soLuongKhachHang; i++) {
 //            KhachHang kh = new KhachHang();
 //            kh.Nhap();
-//            danhSachKhachHang[i] = kh;
+//            DSKH[i] = kh;
 //        }
 //    }
 
@@ -70,13 +70,13 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             FileReader fr = new FileReader("KhachHang.txt");
             BufferedReader br = new BufferedReader(fr);
             while ((line = br.readLine()) != null) {
-                if (soLuongKhachHang == danhSachKhachHang.length) {
-                    danhSachKhachHang = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length + 6);
+                if (soLuongKhachHang == DSKH.length) {
+                    DSKH = Arrays.copyOf(DSKH, DSKH.length + 6);
                 }
                 strings = line.split(";");
                 try {
                     KhachHang kh = new ThanhVien(strings[0],strings[1],strings[2],strings[3],strings[4],Integer.parseInt(strings[5]));
-                    danhSachKhachHang[soLuongKhachHang] = kh;
+                    DSKH[soLuongKhachHang] = kh;
                     soLuongKhachHang++;
                 } catch (Exception e) {
 
@@ -86,21 +86,21 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         } catch (Exception e) {
             System.out.println("Không đọc được file KhachHang.txt\n");
         }
-        if (soLuongKhachHang < danhSachKhachHang.length) {
-            danhSachKhachHang = Arrays.copyOf(danhSachKhachHang, soLuongKhachHang);
+        if (soLuongKhachHang < DSKH.length) {
+            DSKH = Arrays.copyOf(DSKH, soLuongKhachHang);
         }
 
-        danhSachKhachHang_File = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length);
+        DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
     }
 
     public void Them() {
         System.out.println("\n \t \t---------Thêm--------");
 
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Danh sách khách hàng chưa được khởi tạo.");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
@@ -115,25 +115,25 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         } while (n <= 0);
 
         soLuongKhachHang += n;
-        danhSachKhachHang = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length + n);
+        DSKH = Arrays.copyOf(DSKH, DSKH.length + n);
         KhachHang kh;
 
-        int slKHBanDau = danhSachKhachHang.length - n;
-        for (int i = slKHBanDau; i < danhSachKhachHang.length; i++) {
+        int slKHBanDau = DSKH.length - n;
+        for (int i = slKHBanDau; i < DSKH.length; i++) {
             kh = new ThanhVien();
             kh.Nhap();
-            danhSachKhachHang[i] = kh;
+            DSKH[i] = kh;
         }
     }
 
     public void Xoa() {
         System.out.println("\n-------Xóa--------");
 
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Danh sách khách hàng chưa được khởi tạo.");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
@@ -141,10 +141,10 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         System.out.println("Nhập mã khách hàng muốn xóa: ");
         String maKH_Xoa = sc.nextLine();
         boolean kq = false;
-        for (int i = 0; i < danhSachKhachHang.length - 1; i++) {
-            if (danhSachKhachHang[i].getMaKH().equals(maKH_Xoa)) {
-                for (int j = i + 1; j < danhSachKhachHang.length; j++) {
-                    danhSachKhachHang[i] = danhSachKhachHang[j];
+        for (int i = 0; i < DSKH.length - 1; i++) {
+            if (DSKH[i].getMaKH().equals(maKH_Xoa)) {
+                for (int j = i + 1; j < DSKH.length; j++) {
+                    DSKH[i] = DSKH[j];
                 }
                 kq = true;
             }
@@ -153,7 +153,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             System.out.println("Không tìm thấy mã khách hàng" + maKH_Xoa + "muốn xóa");
         }
         else {
-            danhSachKhachHang = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length - 1);
+            DSKH = Arrays.copyOf(DSKH, DSKH.length - 1);
             System.out.println("Xóa khách hàng thành công!\n-------------------");
             soLuongKhachHang--;
         }
@@ -162,11 +162,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     public void TimKiem() {
         System.out.println("\n---------Tìm kiếm--------");
 
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Vui lòng nhập danh sách khách hàng trước !");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
@@ -185,9 +185,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("Nhập mã khách hàng cần tìm: ");
                     String maKH_TimKiem = sc.nextLine();
                     kq = false;
-                    for (int i = 0; i < danhSachKhachHang.length; i++) {
-                        if (danhSachKhachHang[i].getMaKH().equals(maKH_TimKiem)) {
-                            danhSachKhachHang[i].Xuat();
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getMaKH().equals(maKH_TimKiem)) {
+                            DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -200,9 +200,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("Nhập tên khách hàng cần tìm: ");
                     String tenKhachHang_TimKiem = sc.nextLine();
                     kq = false;
-                    for (int i = 0; i < danhSachKhachHang.length; i++) {
-                        if (danhSachKhachHang[i].getTenKH().equals(tenKhachHang_TimKiem)) {
-                            danhSachKhachHang[i].Xuat();
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getTenKH().equals(tenKhachHang_TimKiem)) {
+                            DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -215,9 +215,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("Nhập số điện thoại của khách hàng cần tìm: ");
                     String soDienKhachHang_TimKiem = sc.nextLine();
                     kq = false;
-                    for (int i = 0; i < danhSachKhachHang.length; i++) {
-                        if (danhSachKhachHang[i].getSDT().equals(soDienKhachHang_TimKiem)) {
-                            danhSachKhachHang[i].Xuat();
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getSDT().equals(soDienKhachHang_TimKiem)) {
+                            DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -230,9 +230,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("Nhập địa chỉ khách hàng cần tìm: ");
                     String diaChiKhachHang_TimKiem = sc.nextLine();
                     kq = false;
-                    for (int i = 0; i < danhSachKhachHang.length; i++) {
-                        if (danhSachKhachHang[i].getDiaChi().equals(diaChiKhachHang_TimKiem)) {
-                            danhSachKhachHang[i].Xuat();
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getDiaChi().equals(diaChiKhachHang_TimKiem)) {
+                            DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -245,9 +245,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("Nhập giới tính khách hàng cần tìm: ");
                     String gioiTinhKhachHang_TimKiem = sc.nextLine();
                     kq = false;
-                    for (int i = 0; i < danhSachKhachHang.length; i++) {
-                        if (danhSachKhachHang[i].getGioiTinh().equals(gioiTinhKhachHang_TimKiem)) {
-                            danhSachKhachHang[i].Xuat();
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getGioiTinh().equals(gioiTinhKhachHang_TimKiem)) {
+                            DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -272,17 +272,17 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     public void Xuat() {
         System.out.println("\n \t \t--------Xuất danh sách--------");
 
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Vui lòng tạo danh sách khách hàng trước !");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng.");
         }
 
         System.out.println("\t   Thông tin của danh sách khách hàng \n--------------------------");
-        for (int i = 0; i < danhSachKhachHang.length; i++) {
-            danhSachKhachHang[i].Xuat();
+        for (int i = 0; i < DSKH.length; i++) {
+            DSKH[i].Xuat();
             System.out.println("\t--------------");
         }
     }
@@ -290,11 +290,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     public void Sua() {
         System.out.println("\n \t \t---------Sửa--------");
 
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Danh sách khách hàng chưa được khởi tạo.");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
@@ -303,10 +303,10 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         String maKH_Sua = sc.nextLine();
         boolean kq = false;
 
-        for (int i = 0; i < danhSachKhachHang.length; i++) {
-            if (danhSachKhachHang[i].getMaKH().equals(maKH_Sua)) {
-                danhSachKhachHang[i].Sua();
-                danhSachKhachHang[i].Xuat();
+        for (int i = 0; i < DSKH.length; i++) {
+            if (DSKH[i].getMaKH().equals(maKH_Sua)) {
+                DSKH[i].Sua();
+                DSKH[i].Xuat();
                 kq = true;
                 System.out.println("Sửa thành công ! \n -------------------");
             }
@@ -342,25 +342,25 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
     public void ghiFile() {
         System.out.println("\n---------Ghi file---------");
-        if (danhSachKhachHang == null) {
+        if (DSKH == null) {
             System.out.println("Vui lòng tạo danh sách trước !");
             return;
         }
-        if (danhSachKhachHang.length == 0) {
+        if (DSKH.length == 0) {
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
         try {
             FileWriter fw = new FileWriter("KhachHang.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            for (int i = 0; i < danhSachKhachHang.length; i++) {
-                bw.write(danhSachKhachHang[i].toString());
+            for (int i = 0; i < DSKH.length; i++) {
+                bw.write(DSKH[i].toString());
                 bw.newLine();
             }
             bw.close();
             fw.close();
             System.out.println("Ghi dữ liệu vào KhachHang.txt thành công.");
-            danhSachKhachHang_File = Arrays.copyOf(danhSachKhachHang, danhSachKhachHang.length);
+            DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
         } catch (IOException ioException) {
             System.out.println("Lỗi ghi file: ");
             ioException.printStackTrace();
