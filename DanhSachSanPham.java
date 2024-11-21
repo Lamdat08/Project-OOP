@@ -1,6 +1,7 @@
 package Project_OOP;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -15,6 +16,13 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public DanhSachSanPham(){
         this.danhSachSanPham = new SanPham[5]; //Ít nhất 5 sản phẩm
         this.Nhap();
+    }
+
+    public SanPham[] getDanhSachSanPham() {
+        return danhSachSanPham;
+    }
+    public void setDanhSachSanPham(SanPham[] danhSachSanPham) {
+        this.danhSachSanPham = danhSachSanPham;
     }
 
     public void menuNhap(){
@@ -32,6 +40,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
     //Lấy dữ liệu từ File SanPham.txt
     public void Nhap(){
+        System.out.println("\n \t \t---------TẠO DANH SÁCH SẢN PHẨM TỪ FILE SanPham.txt---------");
+
         String line;
         String[] strings = new String[6];
         try{
@@ -74,7 +84,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         danhSachSanPham_File = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length);
     }
     public void Them(){
-        System.out.println("\n \t \t---------Thêm sản phẩm---------");
+        System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!! ");
@@ -122,7 +132,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
     }
     public void Xoa(){
-        System.out.println("\n---------Xóa sản phẩm---------");
+        System.out.println("\n---------XOÁ SẢN PHẨM---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
@@ -156,7 +166,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void TimKiem(){
-        System.out.println("\n---------Tìm kiếm sản phẩm---------");
+        System.out.println("\n---------TÌM KIẾM SẢN PHẨM---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng tạo danh sách sản phẩm trước.!!!");
@@ -278,7 +288,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Xuat() {
-        System.out.println("\n \t \t---------Xuất danh sách sản phẩm---------");
+        System.out.println("\n \t \t---------XUẤT DANH SÁCH SẢN PHẨM---------");
 
         if (danhSachSanPham == null ){
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng tạo danh sách sản phẩm trước.!!!");
@@ -297,7 +307,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void Sua(){
-        System.out.println("\n \t \t---------Sửa sản phẩm---------");
+        System.out.println("\n \t \t---------SỬA SẢN PHẨM---------");
 
         if (danhSachSanPham == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
@@ -326,6 +336,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void docFile(){
+        System.out.println("\"\\n---------ĐỌC FILE SanPham.txt---------\"");
+
         String line;
         String[] strings = new String[6];
         try{
@@ -352,12 +364,13 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         catch (Exception e) {
-            System.out.println("Lỗi đọc file SanPham.txt\n");
+            System.out.println("Lỗi đọc file SanPham.txt: \n");
             e.printStackTrace();
         }
     }
     public void ghiFile(){
-        System.out.println("\n---------Ghi file sản phẩm---------");
+        System.out.println("\n---------GHI FILE SanPham.txt---------");
+
         if (danhSachSanPham == null ){
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
             return;
@@ -386,9 +399,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
     }
 
     public void thongKeSanPham(int luaChon) {
-        System.out.println("\n --------Thống Kê Sản Phẩm--------");
+        System.out.println("\n --------THỐNG KÊ DANH SÁCH SẢN PHẨM--------");
 
         if(luaChon == 1){
+
             if (danhSachSanPham == null) {
                 System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
                 return;
@@ -412,10 +426,12 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
             for (int i = 0; i < danhSachSanPham.length; i++) {
                 tongLoiNhuan += danhSachSanPham[i].LoiNhuan();
-                if (danhSachSanPham[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan())
+                if (danhSachSanPham[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
                     minSP_LoiNhuan = danhSachSanPham[i];
-                if (danhSachSanPham[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan())
+                }
+                if (danhSachSanPham[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()) {
                     maxSP_LoiNhuan = danhSachSanPham[i];
+                }
 
                 tongSoLuong += danhSachSanPham[i].getSoLuong();
                 if(danhSachSanPham[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
@@ -446,7 +462,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 }
             }
 
-            System.out.println("\n---------Thống kê danh sách sản phẩm hiện tại---------");
+            System.out.println("\n --------THỐNG KÊ DANH SÁCH SẢN PHẨM HIỆN TẠI--------");
             System.out.println("1. Tổng số lượng sản phẩm : " + soLuongSanPham);
 
             System.out.println("2.Các sản phẩm có lợi nhuận thấp nhất : ");
@@ -540,7 +556,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 }
             }
 
-            System.out.println("\n---------Thống kê danh sách sản phẩm trong SanPham.txt---------");
+            System.out.println("\n --------THỐNG KÊ DANH SÁCH SẢN PHẨM CỦA FILE SanPham.txt--------");
             System.out.println("1. Tổng số lượng sản phẩm : " + danhSachSanPham_File.length);
 
             System.out.println("2.Các sản phẩm có lợi nhuận thấp nhất : ");
