@@ -6,11 +6,14 @@ import java.util.*;
 public class DanhSachHoaDon implements IThaoTac_2 {
     static int sl = 0; // Số lượng hóa đơn hiện tại
     private HoaDon[] DSHD; // Mảng chứa các hóa đơn
-    private HoaDon[] DSHD_File; // Mảng chứa các hóa đơn đọc từ file
+    private DanhSachKhachHang dskh;  // Danh sách khách hàng
+    private DanhSachSanPham dssp;    // Danh sách sản phẩm
     Scanner sc = new Scanner(System.in);
 
     // Constructor
-    DanhSachHoaDon() {
+    DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+        this.dskh = dskh;
+        this.dssp = dssp;
         this.DSHD = new HoaDon[5];
         this.Nhap(); // Nhập dữ liệu từ file khi khởi tạo
     }
@@ -18,7 +21,7 @@ public class DanhSachHoaDon implements IThaoTac_2 {
     @Override
     public void Nhap() {
         String line;
-        String[] list = new String[6];
+        String[] list;
         try (BufferedReader br = new BufferedReader(new FileReader("HoaDon.txt"))) {
             while ((line = br.readLine()) != null) {
                 if (sl == DSHD.length) {
@@ -27,7 +30,13 @@ public class DanhSachHoaDon implements IThaoTac_2 {
 
                 list = line.split(";");
                 try {
-                    HoaDon hd = new HoaDon(list[0], list[1], Double.parseDouble(list[2]), Integer.parseInt(list[3]), list[4], list[5]);
+                    HoaDon hd = new HoaDon(dssp, dskh);
+                    hd.setMaHD(list[0]);
+                    hd.setThoiGian(list[1]);
+                    KhachHang khachHang = dskh.getKhachHangBySDT(list[2]);
+                    hd.setKhachHang(khachHang);
+                    hd.setSanpham(this.parseSanphamFromFile(list[3]));
+                    hd.setPhuongThucThanhToan(list[4]);
                     DSHD[sl] = hd;
                     sl++;
                 } catch (Exception e) {
@@ -41,8 +50,16 @@ public class DanhSachHoaDon implements IThaoTac_2 {
         if (sl < DSHD.length) {
             DSHD = Arrays.copyOf(DSHD, sl);
         }
+    }
 
-        DSHD_File = Arrays.copyOf(DSHD, DSHD.length);
+    private SanPham[] parseSanphamFromFile(String data) {
+        String[] products = data.split(",");
+        SanPham[] parsedSanPham = new SanPham[products.length];
+        for (int i = 0; i < products.length; i++) {
+            SanPham sp = dssp.getSanPhamByName(products[i]);
+            parsedSanPham[i] = sp;
+        }
+        return parsedSanPham;
     }
 
     @Override
@@ -56,8 +73,10 @@ public class DanhSachHoaDon implements IThaoTac_2 {
 
         System.out.println("\t   Thông tin của danh sách hóa đơn \n--------------------------");
         for (int i = 0; i < DSHD.length; i++) {
-            DSHD[i].Xuat();
-            System.out.println("\t--------------");
+            if (DSHD[i] != null) {
+                DSHD[i].Xuat();
+                System.out.println("\t--------------");
+            }
         }
     }
 
@@ -84,7 +103,7 @@ public class DanhSachHoaDon implements IThaoTac_2 {
         DSHD = Arrays.copyOf(DSHD, DSHD.length + x);
 
         for (int i = prevLength; i < DSHD.length; i++) {
-            DSHD[i] = new HoaDon();
+            DSHD[i] = new HoaDon(dssp, dskh);
             DSHD[i].Nhap();
             System.out.println("Nhập thành công hóa đơn thứ " + (i + 1) + "!");
         }
@@ -123,7 +142,7 @@ public class DanhSachHoaDon implements IThaoTac_2 {
             return;
         }
 
-        if (DSHD == null || DSHD.length == 0) {
+        if (DSHD.length == 0) {
             System.out.println("Danh sách hóa đơn trống.");
             return;
         }
@@ -237,7 +256,6 @@ public class DanhSachHoaDon implements IThaoTac_2 {
         }
     }
 
-    // Phương thức thống kê
     public void ThongKe() {
         System.out.println("\n---------Thống kê hóa đơn---------");
         if (DSHD == null) {
@@ -245,7 +263,6 @@ public class DanhSachHoaDon implements IThaoTac_2 {
             return;
         }
 
-        // Giả sử thống kê tổng số hóa đơn
         System.out.println("Tổng số hóa đơn: " + DSHD.length);
     }
 
@@ -273,12 +290,10 @@ public class DanhSachHoaDon implements IThaoTac_2 {
     public static void docFile() {
         System.out.println("\n---------Đọc file hóa đơn---------");
         
-        // Đọc dữ liệu từ file
         try (BufferedReader br = new BufferedReader(new FileReader("HoaDon.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(";");
-                // Giả sử có cách tạo đối tượng HoaDon từ dữ liệu file
                 HoaDon hd = new HoaDon(data[0], data[1], Double.parseDouble(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
                 hd.Xuat();
             }
