@@ -139,7 +139,7 @@ public class HoaDon implements IThaoTac {
     public String toString() {
         String result = "Hóa đơn: ";
         result += "Mã hóa đơn: " + getMaHD() + ", Thời gian: " + getThoiGian();
-        result += ", Khách hàng: " + khachHang.Xuat();
+        result += ", Khách hàng: " + khachHang.toString();
 
         for (int i = 0; i < sanpham.length; i++) {
             if (sanpham[i] != null) {
@@ -154,7 +154,7 @@ public class HoaDon implements IThaoTac {
                 }
 
                 // Thêm thông tin sản phẩm vào chuỗi kết quả
-                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].Xuat() 
+                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].toString() 
                         + ", Loại: " + loai 
                         + ", Số lượng: " + soLuongSP[i]
                         + ", Giá: " + sanpham[i].getGiaTien()
