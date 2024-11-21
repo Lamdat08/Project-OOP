@@ -1,6 +1,7 @@
 package Project_OOP;
 
 import java.util.Scanner;
+import java.util.regex.*;
 
 public class SanPham implements IThaoTac {
 
@@ -12,6 +13,8 @@ public class SanPham implements IThaoTac {
     private double giaTien;
     private double tienVon;
 
+    private boolean status;
+
     public void menuSua(){
         System.out.println("1.Mã sản phẩm.");
         System.out.println("2.Tên sản phẩm.");
@@ -22,6 +25,7 @@ public class SanPham implements IThaoTac {
     }
 
     public SanPham() {
+        this.status = true;
     }
 
     public SanPham(String maSP, String tenSP, int soLuong, double giaTien, double tienVon) {
@@ -30,26 +34,37 @@ public class SanPham implements IThaoTac {
         this.soLuong = soLuong;
         this.giaTien = giaTien;
         this.tienVon = tienVon;
+        this.status  = true;
     }
 
     public String getMaSP() {
         return maSP;
     }
     public void setMaSP(String maSP) {
-        while(true){
-            if(!maSP.startsWith("TA") || !maSP.startsWith("NU")){
-                System.out.println("Mã sản phẩm phải bắt đầu với TA(nếu là thức ăn), hoặc NU(nếu là nước uống), vui lòng nhập lại: ");
-                maSP = sc.nextLine();
-            }
-            this.maSP = maSP;
-            break;
+        while(maSP == null || maSP.trim().isEmpty()) {
+            System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
+            maSP = sc.nextLine().trim();
         }
+        while(maSP.startsWith("TA") || maSP.startsWith("NU")){
+            System.out.println("Mã sản phẩm phải bắt đầu với TA(nếu là thức ăn), NU(nếu là nước uống) , vui lòng nhập lại: ");
+            maSP = sc.nextLine().trim();
+        }
+        this.maSP = maSP;
     }
 
     public String getTenSP() {
         return tenSP;
     }
     public void setTenSP(String tenSP) {
+        while(tenSP == null ||tenSP.trim().isEmpty()) {
+            System.out.println("Tên sản phẩm không được để trống, vui lòng nhập lại: ");
+            tenSP = sc.nextLine().trim();
+        }
+        String regex = "^[A-Za-zÀ-ỹ\\s]+$";
+        while(!Pattern.matches(regex, tenSP)){
+            System.out.println("Tên sản phẩm không hợp lệ, vui lòng nhập lại: ");
+            tenSP = sc.nextLine().trim();
+        }
         this.tenSP = tenSP;
     }
 
@@ -57,35 +72,61 @@ public class SanPham implements IThaoTac {
         return soLuong;
     }
     public void setSoLuong(int soLuong) {
-        while(true){
-            if(soLuong < 0){
-                System.out.println("Số lượng của sản phẩm phải > 0, vui lòng nhập lại: ");
-                soLuong = Integer.parseInt(sc.nextLine());
-            }
-            this.soLuong = soLuong;
-            break;
+        String inputSoLuong = Integer.toString(soLuong);
+        while(inputSoLuong == null || inputSoLuong.trim().isEmpty()){
+            System.out.println("Số lượng không được để trống, vui lòng nhập lại: ");
+            soLuong = Integer.parseInt(sc.nextLine());
+            inputSoLuong = Integer.toString(soLuong);
         }
+
+        String regex = "^[0-9]$";
+        while(!Pattern.matches(regex, inputSoLuong)){
+            System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+            soLuong = Integer.parseInt(sc.nextLine());
+            inputSoLuong = Integer.toString(soLuong);
+        }
+        this.soLuong = soLuong;
     }
 
     public double getGiaTien() {
         return giaTien;
     }
     public void setGiaTien(double giaTien) {
-        while(true){
-            if(giaTien < getTienVon()){
-                System.out.println("Giá tiền phải > tiền vốn(nếu không sẽ bị lỗ), vui lòng nhập lại: ");
-                giaTien = Double.parseDouble(sc.nextLine());
-            }
-            this.giaTien = giaTien;
-            break;
+        String inputGiaTien = Double.toString(giaTien);
+        while(inputGiaTien == null || inputGiaTien.trim().isEmpty()){
+            System.out.println("Giá tiền không được để trống, vui lòng nhập lại: ");
+            giaTien = Double.parseDouble(sc.nextLine());
+            inputGiaTien = Double.toString(giaTien);
         }
+        while(giaTien < 0){
+            System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+            giaTien = Double.parseDouble(sc.nextLine());
+        }
+        this.giaTien = giaTien;
     }
 
     public double getTienVon() {
         return tienVon;
     }
     public void setTienVon(double tienVon) {
+        String inputTienVon = Double.toString(tienVon);
+        while(inputTienVon == null || inputTienVon.trim().isEmpty()){
+            System.out.println("Tiền vốn không được để trống, vui lòng nhập lại: ");
+            tienVon = Double.parseDouble(sc.nextLine());
+            inputTienVon = Double.toString(tienVon);
+        }
+        while(tienVon < 0){
+            System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+            tienVon = Double.parseDouble(sc.nextLine());
+        }
         this.tienVon = tienVon;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void Nhap(){

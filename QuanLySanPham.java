@@ -92,7 +92,17 @@ public class QuanLySanPham {
                                 break;
 
                             case 9:
-                                //Thống kê
+                                System.out.println("1. Thống kê danh sách sản phẩm hiện tại");
+                                System.out.println("2. Thống kê danh sách");
+
+                                System.out.print("Nhập lựa chọn : ");
+                                int luaChonThongKe = Integer.parseInt(sc.nextLine());
+                                while(luaChonThongKe < 1 || luaChonThongKe > 4){
+                                    menuQLSP();
+                                    System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
+                                    luaChonThongKe = Integer.parseInt(sc.nextLine());
+                                }
+                                dssp.thongKeSanPham(luaChonThongKe);
                                 break;
 
                             case 10 :

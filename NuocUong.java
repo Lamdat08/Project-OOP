@@ -1,10 +1,13 @@
 package Project_OOP;
 
+import java.util.regex.Pattern;
+
 public class NuocUong extends SanPham{
 
     private String loaiNuoc;
 
     public NuocUong() {
+        super();
     }
 
     public NuocUong(String maSP, String tenSP, int soLuong, double giaTien, double tienVon, String loaiNuoc) {
@@ -23,6 +26,15 @@ public class NuocUong extends SanPham{
     }
 
     public void setLoaiNuoc(String loaiNuoc) {
+        while(loaiNuoc == null ||loaiNuoc.trim().isEmpty()) {
+            System.out.println("Loại nước uống không được để trống, vui lòng nhập lại: ");
+            loaiNuoc = sc.nextLine().trim();
+        }
+        String regex = "^[A-Za-zÀ-ỹ\\s]+$";
+        while(!Pattern.matches(regex, loaiNuoc)){
+            System.out.println("Loại nước uống không hợp lệ, vui lòng nhập lại: ");
+            loaiNuoc = sc.nextLine().trim();
+        }
         this.loaiNuoc = loaiNuoc;
     }
 
