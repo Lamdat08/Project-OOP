@@ -27,19 +27,17 @@ public class ThanhVien extends KhachHang {
     }
 
     public void setDiemTichLuy(int diemTichLuy) {
-        String inputDiemTichLuy = Integer.toString(diemTichLuy);
-        if (inputDiemTichLuy == null || inputDiemTichLuy.trim().isEmpty()) {
-            this.diemTichLuy = 0;
-            return;
-        }
-        String regex = "^[0-9]$";
-        while (!Pattern.matches(regex, inputDiemTichLuy)) {
-            System.out.println("Điểm tích lũy không hợp lệ, vui lòng nhập lại !");
-            diemTichLuy = Integer.parseInt(sc.nextLine());
-            inputDiemTichLuy = Integer.toString(diemTichLuy);
+        while (diemTichLuy < 0) {
+            System.out.println("Điểm tích lũy không hợp lệ (phải >= 0). Vui lòng nhập lại: ");
+            try {
+                diemTichLuy = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số nguyên hợp lệ!");
+            }
         }
         this.diemTichLuy = diemTichLuy;
     }
+
 
     public String rank() {
         if (getDiemTichLuy() >= 20)
@@ -59,7 +57,7 @@ public class ThanhVien extends KhachHang {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(";%d%s", diemTichLuy, rank());
+        return super.toString() + String.format(";%d%s", getDiemTichLuy(), rank());
     }
 
     @Override
