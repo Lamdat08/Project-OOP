@@ -12,6 +12,7 @@ public class KhachHang implements IThaoTac {
     private String SDT;
     private String diaChi;
     private String gioiTinh;
+    private boolean status;
 
     public void menuSua() {
         System.out.println("1. Tên khách hàng.");
@@ -23,7 +24,7 @@ public class KhachHang implements IThaoTac {
     }
 
     public KhachHang() {
-
+        this.status = true;
     }
 
     public KhachHang(String maKH, String tenKH, String SDT, String diaChi, String gioiTinh) {
@@ -32,6 +33,7 @@ public class KhachHang implements IThaoTac {
         this.SDT = SDT;
         this.diaChi = diaChi;
         this.gioiTinh = gioiTinh;
+        this.status = true;
     }
 
     public String getMaKH() {
@@ -41,12 +43,10 @@ public class KhachHang implements IThaoTac {
     public void setMaKH(String maKH) {
         while (maKH == null || maKH.trim().isEmpty()) {
             System.out.println("Mã khách hàng không được để trống. Vui lòng nhập mã khách hàng: ");
-            maKH = sc.nextLine();
+            maKH = sc.nextLine().trim();
         }
-        maKH = maKH.trim();
-        String regex = "^[a-zA-Z0-9]+$";
-        while (!Pattern.matches(regex, maKH)) {
-            System.out.println("Mã khách hàng không hợp lệ. Vui lòng nhập lại");
+        while (!maKH.startsWith("KH")) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH, vui lòng nhập lại mã khách hàng.");
             maKH = sc.nextLine().trim();
         }
         this.maKH = maKH;
@@ -59,9 +59,8 @@ public class KhachHang implements IThaoTac {
     public void setTenKH(String tenKH) {
         while (tenKH == null || tenKH.trim().isEmpty()) {
             System.out.println("Tên khách hàng không được để trống. Vui lòng nhập tên khách hàng: ");
-            tenKH = sc.nextLine();
+            tenKH = sc.nextLine().trim();
         }
-        tenKH = tenKH.trim();
         String regex = "^[a-zA-ZÀ-ỹ\\s]+$";
         while (!Pattern.matches(regex, tenKH)) {
             System.out.println("Tên khách hàng không hợp lệ. Vui lòng nhập lại: ");
@@ -93,7 +92,6 @@ public class KhachHang implements IThaoTac {
     }
 
     public void setDiaChi(String diaChi) {
-        //Địa chỉ có thể bỏ trống
         if (diaChi == null || diaChi.trim().isEmpty()) {
             this.diaChi = "Không xác định";
             return;
@@ -125,6 +123,14 @@ public class KhachHang implements IThaoTac {
                 gioiTinh = sc.nextLine().trim();
             }
         }
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void Nhap() {

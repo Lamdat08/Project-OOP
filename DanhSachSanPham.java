@@ -1,28 +1,35 @@
 package Project_OOP;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class DanhSachSanPham implements IThaoTac_2 {
 
     private static int soLuongSanPham;
-    private SanPham[] danhSachSanPham;
-    private SanPham[] danhSachSanPham_File;
+    private SanPham[] DSSP;
+    private SanPham[] DSSP_File;
 
     static Scanner sc = new Scanner(System.in);
 
     public DanhSachSanPham(){
-        this.danhSachSanPham = new SanPham[5]; //Ít nhất 5 sản phẩm
+        this.DSSP = new SanPham[5]; //Ít nhất 5 sản phẩm
         this.Nhap();
     }
 
-    public SanPham[] getDanhSachSanPham() {
-        return danhSachSanPham;
+    public SanPham[] getDSSP() {
+        return DSSP;
     }
-    public void setDanhSachSanPham(SanPham[] danhSachSanPham) {
-        this.danhSachSanPham = danhSachSanPham;
+    public void setDSSP(SanPham[] DSSP) {
+        this.DSSP = DSSP;
+    }
+
+    public SanPham[] getDSSP_File() {
+        return DSSP_File;
+    }
+    public void setDSSP_File(SanPham[] DSSP_File) {
+        this.DSSP_File = DSSP_File;
     }
 
     public void menuNhap(){
@@ -48,8 +55,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
             FileReader fr = new FileReader("SanPham.txt");
             BufferedReader br = new BufferedReader(fr);
             while((line = br.readLine()) != null){
-                if(soLuongSanPham == danhSachSanPham.length){
-                    danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + 5);
+                if(soLuongSanPham == DSSP.length){
+                    DSSP = Arrays.copyOf(DSSP, DSSP.length + 5);
                 }
 
                 strings = line.split(";");
@@ -64,7 +71,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         sp = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]), Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
                     }
                     //Thêm sản phẩm vào danh sách
-                    danhSachSanPham[soLuongSanPham] = sp;
+                    DSSP[soLuongSanPham] = sp;
                     soLuongSanPham++;
                 }
                 catch (Exception e){
@@ -77,20 +84,20 @@ public class DanhSachSanPham implements IThaoTac_2 {
             e.printStackTrace();
         }
         //Thu hẹp mảng nếu mảng chưa đầy
-        if(soLuongSanPham < danhSachSanPham.length){
-            danhSachSanPham = Arrays.copyOf(danhSachSanPham, soLuongSanPham);
+        if(soLuongSanPham < DSSP.length){
+            DSSP = Arrays.copyOf(DSSP, soLuongSanPham);
         }
         //Copy mảng hiện tại đang chỉnh sửa vào mảng lấy dữ liệu từ File
-        danhSachSanPham_File = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length);
+        DSSP_File = Arrays.copyOf(DSSP, DSSP.length);
     }
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
-        if (danhSachSanPham == null) {
+        if (DSSP == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!! ");
             return;
         }
-        if(danhSachSanPham.length == 0){
+        if(DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
             return;
         }
@@ -105,11 +112,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
         } while(slSP <= 0);
 
         soLuongSanPham += slSP;
-        danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length + slSP);
+        DSSP = Arrays.copyOf(DSSP, DSSP.length + slSP);
         SanPham sp;
 
-        int slSPBanDau = danhSachSanPham.length - slSP;
-        for(int i = slSPBanDau; i < danhSachSanPham.length; i++){
+        int slSPBanDau = DSSP.length - slSP;
+        for(int i = slSPBanDau; i < DSSP.length; i++){
             menuNhap();
             System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
@@ -122,23 +129,23 @@ public class DanhSachSanPham implements IThaoTac_2 {
             if(luaChon == 1){
                 sp = new ThucAn();
                 sp.Nhap();
-                danhSachSanPham[i] = sp;
+                DSSP[i] = sp;
             }
             if(luaChon == 2){
                 sp = new NuocUong();
                 sp.Nhap();
-                danhSachSanPham[i] = sp;
+                DSSP[i] = sp;
             }
         }
     }
     public void Xoa(){
         System.out.println("\n---------XOÁ SẢN PHẨM---------");
 
-        if (danhSachSanPham == null) {
+        if (DSSP == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
             return;
         }
-        if(danhSachSanPham.length == 0){
+        if(DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
             return;
         }
@@ -146,33 +153,28 @@ public class DanhSachSanPham implements IThaoTac_2 {
         System.out.println("Nhập mã sản phẩm muốn xoá: ");
         String maSP_Xoa = sc.nextLine();
         boolean kq = false;
-        for(int i = 0; i < danhSachSanPham.length - 1; i++){
-            if(danhSachSanPham[i].getMaSP().equals(maSP_Xoa)){
-                for(int j = i + 1; j < danhSachSanPham.length; j++){
-                    danhSachSanPham[i] = danhSachSanPham[j];
-                }
+        for(int i = 0; i < DSSP.length - 1; i++){
+            if(DSSP[i].getMaSP().equals(maSP_Xoa)){
                 kq = true;
+                DSSP[i].setStatus(false);
+                System.out.println("Xóa sản phẩm thành công!\n-------------------");
+                soLuongSanPham--;
+                break;
             }
         }
         if(!kq){
             System.out.println("Không tìm thấy mã sản phẩm" + maSP_Xoa + " muốn xoá");
-        }
-        else{
-            //Thu hẹp mảng sau khi xoá 1 sản phẩm
-            danhSachSanPham = Arrays.copyOf(danhSachSanPham, danhSachSanPham.length - 1);
-            System.out.println("Xóa sản phẩm thành công!\n-------------------");
-            soLuongSanPham--;
         }
     }
 
     public void TimKiem(){
         System.out.println("\n---------TÌM KIẾM SẢN PHẨM---------");
 
-        if (danhSachSanPham == null) {
+        if (DSSP == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng tạo danh sách sản phẩm trước.!!!");
             return;
         }
-        if (danhSachSanPham.length == 0){
+        if (DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!!\n");
             return;
         }
@@ -192,14 +194,18 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 1:
                     System.out.println("Nhập mã sản phẩm cần tìm: ");
                     String maSP_TimKiem = sc.nextLine();
+                    while(maSP_TimKiem == null || maSP_TimKiem.trim().isEmpty()) {
+                        System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
+                        maSP_TimKiem = sc.nextLine().trim();
+                    }
                     while(!maSP_TimKiem.startsWith("TA") && !maSP_TimKiem.startsWith("NU")){
                         System.out.println("Mã sản phẩm phải bắt đầu với TA(nếu là thức ăn) hoặc NU(nếu là nước uống), vui lòng nhập lại mã sản phẩm cần tìm: ");
                         maSP_TimKiem = sc.nextLine();
                     }
                     kq = false;
-                    for(int i = 0; i < danhSachSanPham.length; i++){
-                        if(danhSachSanPham[i].getMaSP().equals(maSP_TimKiem)){
-                            danhSachSanPham[i].Xuat();
+                    for(int i = 0; i < DSSP.length; i++){
+                        if(DSSP[i].getMaSP().equals(maSP_TimKiem)){
+                            DSSP[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
@@ -211,10 +217,19 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 2:
                     System.out.println("Nhập tên sản phẩm cần tìm: ");
                     String tenSP_TimKiem = sc.nextLine();
+                    while(tenSP_TimKiem == null ||tenSP_TimKiem.trim().isEmpty()) {
+                        System.out.println("Tên sản phẩm không được để trống, vui lòng nhập lại: ");
+                        tenSP_TimKiem = sc.nextLine().trim();
+                    }
+                    String regexTen = "^[A-Za-zÀ-ỹ\\s]+$";
+                    while(!Pattern.matches(regexTen, tenSP_TimKiem)){
+                        System.out.println("Tên sản phẩm không hợp lệ, vui lòng nhập lại: ");
+                        tenSP_TimKiem = sc.nextLine().trim();
+                    }
                     kq = false;
-                    for(int i = 0; i < danhSachSanPham.length; i++){
-                        if(danhSachSanPham[i].getTenSP().equals(tenSP_TimKiem)){
-                            danhSachSanPham[i].Xuat();
+                    for(int i = 0; i < DSSP.length; i++){
+                        if(DSSP[i].getTenSP().equals(tenSP_TimKiem)){
+                            DSSP[i].Xuat();
                             kq = true;
                         }
                     }
@@ -225,14 +240,27 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 3:
                     System.out.println("Nhập số lượng của sản phẩm cần tìm: ");
                     int soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                    String inputSoLuong = Integer.toString(soLuongSP_TimKiem);
+                    while(inputSoLuong == null || inputSoLuong.trim().isEmpty()){
+                        System.out.println("Số lượng không được để trống, vui lòng nhập lại: ");
+                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                        inputSoLuong = Integer.toString(soLuongSP_TimKiem);
+                    }
+
+                    String regexSoLuong = "^[0-9]$";
+                    while(!Pattern.matches(regexSoLuong, inputSoLuong)){
+                        System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại: ");
+                        soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
+                        inputSoLuong = Integer.toString(soLuongSP_TimKiem);
+                    }
                     while(soLuongSP_TimKiem < 0){
                         System.out.println("Số lượng của sản phẩm phải là số > 0, vui lòng nhập lại số lượng của sản phẩm cần tìm: ");
                         soLuongSP_TimKiem = Integer.parseInt(sc.nextLine());
                     }
                     kq = false;
-                    for(int i = 0; i < danhSachSanPham.length; i++){
-                        if(danhSachSanPham[i].getSoLuong() == soLuongSP_TimKiem){
-                            danhSachSanPham[i].Xuat();
+                    for(int i = 0; i < DSSP.length; i++){
+                        if(DSSP[i].getSoLuong() == soLuongSP_TimKiem){
+                            DSSP[i].Xuat();
                             kq = true;
                         }
                     }
@@ -243,14 +271,20 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 4:
                     System.out.println("Nhập giá tiền của san phẩm cần tìm: ");
                     double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
+                    String inputGiaTien = Double.toString(giaTienSP_TimKiem);
+                    while(inputGiaTien == null || inputGiaTien.trim().isEmpty()){
+                        System.out.println("Giá tiền không được để trống, vui lòng nhập lại: ");
+                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        inputGiaTien = Double.toString(giaTienSP_TimKiem);
+                    }
                     while(giaTienSP_TimKiem < 0){
-                        System.out.println("Giá tiền của sản phẩm phải là số > 0, vui lòng nhập lại giá tiền của sản phẩm cần tìm: ");
-                        giaTienSP_TimKiem = Integer.parseInt(sc.nextLine());
+                        System.out.println("Giá tiền của sản phẩm phải > 0, vui lòng nhập lại: ");
+                        giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
                     }
                     kq = false;
-                    for(int i = 0; i < danhSachSanPham.length; i++){
-                        if(danhSachSanPham[i].getGiaTien() == giaTienSP_TimKiem){
-                            danhSachSanPham[i].Xuat();
+                    for(int i = 0; i < DSSP.length; i++){
+                        if(DSSP[i].getGiaTien() == giaTienSP_TimKiem){
+                            DSSP[i].Xuat();
                             kq = true;
                         }
                     }
@@ -261,14 +295,20 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 5:
                     System.out.println("Nhập tiền vốn của sản phẩm cần tìm: ");
                     double tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
+                    String inputTienVon = Double.toString(tienVonSP_TimKiem);
+                    while(inputTienVon == null || inputTienVon.trim().isEmpty()){
+                        System.out.println("Tiền vốn không được để trống, vui lòng nhập lại: ");
+                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
+                        inputTienVon = Double.toString(tienVonSP_TimKiem);
+                    }
                     while(tienVonSP_TimKiem < 0){
-                        System.out.println("Tiền vốn của sản phẩm phải là số > 0, vui lòng nhập lại tiền vốn của sản phẩm cần tìm: ");
-                        tienVonSP_TimKiem = Integer.parseInt(sc.nextLine());
+                        System.out.println("Tiền vốn của sản phẩm phải > 0, vui lòng nhập lại: ");
+                        tienVonSP_TimKiem = Double.parseDouble(sc.nextLine());
                     }
                     kq = false;
-                    for(int i = 0; i < danhSachSanPham.length; i++){
-                        if(danhSachSanPham[i].getTienVon() == tienVonSP_TimKiem){
-                            danhSachSanPham[i].Xuat();
+                    for(int i = 0; i < DSSP.length; i++){
+                        if(DSSP[i].getTienVon() == tienVonSP_TimKiem){
+                            DSSP[i].Xuat();
                             kq = true;
                         }
                     }
@@ -290,18 +330,18 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Xuat() {
         System.out.println("\n \t \t---------XUẤT DANH SÁCH SẢN PHẨM---------");
 
-        if (danhSachSanPham == null ){
+        if (DSSP == null){
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng tạo danh sách sản phẩm trước.!!!");
             return;
         }
-        if (danhSachSanPham.length == 0){
+        if (DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
             return;
         }
 
         System.out.println("\tThông tin của danh sách sản phẩm \n--------------------------");
-        for(int i = 0;i<danhSachSanPham.length;i++){
-            danhSachSanPham[i].Xuat();
+        for(int i = 0;i<DSSP.length;i++){
+            DSSP[i].Xuat();
             System.out.println("\t--------------");
         }
     }
@@ -309,11 +349,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Sua(){
         System.out.println("\n \t \t---------SỬA SẢN PHẨM---------");
 
-        if (danhSachSanPham == null) {
+        if (DSSP == null) {
             System.out.println("Danh sách sản phẩm chưa được khởi tạo.");
             return;
         }
-        if (danhSachSanPham.length == 0){
+        if (DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm. \n");
             return;
         }
@@ -322,10 +362,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
         String maSP_Sua = sc.nextLine();
         boolean kq = false;
 
-        for(int i = 0; i < danhSachSanPham.length; i++){
-            if(danhSachSanPham[i].getMaSP().equals(maSP_Sua)){
-                danhSachSanPham[i].Sua();
-                danhSachSanPham[i].Xuat();
+        for(int i = 0; i < DSSP.length; i++){
+            if(DSSP[i].getMaSP().equals(maSP_Sua)){
+                DSSP[i].Sua();
+                DSSP[i].Xuat();
                 kq = true;
                 System.out.println("Sửa sản phẩm " + maSP_Sua + " thành công ! \n -------------------");
             }
@@ -335,7 +375,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
     }
 
-    public void docFile(){
+    public static void docFile(){
         System.out.println("\"\\n---------ĐỌC FILE SanPham.txt---------\"");
 
         String line;
@@ -371,11 +411,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void ghiFile(){
         System.out.println("\n---------GHI FILE SanPham.txt---------");
 
-        if (danhSachSanPham == null ){
+        if (DSSP == null ){
             System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
             return;
         }
-        if (danhSachSanPham.length == 0){
+        if (DSSP.length == 0){
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
             return;
         }
@@ -383,14 +423,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
         try{
             FileWriter fw = new FileWriter("SanPham.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            for(int i = 0; i < danhSachSanPham.length; i++){
-                bw.write(danhSachSanPham[i].toString());
+            for(int i = 0; i < DSSP.length; i++){
+                bw.write(DSSP[i].toString());
                 bw.newLine();
             }
             bw.close();
             fw.close();
             System.out.println("Ghi dữ liệu vào SanPham.txt thành công");
-            danhSachSanPham_File = Arrays.copyOf(danhSachSanPham,danhSachSanPham.length);
+            DSSP_File = Arrays.copyOf(DSSP,DSSP.length);
         }
         catch (IOException ioException) {
             System.out.printf("Lỗi ghi file SanPham.txt: ");
@@ -403,62 +443,62 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         if(luaChon == 1){
 
-            if (danhSachSanPham == null) {
+            if (DSSP == null) {
                 System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
                 return;
             }
-            if (danhSachSanPham.length == 0) {
+            if (DSSP.length == 0) {
                 System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
                 return;
             }
 
-            SanPham minSP_LoiNhuan = danhSachSanPham[0];
-            SanPham maxSP_LoiNhuan = danhSachSanPham[0];
+            SanPham minSP_LoiNhuan = DSSP[0];
+            SanPham maxSP_LoiNhuan = DSSP[0];
             double tongLoiNhuan = 0;
             SanPham[] minDSSP_LoiNhuan = new SanPham[1];
             SanPham[] maxDSSP_LoiNhuan = new SanPham[1];
 
-            SanPham minSP_SoLuong = danhSachSanPham[0];
-            SanPham maxSP_SoLuong = danhSachSanPham[0];
+            SanPham minSP_SoLuong = DSSP[0];
+            SanPham maxSP_SoLuong = DSSP[0];
             int tongSoLuong = 0;
             SanPham[] minDSSP_SoLuong = new SanPham[1];
             SanPham[] maxDSSP_SoLuong = new SanPham[1];
 
-            for (int i = 0; i < danhSachSanPham.length; i++) {
-                tongLoiNhuan += danhSachSanPham[i].LoiNhuan();
-                if (danhSachSanPham[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
-                    minSP_LoiNhuan = danhSachSanPham[i];
+            for (int i = 0; i < DSSP.length; i++) {
+                tongLoiNhuan += DSSP[i].LoiNhuan();
+                if (DSSP[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
+                    minSP_LoiNhuan = DSSP[i];
                 }
-                if (danhSachSanPham[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()) {
-                    maxSP_LoiNhuan = danhSachSanPham[i];
+                if (DSSP[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()) {
+                    maxSP_LoiNhuan = DSSP[i];
                 }
 
-                tongSoLuong += danhSachSanPham[i].getSoLuong();
-                if(danhSachSanPham[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
-                    minSP_SoLuong = danhSachSanPham[i];
+                tongSoLuong += DSSP[i].getSoLuong();
+                if(DSSP[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
+                    minSP_SoLuong = DSSP[i];
                 }
-                if(danhSachSanPham[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
-                    maxSP_SoLuong = danhSachSanPham[i];
+                if(DSSP[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
+                    maxSP_SoLuong = DSSP[i];
                 }
             }
 
-            for (int i = 0; i < danhSachSanPham.length; i++) {
-                if (danhSachSanPham[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
+            for (int i = 0; i < DSSP.length; i++) {
+                if (DSSP[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
                     minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
-                    minDSSP_LoiNhuan[i] = danhSachSanPham[i];
+                    minDSSP_LoiNhuan[i] = DSSP[i];
                 }
-                if (danhSachSanPham[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
+                if (DSSP[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
                     maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
-                    maxDSSP_LoiNhuan[i] = danhSachSanPham[i];
+                    maxDSSP_LoiNhuan[i] = DSSP[i];
                 }
 
-                if (danhSachSanPham[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
                     minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
-                    minDSSP_SoLuong[i] = danhSachSanPham[i];
+                    minDSSP_SoLuong[i] = DSSP[i];
                 }
-                if (danhSachSanPham[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
                     maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
-                    maxDSSP_SoLuong[i] = danhSachSanPham[i];
+                    maxDSSP_SoLuong[i] = DSSP[i];
                 }
             }
 
@@ -499,65 +539,65 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
 
         if(luaChon == 2){
-            if (danhSachSanPham_File == null) {
+            if (DSSP_File == null) {
                 System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!!");
                 return;
             }
-            if (danhSachSanPham_File.length == 0) {
+            if (DSSP_File.length == 0) {
                 System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
                 return;
             }
 
-            SanPham minSP_LoiNhuan = danhSachSanPham_File[0];
-            SanPham maxSP_LoiNhuan = danhSachSanPham_File[0];
+            SanPham minSP_LoiNhuan = DSSP_File[0];
+            SanPham maxSP_LoiNhuan = DSSP_File[0];
             double tongLoiNhuan = 0;
             SanPham[] minDSSP_LoiNhuan = new SanPham[1];
             SanPham[] maxDSSP_LoiNhuan = new SanPham[1];
 
-            SanPham minSP_SoLuong = danhSachSanPham_File[0];
-            SanPham maxSP_SoLuong = danhSachSanPham_File[0];
+            SanPham minSP_SoLuong = DSSP_File[0];
+            SanPham maxSP_SoLuong = DSSP_File[0];
             int tongSoLuong = 0;
             SanPham[] minDSSP_SoLuong = new SanPham[1];
             SanPham[] maxDSSP_SoLuong = new SanPham[1];
 
-            for (int i = 0; i < danhSachSanPham_File.length; i++) {
-                tongLoiNhuan += danhSachSanPham_File[i].LoiNhuan();
-                if (danhSachSanPham_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan())
-                    minSP_LoiNhuan = danhSachSanPham_File[i];
-                if (danhSachSanPham_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan())
-                    maxSP_LoiNhuan = danhSachSanPham_File[i];
+            for (int i = 0; i < DSSP_File.length; i++) {
+                tongLoiNhuan += DSSP_File[i].LoiNhuan();
+                if (DSSP_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan())
+                    minSP_LoiNhuan = DSSP_File[i];
+                if (DSSP_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan())
+                    maxSP_LoiNhuan = DSSP_File[i];
 
-                tongSoLuong += danhSachSanPham_File[i].getSoLuong();
-                if(danhSachSanPham_File[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
-                    minSP_SoLuong = danhSachSanPham_File[i];
+                tongSoLuong += DSSP_File[i].getSoLuong();
+                if(DSSP_File[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
+                    minSP_SoLuong = DSSP_File[i];
                 }
-                if(danhSachSanPham_File[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
-                    maxSP_SoLuong = danhSachSanPham_File[i];
+                if(DSSP_File[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
+                    maxSP_SoLuong = DSSP_File[i];
                 }
             }
 
-            for (int i = 0; i < danhSachSanPham_File.length; i++) {
-                if (danhSachSanPham_File[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
+            for (int i = 0; i < DSSP_File.length; i++) {
+                if (DSSP_File[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
                     minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
-                    minDSSP_LoiNhuan[i] = danhSachSanPham_File[i];
+                    minDSSP_LoiNhuan[i] = DSSP_File[i];
                 }
-                if (danhSachSanPham_File[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
+                if (DSSP_File[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
                     maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
-                    maxDSSP_LoiNhuan[i] = danhSachSanPham_File[i];
+                    maxDSSP_LoiNhuan[i] = DSSP_File[i];
                 }
 
-                if (danhSachSanPham_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                if (DSSP_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
                     minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
-                    minDSSP_SoLuong[i] = danhSachSanPham_File[i];
+                    minDSSP_SoLuong[i] = DSSP_File[i];
                 }
-                if (danhSachSanPham_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                if (DSSP_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
                     maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
-                    maxDSSP_SoLuong[i] = danhSachSanPham_File[i];
+                    maxDSSP_SoLuong[i] = DSSP_File[i];
                 }
             }
 
             System.out.println("\n --------THỐNG KÊ DANH SÁCH SẢN PHẨM CỦA FILE SanPham.txt--------");
-            System.out.println("1. Tổng số lượng sản phẩm : " + danhSachSanPham_File.length);
+            System.out.println("1. Tổng số lượng sản phẩm : " + DSSP_File.length);
 
             System.out.println("2.Các sản phẩm có lợi nhuận thấp nhất : ");
             for ( int i = 0 ; i < minDSSP_LoiNhuan.length ; i++ ){

@@ -15,6 +15,7 @@ public class HoaDon implements IThaoTac {
     private int[] soLuongSP;  // Mảng số lượng sản phẩm
     private String phuongThucThanhToan;  // Phương thức thanh toán
 
+
     public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
         this.dssp = dssp;
         this.dskh = dskh;
@@ -78,6 +79,14 @@ public class HoaDon implements IThaoTac {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
+    public KhachHang getKhachHang() {
+        return khachHang;
+    }
+
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang = khachHang;
+    }
+
     @Override
     public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
@@ -102,7 +111,7 @@ public class HoaDon implements IThaoTac {
             System.out.println("Nhập số lượng sản phẩm: ");
             int sl = Integer.parseInt(sc.nextLine());
 
-            for (SanPham x : dssp.getDanhSachSanPham()) {
+            for (SanPham x : dssp.getDSSP()) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
                     sanpham[i] = x;
                     soLuongSP[i] = sl;
@@ -225,7 +234,7 @@ public class HoaDon implements IThaoTac {
                         System.out.println("Nhập tên sản phẩm: ");
                         String tenSP = sc.nextLine();
                         boolean timSP = false;
-                        for (SanPham sp : dssp.getDanhSachSanPham()) {
+                        for (SanPham sp : dssp.getDSSP()) {
                             if (tenSP.equalsIgnoreCase(sp.getTenSP())) {
                                 sanpham[i] = sp;
                                 System.out.println("Nhập số lượng sản phẩm: ");
