@@ -13,7 +13,31 @@ public class DanhSachKhachHang implements IThaoTac_2 {
     private int soLuongKhachHang;
     private KhachHang[] danhSachKhachHang;
     private KhachHang[] danhSachKhachHang_File;
+    
+    public int getSoLuongKhachHang() {
+    return soLuongKhachHang;
+    }
 
+    public void setSoLuongKhachHang(int soLuongKhachHang) {
+        this.soLuongKhachHang = soLuongKhachHang;
+    }
+
+    public KhachHang[] getDanhSachKhachHang() {
+        return danhSachKhachHang;
+    }
+
+    public void setDanhSachKhachHang(KhachHang[] danhSachKhachHang) {
+        this.danhSachKhachHang = danhSachKhachHang;
+    }
+
+    public KhachHang[] getDanhSachKhachHang_File() {
+        return danhSachKhachHang_File;
+    }
+
+    public void setDanhSachKhachHang_File(KhachHang[] danhSachKhachHang_File) {
+        this.danhSachKhachHang_File = danhSachKhachHang_File;
+    }
+    
     public DanhSachKhachHang() {
         this.danhSachKhachHang = new KhachHang[5];
         this.Nhap();
