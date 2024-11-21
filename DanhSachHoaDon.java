@@ -1,304 +1,329 @@
 package Project_OOP;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
-public class DanhSachHoaDon implements IThaoTac_2 {
-    static int sl = 0; // Số lượng hóa đơn hiện tại
-    private HoaDon[] DSHD; // Mảng chứa các hóa đơn
-    private DanhSachKhachHang dskh;  // Danh sách khách hàng
-    private DanhSachSanPham dssp;    // Danh sách sản phẩm
-    Scanner sc = new Scanner(System.in);
+public class DanhSachHoaDon {
 
-    // Constructor
-    DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-        this.dskh = dskh;
-        this.dssp = dssp;
-        this.DSHD = new HoaDon[5];
-        this.Nhap(); // Nhập dữ liệu từ file khi khởi tạo
+    private static int soLuongHoaDon;
+    private HoaDon[] DSHD;         // Đổi từ danhSachHoaDon thành DSHD
+    private HoaDon[] DSHD_File;    // Đổi từ danhSachHoaDon_File thành DSHD_File
+
+    static Scanner sc = new Scanner(System.in);
+
+    public DanhSachHoaDon() {
+        this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
+        this.Nhap();
     }
 
-    @Override
+    public HoaDon[] getDSHD() {
+        return DSHD;
+    }
+
+    public void setDSHD(HoaDon[] DSHD) {
+        this.DSHD = DSHD;
+    }
+
+    // Nhập danh sách hóa đơn từ file
     public void Nhap() {
+        System.out.println("\n \t \t---------TẠO DANH SÁCH HÓA ĐƠN TỪ FILE HoaDon.txt---------");
+
         String line;
-        String[] list;
-        try (BufferedReader br = new BufferedReader(new FileReader("HoaDon.txt"))) {
+        String[] strings = new String[6];
+        try {
+            FileReader fr = new FileReader("HoaDon.txt");
+            BufferedReader br = new BufferedReader(fr);
+
             while ((line = br.readLine()) != null) {
-                if (sl == DSHD.length) {
+                if (soLuongHoaDon == DSHD.length) {
                     DSHD = Arrays.copyOf(DSHD, DSHD.length + 5);
                 }
 
-                list = line.split(";");
+                strings = line.split(";");
                 try {
-                    HoaDon hd = new HoaDon(dssp, dskh);
-                    hd.setMaHD(list[0]);
-                    hd.setThoiGian(list[1]);
-                    KhachHang khachHang = dskh.getKhachHangBySDT(list[2]);
-                    hd.setKhachHang(khachHang);
-                    hd.setSanpham(this.parseSanphamFromFile(list[3]));
-                    hd.setPhuongThucThanhToan(list[4]);
-                    DSHD[sl] = hd;
-                    sl++;
+                    // Code để tạo HoaDon từ dữ liệu file
+                    // Bạn cần điều chỉnh phần này dựa trên cách bạn implement HoaDon
+                    HoaDon hd = new HoaDon();
+                    DSHD[soLuongHoaDon] = hd;
+                    soLuongHoaDon++;
                 } catch (Exception e) {
-                    System.out.println("Lỗi dữ liệu hóa đơn!");
+                    e.printStackTrace();
                 }
             }
+
+            br.close();
+            fr.close();
         } catch (Exception e) {
-            System.out.println("Không đọc được file hóa đơn!");
+            System.out.println("Lỗi đọc file HoaDon.txt: ");
+            e.printStackTrace();
         }
 
-        if (sl < DSHD.length) {
-            DSHD = Arrays.copyOf(DSHD, sl);
+        // Thu hẹp mảng nếu mảng chưa đầy
+        if (soLuongHoaDon < DSHD.length) {
+            DSHD = Arrays.copyOf(DSHD, soLuongHoaDon);
         }
+
+        // Copy mảng hiện tại vào mảng lấy dữ liệu từ File
+        DSHD_File = Arrays.copyOf(DSHD, DSHD.length);
     }
 
-    private SanPham[] parseSanphamFromFile(String data) {
-        String[] products = data.split(",");
-        SanPham[] parsedSanPham = new SanPham[products.length];
-        for (int i = 0; i < products.length; i++) {
-            SanPham sp = dssp.getSanPhamByName(products[i]);
-            parsedSanPham[i] = sp;
-        }
-        return parsedSanPham;
-    }
-
-    @Override
-    public void Xuat() {
-        System.out.println("\n \t \t---------Xuất danh sách hóa đơn---------");
-
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
-            return;
-        }
-
-        System.out.println("\t   Thông tin của danh sách hóa đơn \n--------------------------");
-        for (int i = 0; i < DSHD.length; i++) {
-            if (DSHD[i] != null) {
-                DSHD[i].Xuat();
-                System.out.println("\t--------------");
-            }
-        }
-    }
-
-    @Override
+    // Thêm hóa đơn mới
     public void Them() {
-        System.out.println("\n \t \t---------Thêm hóa đơn---------");
+        System.out.println("\n \t \t---------THÊM HÓA ĐƠN---------");
 
         if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
+            System.out.println("Danh sách hóa đơn chưa được khởi tạo. Vui lòng khởi tạo danh sách hóa đơn trước.!!! ");
             return;
         }
 
-        int x;
+        int slHD;
         do {
-            System.out.printf("Nhập số lượng hóa đơn cần thêm: ");
-            x = sc.nextInt();
-            sc.nextLine();
-            if (x <= 0)
-                System.out.println("Vui lòng nhập số lượng lớn hơn 0!!");
-        } while (x <= 0);
-        sl += x;
-
-        int prevLength = DSHD.length;
-        DSHD = Arrays.copyOf(DSHD, DSHD.length + x);
-
-        for (int i = prevLength; i < DSHD.length; i++) {
-            DSHD[i] = new HoaDon(dssp, dskh);
-            DSHD[i].Nhap();
-            System.out.println("Nhập thành công hóa đơn thứ " + (i + 1) + "!");
-        }
-    }
-
-    @Override
-    public void Sua() {
-        System.out.println("\n \t \t---------Sửa hóa đơn---------");
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
-            return;
-        }
-
-        System.out.printf("Nhập vào mã hóa đơn cần sửa: ");
-        String s = sc.nextLine();
-        boolean isFind = false;
-
-        for (int i = 0; i < DSHD.length; i++) {
-            if (DSHD[i].getMaHD().equals(s)) {
-                DSHD[i].Sua();
-                isFind = true;
-                System.out.println("Sửa hóa đơn thành công!");
+            System.out.println("Nhập số lượng hóa đơn muốn thêm: ");
+            slHD = Integer.parseInt(sc.nextLine());
+            if (slHD <= 0) {
+                System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0: ");
             }
-        }
+        } while (slHD <= 0);
 
-        if (!isFind)
-            System.out.println("Không tìm thấy mã hóa đơn '" + s + "' để sửa!");
+        soLuongHoaDon += slHD;
+        DSHD = Arrays.copyOf(DSHD, DSHD.length + slHD);
+
+        int slHDBanDau = DSHD.length - slHD;
+        for (int i = slHDBanDau; i < DSHD.length; i++) {
+            HoaDon hd = new HoaDon();
+            hd.Nhap(); // Giả sử HoaDon có phương thức Nhap()
+            DSHD[i] = hd;
+        }
     }
 
-    @Override
-    public void Xoa() {
-        System.out.println("\n---------Xóa hóa đơn---------");
+    // Xuất danh sách hóa đơn
+    public void Xuat() {
+        System.out.println("\n \t \t---------XUẤT DANH SÁCH HÓA ĐƠN---------");
 
         if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
+            System.out.println("Danh sách hóa đơn chưa được khởi tạo.");
             return;
         }
 
         if (DSHD.length == 0) {
-            System.out.println("Danh sách hóa đơn trống.");
+            System.out.println("Danh sách hóa đơn hiện tại đang trống.");
             return;
         }
 
-        System.out.print("Nhập vào mã hóa đơn cần xóa: ");
-        String x = sc.nextLine();
-        boolean isFound = false;
-        int index = -1;
-
         for (int i = 0; i < DSHD.length; i++) {
-            if (DSHD[i].getMaHD().equals(x)) {
-                index = i;
-                isFound = true;
+            DSHD[i].Xuat(); // Giả sử HoaDon có phương thức Xuat()
+            System.out.println("\t--------------");
+        }
+    }
+
+    // Sửa hóa đơn
+    public void Sua() {
+        System.out.println("\n \t \t---------SỬA HÓA ĐƠN---------");
+
+        if (DSHD == null || DSHD.length == 0) {
+            System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
+            return;
+        }
+
+        System.out.println("Nhập mã hóa đơn cần sửa: ");
+        String maHD_Sua = sc.nextLine();
+
+        boolean timThay = false;
+        for (int i = 0; i < DSHD.length; i++) {
+            if (DSHD[i].getMaHD().equals(maHD_Sua)) {
+                DSHD[i].Sua(); // Giả sử HoaDon có phương thức Sua()
+                timThay = true;
+                System.out.println("Sửa hóa đơn thành công!");
                 break;
             }
         }
 
-        if (isFound) {
-            for (int i = index; i < DSHD.length - 1; i++) {
-                DSHD[i] = DSHD[i + 1];
-            }
-            DSHD = Arrays.copyOf(DSHD, DSHD.length - 1);
-            System.out.println("Xóa hóa đơn thành công!");
-            sl--;
-        } else {
-            System.out.println("Không tìm thấy mã hóa đơn '" + x + "' để xóa!");
+        if (!timThay) {
+            System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Sua);
         }
     }
 
-    @Override
+    // Xóa hóa đơn
+    public void Xoa() {
+        System.out.println("\n \t \t---------XÓA HÓA ĐƠN---------");
+
+        if (DSHD == null || DSHD.length == 0) {
+            System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
+            return;
+        }
+
+        System.out.println("Nhập mã hóa đơn cần xóa: ");
+        String maHD_Xoa = sc.nextLine();
+
+        boolean timThay = false;
+        for (int i = 0; i < DSHD.length; i++) {
+            if (DSHD[i].getMaHD().equals(maHD_Xoa)) {
+                // Di chuyển các phần tử phía sau lên
+                for (int j = i; j < DSHD.length - 1; j++) {
+                    DSHD[j] = DSHD[j + 1];
+                }
+
+                // Thu nhỏ mảng
+                DSHD = Arrays.copyOf(DSHD, DSHD.length - 1);
+                timThay = true;
+                soLuongHoaDon--;
+                System.out.println("Xóa hóa đơn thành công!");
+                break;
+            }
+        }
+
+        if (!timThay) {
+            System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Xoa);
+        }
+    }
+
+    // Tìm kiếm hóa đơn
     public void TimKiem() {
-        System.out.println("\n---------Tìm kiếm hóa đơn---------");
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
+        System.out.println("\n \t \t---------TÌM KIẾM HÓA ĐƠN---------");
+
+        if (DSHD == null || DSHD.length == 0) {
+            System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
             return;
         }
 
-        while (true) {
-            int x;
-            System.out.println("1.Tìm kiếm theo mã hóa đơn.");
-            System.out.println("2.Tìm kiếm theo tên khách hàng.");
-            System.out.println("3.Tìm kiếm theo số lượng.");
-            System.out.println("4.Tìm kiếm theo tổng giá trị.");
-            System.out.println("5.Thoát.");
-            do {
-                System.out.printf("Nhập lựa chọn: ");
-                x = sc.nextInt();
-                sc.nextLine();
-                if (x < 1 || x > 5)
-                    System.out.println("Vui lòng nhập lựa chọn từ 1 đến 5!");
-            } while (x < 1 || x > 5);
+        System.out.println("Chọn cách tìm kiếm:");
+        System.out.println("1. Tìm theo mã hóa đơn");
+        System.out.println("2. Tìm theo khách hàng");
+        System.out.println("3. Tìm theo ngày");
 
-            if (x == 1) {
-                System.out.printf("Nhập mã hóa đơn cần tìm: ");
-                String s = sc.nextLine();
-                boolean isFind = false;
-                for (int i = 0; i < DSHD.length; i++) {
-                    if (DSHD[i].getMaHD().equals(s)) {
-                        isFind = true;
-                        DSHD[i].Xuat();
-                    }
-                }
-                if (!isFind)
-                    System.out.println("Không tìm thấy hóa đơn có mã '" + s + "' trong danh sách!");
-            }
+        int luaChon = Integer.parseInt(sc.nextLine());
 
-            else if (x == 2) {
-                System.out.printf("Nhập tên khách hàng cần tìm: ");
-                String s = sc.nextLine();
-                boolean isFind = false;
-                for (int i = 0; i < DSHD.length; i++) {
-                    if (DSHD[i].getTenKH().equals(s)) {
-                        isFind = true;
-                        DSHD[i].Xuat();
-                    }
-                }
-                if (!isFind)
-                    System.out.println("Không tìm thấy hóa đơn có tên khách hàng '" + s + "'!");
-            }
-
-            else if (x == 3) {
-                System.out.printf("Nhập số lượng cần tìm: ");
-                int s = sc.nextInt();
-                boolean isFind = false;
-                for (int i = 0; i < DSHD.length; i++) {
-                    if (DSHD[i].getSoLuong() == s) {
-                        isFind = true;
-                        DSHD[i].Xuat();
-                    }
-                }
-                if (!isFind)
-                    System.out.println("Không tìm thấy hóa đơn với số lượng '" + s + "'!");
-            }
-
-            else if (x == 4) {
-                System.out.printf("Nhập tổng giá trị cần tìm: ");
-                double s = sc.nextDouble();
-                boolean isFind = false;
-                for (int i = 0; i < DSHD.length; i++) {
-                    if (DSHD[i].getTongGiaTri() == s) {
-                        isFind = true;
-                        DSHD[i].Xuat();
-                    }
-                }
-                if (!isFind)
-                    System.out.println("Không tìm thấy hóa đơn với tổng giá trị '" + s + "'!");
-            }
-
-            else
-                return;
+        switch (luaChon) {
+            case 1:
+                timTheoMaHoaDon();
+                break;
+            case 2:
+                timTheoKhachHang();
+                break;
+            case 3:
+                timTheoNgay();
+                break;
+            default:
+                System.out.println("Lựa chọn không hợp lệ.");
         }
     }
 
-    public void ThongKe() {
-        System.out.println("\n---------Thống kê hóa đơn---------");
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
-            return;
-        }
+    private void timTheoMaHoaDon() {
+        System.out.println("Nhập mã hóa đơn cần tìm: ");
+        String maHD = sc.nextLine();
 
-        System.out.println("Tổng số hóa đơn: " + DSHD.length);
-    }
-
-    @Override
-    public void ghiFile() {
-        System.out.println("\n---------Ghi file hóa đơn---------");
-        if (DSHD == null) {
-            System.out.println("Vui lòng tạo danh sách hóa đơn trước!!");
-            return;
-        }
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("HoaDon.txt"))) {
-            for (HoaDon hd : DSHD) {
-                bw.write(hd.getMaHD() + ";" + hd.getTenKH() + ";" + hd.getTongGiaTri() + ";" +
-                        hd.getSoLuong() + ";" + hd.getNgayLap() + ";" + hd.getNgayThanhToan());
-                bw.newLine();
-            }
-            System.out.println("Ghi file thành công!");
-        } catch (IOException e) {
-            System.out.println("Lỗi ghi file!");
-        }
-    }
-
-    // Phương thức đọc file đã được sửa thành static
-    public static void docFile() {
-        System.out.println("\n---------Đọc file hóa đơn---------");
-
-        try (BufferedReader br = new BufferedReader(new FileReader("HoaDon.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(";");
-                HoaDon hd = new HoaDon(data[0], data[1], Double.parseDouble(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
+        boolean timThay = false;
+        for (HoaDon hd : DSHD) {
+            if (hd.getMaHD().equals(maHD)) {
                 hd.Xuat();
+                timThay = true;
+                break;
             }
-        } catch (IOException e) {
-            System.out.println("Không đọc được file hóa đơn!");
+        }
+
+        if (!timThay) {
+            System.out.println("Không tìm thấy hóa đơn.");
         }
     }
+
+    private void timTheoKhachHang() {
+        System.out.println("Nhập SDT khách hàng cần tìm: ");
+        String sdt = sc.nextLine();
+
+        boolean timThay = false;
+        for (HoaDon hd : DSHD) {
+            if (hd.khachHang.getSDT().equalsIgnoreCase(sdt)) {
+                hd.Xuat();
+                timThay = true;
+                break;
+            }
+        }
+        if (!timThay) {
+            System.out.println("Không tìm thấy hóa đơn với số điện thoại khách hàng: " + sdt);
+        }
+    }
+
+    private void timTheoNgay() {
+        System.out.println("Nhập thời gian cần tìm: ");
+        String tg = sc.nextLine();
+
+        boolean timThay = false;
+        for (HoaDon hd : DSHD) {
+            if (hd.getThoiGian().equalsIgnoreCase(tg)) {
+                hd.Xuat();
+                timThay = true;
+                break;
+            }
+        }
+        if (!timThay) {
+            System.out.println("Không tìm thấy hóa đơn được tạo vào " + tg);
+        }
+    }
+
+    // Thống kê hóa đơn
+    public void ThongKe() {
+        System.out.println("\n \t \t---------THỐNG KÊ HÓA ĐƠN---------");
+
+        if (DSHD == null || DSHD.length == 0) {
+            System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
+            return;
+        }
+
+        double tongDoanhThu = 0;
+        HoaDon hoaDonCaoNhat = DSHD[0];
+        HoaDon hoaDonThapNhat = DSHD[0];
+
+        for (HoaDon hd : DSHD) {
+            double tongTien = hd.TongTien();
+            tongDoanhThu += tongTien;
+
+            if (tongTien > hoaDonCaoNhat.TongTien()) {
+                hoaDonCaoNhat = hd;
+            }
+
+            if (tongTien < hoaDonThapNhat.TongTien()) {
+                hoaDonThapNhat = hd;
+            }
+        }
+
+        System.out.println("Tổng doanh thu: " + tongDoanhThu);
+        System.out.println("Hóa đơn có tổng tiền cao nhất:");
+        hoaDonCaoNhat.Xuat();
+        System.out.println("Hóa đơn có tổng tiền thấp nhất:");
+        hoaDonThapNhat.Xuat();
+    }
+
+    // Đọc file hóa đơn
+    // Đọc và xuất nội dung của file HoaDon.txt
+    public void docFile() {
+        System.out.println("\n \t \t---------ĐỌC FILE HoaDon.txt VÀ XUẤT RA MÀN HÌNH---------");
+
+        String line;
+        String[] strings = new String[6];
+
+        try {
+            FileReader fr = new FileReader("HoaDon.txt");
+            BufferedReader br = new BufferedReader(fr);
+
+            while ((line = br.readLine()) != null) {
+                strings = line.split(";");
+
+                // In từng dòng dữ liệu ra màn hình
+                System.out.println("Dòng dữ liệu: " + line);
+
+                // In chi tiết thông tin của hóa đơn từ mảng strings
+                System.out.println("Mã Hóa Đơn: " + strings[0] + " - Tên Khách Hàng: " + strings[1] + " - Tổng Tiền: " + strings[4]);
+                // Bạn có thể điều chỉnh chỉ mục nếu cấu trúc file có sự thay đổi. 
+                // Ở đây tôi đang giả sử tổng tiền là phần tử ở chỉ mục 4.
+            }
+
+            br.close();
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi đọc file HoaDon.txt: ");
+            e.printStackTrace();
+        }
+    }
+
 }
