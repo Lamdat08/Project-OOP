@@ -12,6 +12,7 @@ public class KhachHang implements IThaoTac {
     private String SDT;
     private String diaChi;
     private String gioiTinh;
+
     private boolean status;
 
     public void menuSua() {
@@ -76,9 +77,8 @@ public class KhachHang implements IThaoTac {
     public void setSDT(String SDT) {
         while (SDT == null || SDT.trim().isEmpty()) {
             System.out.println("Số điện thoại không được để trống. Vui lòng nhập số điện thoại: ");
-            SDT = sc.nextLine();
+            SDT = sc.nextLine().trim();
         }
-        SDT = SDT.trim();
         String regex = "^[0-9]{10,11}$";
         while (!Pattern.matches(regex, SDT)) {
             System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại: ");
@@ -157,6 +157,7 @@ public class KhachHang implements IThaoTac {
         System.out.println("Số điện thoại khách hàng: " + getSDT());
         System.out.println("Địa chỉ khách hàng: " + getDiaChi());
         System.out.println("Giới tính khách hàng: " + getGioiTinh());
+        System.out.println("\\n-------------------\"");
     }
 
     public void Sua() {
@@ -195,6 +196,6 @@ public class KhachHang implements IThaoTac {
                     return;
             }
         }
-
     }
+
 }
