@@ -42,7 +42,7 @@ public class QuanLyKhachHang {
             int luaChon1 = Integer.parseInt(sc.nextLine());
             while (luaChon1 < 1 || luaChon1 > 4) {
                 menuQLKH();
-                System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 6: ");
+                System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
                 luaChon1 = Integer.parseInt(sc.nextLine());
             }
             switch (luaChon1) {
@@ -57,9 +57,9 @@ public class QuanLyKhachHang {
                         menuKhachHang();
                         System.out.println("Nhập lựa chọn: ");
                         int luaChon2 = Integer.parseInt(sc.nextLine());
-                        while (luaChon2 < 1 || luaChon2 > 9) {
+                        while (luaChon2 < 1 || luaChon2 > 10) {
                             menuQLKH();
-                            System.out.println("Không có lựa chọn này, vui lòng nhập các lựa chọn từ 1 - 4");
+                            System.out.println("Không có lựa chọn này, vui lòng nhập các lựa chọn từ 1 - 10");
                             luaChon2 = Integer.parseInt(sc.nextLine());
                         }
                         switch (luaChon2) {
@@ -88,14 +88,15 @@ public class QuanLyKhachHang {
                                 dskh.ghiFile();
                                 break;
                             case 9:
-                                //Thống kê
+                                System.out.println("Thống kê danh sách khách hàng.");
+                                dskh.thongKeKhachHang();
                                 break;
                             case 10:
-                                menuKhachHang();
+                                menuThoat();
                                 System.out.println("Nhập lựa chọn: ");
                                 int exit = Integer.parseInt(sc.nextLine());
                                 while (exit < 1 || exit > 2) {
-                                    menuQLKH();
+                                    menuThoat();
                                     System.out.println("Không có lựa chọn này, vui lòng nhập lựa chọn 1 hoặc 2: ");
                                     exit = Integer.parseInt(sc.nextLine());
                                 }
