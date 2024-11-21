@@ -3,7 +3,7 @@ package Project_OOP;
 import java.util.Scanner;
 
 public class QuanLyHoaDon {
-    DanhSachHoaDon DSHD = new DanhSachHoaDon(); // Danh sách hóa đơn
+    DanhSachHoaDon DShd = new DanhSachHoaDon(); // Danh sách hóa đơn
     Scanner sc = new Scanner(System.in);
 
     // Constructor
@@ -30,11 +30,11 @@ public class QuanLyHoaDon {
             } while (x < 1 || x > 4);
 
             if (x == 1) {
-                DSHD.docFile();
+                DShd.docFile(); // Đọc file hóa đơn
             } else if (x == 2) {
-                DSHD.ThongKe(2);
+                DShd.ThongKe(2); // Thống kê từ file
             } else if (x == 3) {
-                // Menu các thao tác với hóa đơn
+                // Menu thao tác với hóa đơn
                 while (true) {
                     System.out.println("--------Menu các thao tác quản lý hóa đơn--------");
                     System.out.println("1. Xuất danh sách hóa đơn.");
@@ -54,50 +54,45 @@ public class QuanLyHoaDon {
                             System.out.println("Nhập lựa chọn từ 1->8 !! ");
                     } while (c < 1 || c > 8);
 
-                    if (c == 1)
-                        DSHD.Xuat();
-
-                    else if (c == 2)
-                        DSHD.Them();
-
-                    else if (c == 3)
-                        DSHD.Sua();
-
-                    else if (c == 4)
-                        DSHD.Xoa();
-
-                    else if (c == 5)
-                        DSHD.TimKiem();
-
-                    else if (c == 6)
-                        DSHD.ghiFile();
-
-                    else if (c == 7)
-                        DSHD.ThongKe(1);
-
-                    else {
+                    if (c == 1) {
+                        DShd.Xuat(); // Xuất danh sách hóa đơn
+                    } else if (c == 2) {
+                        DShd.Them(); // Thêm hóa đơn vào danh sách
+                    } else if (c == 3) {
+                        DShd.Sua(); // Sửa hóa đơn theo mã
+                    } else if (c == 4) {
+                        DShd.Xoa(); // Xóa hóa đơn theo mã
+                    } else if (c == 5) {
+                        DShd.TimKiem(); // Tìm kiếm hóa đơn
+                    } else if (c == 6) {
+                        DShd.ghiFile(); // Ghi file hóa đơn
+                    } else if (c == 7) {
+                        DShd.ThongKe(1); // Thống kê danh sách hóa đơn
+                    } else {
+                        // Lưu ý: Nhớ ghi file trước khi thoát
                         System.out.println("Lưu ý : Nhớ ghi file trước khi thoát !!! ");
                         System.out.println("1. Ghi file rồi thoát.");
                         System.out.println("2. Thoát.");
                         System.out.println("3. Quay trở lại.");
                         int exit;
                         do {
-                            System.out.println("");
+                            System.out.printf("Nhập lựa chọn: ");
                             exit = sc.nextInt();
                             sc.nextLine();
                         } while (exit < 1 || exit > 3);
 
                         if (exit == 1) {
-                            DSHD.ghiFile();
+                            DShd.ghiFile(); // Ghi file rồi thoát
                             break;
-                        } else if (exit == 2)
-                            break;
-                        else
+                        } else if (exit == 2) {
+                            break; // Thoát chương trình
+                        } else {
                             System.out.println("\n Quay trở lại \n------------------------------------");
+                        }
                     }
                 }
             } else {
-                return; // Thoát chương trình quản lý
+                return; // Thoát chương trình quản lý hóa đơn
             }
         }
     }
