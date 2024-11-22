@@ -467,40 +467,44 @@ public class DanhSachSanPham implements IThaoTac_2 {
             SanPham[] maxDSSP_SoLuong = new SanPham[1];
 
             for (int i = 0; i < DSSP.length; i++) {
-                tongLoiNhuan += DSSP[i].LoiNhuan();
-                if (DSSP[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
-                    minSP_LoiNhuan = DSSP[i];
-                }
-                if (DSSP[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()) {
-                    maxSP_LoiNhuan = DSSP[i];
-                }
+                if(DSSP[i].getStatus()){
+                    tongLoiNhuan += DSSP[i].LoiNhuan();
+                    if (DSSP[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
+                        minSP_LoiNhuan = DSSP[i];
+                    }
+                    if (DSSP[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()) {
+                        maxSP_LoiNhuan = DSSP[i];
+                    }
 
-                tongSoLuong += DSSP[i].getSoLuong();
-                if(DSSP[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
-                    minSP_SoLuong = DSSP[i];
-                }
-                if(DSSP[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
-                    maxSP_SoLuong = DSSP[i];
+                    tongSoLuong += DSSP[i].getSoLuong();
+                    if(DSSP[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
+                        minSP_SoLuong = DSSP[i];
+                    }
+                    if(DSSP[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
+                        maxSP_SoLuong = DSSP[i];
+                    }
                 }
             }
 
             for (int i = 0; i < DSSP.length; i++) {
-                if (DSSP[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
-                    minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
-                    minDSSP_LoiNhuan[i] = DSSP[i];
-                }
-                if (DSSP[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
-                    maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
-                    maxDSSP_LoiNhuan[i] = DSSP[i];
-                }
+                if(DSSP[i].getStatus()){
+                    if (DSSP[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
+                        minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
+                        minDSSP_LoiNhuan[i] = DSSP[i];
+                    }
+                    if (DSSP[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
+                        maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
+                        maxDSSP_LoiNhuan[i] = DSSP[i];
+                    }
 
-                if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
-                    minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
-                    minDSSP_SoLuong[i] = DSSP[i];
-                }
-                if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
-                    maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
-                    maxDSSP_SoLuong[i] = DSSP[i];
+                    if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                        minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
+                        minDSSP_SoLuong[i] = DSSP[i];
+                    }
+                    if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                        maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
+                        maxDSSP_SoLuong[i] = DSSP[i];
+                    }
                 }
             }
 
