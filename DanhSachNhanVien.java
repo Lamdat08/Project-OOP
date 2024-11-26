@@ -342,10 +342,12 @@ public class DanhSachNhanVien implements IThaoTac_2{
                          QuanLy ql = new QuanLy(arr[0],arr[1],arr[2],arr[3],Double.parseDouble(arr[4]),Double.parseDouble(arr[5]));
                          arrNhanVien[soLuong++] = ql;
                     }
-
-
-
             }
+
+            if (soLuong < arrNhanVien.length){
+                arrNhanVien = Arrays.copyOf(arrNhanVien, soLuong);
+            }
+
             arrNhanVienFile = Arrays.copyOf(arrNhanVien,arrNhanVien.length);
         }catch(IOException e){
             e.printStackTrace();

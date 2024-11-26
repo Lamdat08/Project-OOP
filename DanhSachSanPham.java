@@ -93,14 +93,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
-        if (DSSP == null) {
-            System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!! ");
-            return;
-        }
-        if(DSSP.length == 0){
-            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
-            return;
-        }
+
 
         int slSP;
         do{
@@ -457,8 +450,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
             SanPham minSP_LoiNhuan = DSSP[viTri];
             SanPham maxSP_LoiNhuan = DSSP[viTri];
             double tongLoiNhuan = 0;
-            SanPham[] minDSSP_LoiNhuan = new SanPham[1];
-            SanPham[] maxDSSP_LoiNhuan = new SanPham[1];
+            SanPham[] minDSSP_LoiNhuan = new SanPham[0];
+            SanPham[] maxDSSP_LoiNhuan = new SanPham[0];
 
             SanPham minSP_SoLuong = DSSP[viTri];
             SanPham maxSP_SoLuong = DSSP[viTri];
@@ -497,6 +490,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         maxDSSP_LoiNhuan[i] = DSSP[i];
                     }
 
+                    //Loi
                     if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
                         minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
                         minDSSP_SoLuong[i] = DSSP[i];

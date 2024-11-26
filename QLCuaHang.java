@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class QLCuaHang {
     public static void main(String[] args) {
+
         QLCuaHang QLCH = new QLCuaHang();
         QLCH.Menu();
     }
@@ -12,7 +13,7 @@ public class QLCuaHang {
     QuanLySuKien qlsk = new QuanLySuKien();
     QuanLyNhanVien qlnv = new QuanLyNhanVien();
     QuanLySanPham qlsp = new QuanLySanPham();
-    //QuanLyHoaDon qlhd = new QuanLyHoaDon();
+    QuanLyHoaDon qlhd = new QuanLyHoaDon();
     QuanLyKhachHang qlkh = new QuanLyKhachHang();
 
     public void Menu()
@@ -27,10 +28,10 @@ public class QLCuaHang {
                 System.out.println("4.Quản lý nhân viên.");
                 System.out.println("5.Quản lý sự kiện.");
                 System.out.println("6.Thoát.");
-                System.out.printf("Nhập lựa chọn : ");
+                System.out.printf(" Nhập lựa chọn : ");
                 x = sc.nextInt(); sc.nextLine();
                 if ( x < 1 || x > 6)
-                    System.out.println("Vui lòng nhập lựa chọn từ 1 -> 6");
+                    System.out.println("Vui lòng nhập lựa chọn từ 1 -> 6 : ");
             } while (x < 1 || x > 6);
 
                 switch (x) {
@@ -39,11 +40,11 @@ public class QLCuaHang {
                         break;
 
                     case 2:
-                        //qlhd.menuQuanLyHoaDon();
+                        qlhd.menu();
                         break;
 
                     case 3:
-                        qlkh.menuKhachHang();
+                        qlkh.menuQuanLyKhachHang();
                         break;
 
                     case 4:

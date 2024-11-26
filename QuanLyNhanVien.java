@@ -46,7 +46,7 @@ public class QuanLyNhanVien {
 
 
         while (true) {
-            System.out.println("0 - Tạo mới và nhập");
+
             System.out.println("1 - Chọn xuất");
             System.out.println("2 - Chọn sửa");
             System.out.println("3 - Chọn ghi file");
@@ -58,12 +58,10 @@ public class QuanLyNhanVien {
             System.out.println("9 - Chọn thoát");
             int n;
             do {
+                System.out.printf("Nhap lua chon : ");
                 n = Integer.parseInt(sc.nextLine());
-            }while (n < 0 || n > 9);
+            }while (n < 1 || n > 9);
 
-            if (n == 0) {
-                dsnv.Nhap();
-            }
             if (n == 1) {
                 dsnv.Xuat();
             }
