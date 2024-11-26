@@ -40,31 +40,31 @@ public class NhanVienPartTime extends NhanVien{
 //        setMaNhanVien(sc.nextLine());
        String maNhanVien;
         do{
-            System.out.println("nhap ma nhan vien va ma nhan vien phai bat dau voi NV");
+            System.out.println("Nhập mã nhân viên ( bắt đầu với 'NV' ) : ");
             maNhanVien = sc.nextLine();
         }while(!maNhanVien.startsWith("NV"));
         setMaNhanVien(maNhanVien);
-        System.out.println("Nhap ten nhan vien");
+        System.out.println("Nhập vào tên nhân viên : ");
         setTenNhanVien(sc.nextLine());
-        System.out.println("nhap so dien thoai nhan vien");
+        System.out.println("Nhập vào số điện thoại nhân viên :");
         setSoDienThoai(sc.nextLine());
-        System.out.println("nhap gioi tinh");
+        System.out.println("Nhập vào giới tính :");
         setGioiTinh(sc.nextLine());
-        System.out.println("nhap luong co ban");
+        System.out.println("Nhập lương cơ bản : ");
         setLuongCoBan(Double.parseDouble(sc.nextLine()));
-        System.out.println("nhap so gio lam");
+        System.out.println("Nhập số giờ làm : ");
         setGioLam(Double.parseDouble(sc.nextLine()));
     }
 
 
     public void Xuat() {
-        System.out.println("Ma Nhan Vien : " + getMaNhanVien());
-        System.out.println("Ten Nhan Vien : "+getTenNhanVien());
-        System.out.println("So dien thoai : " + getSoDienThoai());
-        System.out.println("gioi tinh : " + getGioiTinh());
-        System.out.println("luong co ban : " + getLuongCoBan());
-        System.out.println("so gio lam : " + getGioLam());
-        System.out.println("tong luong : " + tinhLuong());
+        System.out.println("Mã nhân viên : " + getMaNhanVien());
+        System.out.println("Tên nhân viên : "+getTenNhanVien());
+        System.out.println("Số điện thoại : " + getSoDienThoai());
+        System.out.println("Giới tính " + getGioiTinh());
+        System.out.println("Lương cơ bản : " + getLuongCoBan());
+        System.out.println("Số giờ làm : " + getGioLam());
+        System.out.println("Tổng lương : " + tinhLuong());
     }
 
 
@@ -72,41 +72,41 @@ public class NhanVienPartTime extends NhanVien{
         Scanner sc = new Scanner(System.in);
         while(true){
 
-            System.out.println("1-Thay doi ma nhan vien");
-            System.out.println("2-Thay doi ten nhan vien");
-            System.out.println("3-Thay doi so dien thoai");
-            System.out.println("4-Thay doi gioi tinh");
-            System.out.println("5-Thay doi luong co ban");
-            System.out.println("6-Thay doi so gio lam");
+            System.out.println("1-Thay đổi mã nhân viên. ");
+            System.out.println("2-Thay đổi tên nhân viên. ");
+            System.out.println("3-Thay đổi số điện thoại. ");
+            System.out.println("4-Thay đổi giới tính. ");
+            System.out.println("5-TThay đổi lương cơ bản. ");
+            System.out.println("6-Thay đổi số giờ làm. ");
             int n = Integer.parseInt(sc.nextLine());
-
-            if(n == 1){
-                System.out.println("Thay doi ma nhan vien thanh");
+            if (n == 1) {
+                System.out.println("Thay đổi mã nhân viên thành : ");
                 setMaNhanVien(sc.nextLine());
             }
-            if(n == 2){
-                System.out.println("Thay doi ten nhan vien thanh");
+            if (n == 2) {
+                System.out.println("Thay đổi tên nhân viên thành : ");
                 setTenNhanVien(sc.nextLine());
             }
-            if(n == 3){
-                System.out.println("Thay doi so dien thoai thanh");
+            if (n == 3) {
+                System.out.println("Thay đổi số điện thoại thành : ");
                 setSoDienThoai(sc.nextLine());
             }
-            if(n == 4){
-                System.out.println("Thay doi gioi tinh thanh");
+            if (n == 4) {
+                System.out.println("Thay đổi giới tính thành : ");
                 setGioiTinh(sc.nextLine());
             }
-            if(n == 5){
-                System.out.println("Thay doi luong co ban Thanh");
+            if (n == 5) {
+                System.out.println("Thay đổi lương cơ bản thành :");
                 setLuongCoBan(Double.parseDouble(sc.nextLine()));
             }
-            if(n == 6){
-                System.out.println("Thay doi so gio lam thanh");
+            if (n == 6) {
+                System.out.println("Thay đổi số giờ làm thành :");
                 setGioLam(Double.parseDouble(sc.nextLine()));
             }
-            if(n == 7){
+            if (n == 7) {
                 break;
             }
+
         }
     }
 

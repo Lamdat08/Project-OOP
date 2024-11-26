@@ -448,4 +448,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             System.out.println("Lượng khách hàng chủ yếu là người cũ.");
         }
     }
+
+
+
+
 }

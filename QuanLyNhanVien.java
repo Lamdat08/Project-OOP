@@ -2,7 +2,7 @@ package Project_OOP;
 
 import java.util.Scanner;
 
-public class QuanLyNhanVien{
+public class QuanLyNhanVien {
 //    public static void main(String[] args) {
 //       NhanVienPartTime nvpt = new NhanVienPartTime();
 //       nvpt.nhap();
@@ -39,53 +39,56 @@ public class QuanLyNhanVien{
 //            x.docFile();
 
 
-        Scanner sc = new Scanner(System.in);
-        DanhSachNhanVien dsnv = new DanhSachNhanVien();
-        public void Menu(){
+    Scanner sc = new Scanner(System.in);
+    DanhSachNhanVien dsnv = new DanhSachNhanVien();
+
+    public void Menu() {
 
 
+        while (true) {
+            System.out.println("0 - Tạo mới và nhập");
+            System.out.println("1 - Chọn xuất");
+            System.out.println("2 - Chọn sửa");
+            System.out.println("3 - Chọn ghi file");
+            System.out.println("4 - Chọn đọc file");
+            System.out.println("5 - Chọn tìm kiếm");
+            System.out.println("6 - Chọn thêm");
+            System.out.println("7 - Chọn xóa");
+            System.out.println("8 - Thống kê");
+            System.out.println("9 - Chọn thoát");
+            int n;
+            do {
+                n = Integer.parseInt(sc.nextLine());
+            }while (n < 0 || n > 9);
 
-        while(true){
-            System.out.println("0 - tao moi va nhap");
-            System.out.println("1 - chon xuat");
-            System.out.println("2 -  chon sua");
-            System.out.println("3 - chon ghi file");
-            System.out.println("4 - chon doc file");
-            System.out.println("5 - chon tim kiem");
-            System.out.println("6 - chon them");
-            System.out.println("7 - chon xoa");
-            System.out.println("8 - Thong Ke");
-            System.out.println("9 - chon thoat");
-            int n = Integer.parseInt(sc.nextLine());
-
-            if(n == 0){
+            if (n == 0) {
                 dsnv.Nhap();
             }
-            if(n == 1){
+            if (n == 1) {
                 dsnv.Xuat();
             }
-            if(n == 2){
+            if (n == 2) {
                 dsnv.Sua();
             }
-            if(n == 3){
+            if (n == 3) {
                 dsnv.ghiFile();
             }
-            if(n == 4){
+            if (n == 4) {
                 dsnv.docFile();
             }
-            if(n == 5){
+            if (n == 5) {
                 dsnv.TimKiem();
             }
-            if(n == 6){
+            if (n == 6) {
                 dsnv.Them();
             }
-            if(n == 7){
+            if (n == 7) {
                 dsnv.Xoa();
             }
-            if(n == 8){
+            if (n == 8) {
                 dsnv.thongKe();
             }
-            if(n == 9){
+            if (n == 9) {
                 break;
             }
         }

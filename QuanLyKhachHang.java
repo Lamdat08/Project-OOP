@@ -16,7 +16,7 @@ public class QuanLyKhachHang {
         System.out.println("4 - Thoát quản lý danh sách khách hàng.");
     }
 
-    public void menuKhachHang() {
+    public static void menuKhachHang() {
         System.out.println("\n --------Menu các thao tác quản lý danh sách khách hàng---------");
         System.out.println("1 - Tạo danh sách mới và nhập.");
         System.out.println("2 - Xuất danh sách khách hàng.");

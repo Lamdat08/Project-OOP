@@ -25,10 +25,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void Xoa() {
         if(soLuong == 0){
-            System.out.println("Danh sach trong \n");
+            System.out.println("Danh sách trống \n");
             return;
         }
-        System.out.println("Nhap Ma De Xoa");
+        System.out.println("Nhập mã để xóa : ");
         String maXoa = sc.nextLine();
         boolean find = false;
 
@@ -40,15 +40,15 @@ public class DanhSachNhanVien implements IThaoTac_2{
             }
         }
         if(!find){
-            System.out.println("khong tim thay");
+            System.out.println("Không tìm thấy ");
         }
     }
 
     @Override
     public void Them() {
         arrNhanVien = Arrays.copyOf(arrNhanVien,arrNhanVien.length+1);
-        System.out.println("1-Nhap danh sach nhan vien");
-        System.out.println("2-Nhap danh sach quan ly");
+        System.out.println("1 - Nhập danh sách nhân viên");
+        System.out.println("2 - Nhập danh sách quản lý");
 
         int luaChon;
 
@@ -74,20 +74,20 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void TimKiem() {
         if(soLuong == 0){
-            System.out.println("Danh sach trong \n");
+            System.out.println("Danh sách trống \n");
             return;
         }
         while(true){
-            System.out.println("1-Tim kiem theo ma");
-            System.out.println("2-Tim kiem theo ten");
-            System.out.println("3-Tim kiem theo sdt");
-            System.out.println("4-Tim kiem theo gioi tinh");
-            System.out.println("5-Tim kiem luong co ban");
+            System.out.println("1 - Tìm kiếm theo mã");
+            System.out.println("2 - Tìm kiếm theo tên");
+            System.out.println("3 - Tìm kiếm theo SĐT");
+            System.out.println("4 - Tìm kiếm theo giới tính");
+            System.out.println("5 - Tìm kiếm theo lương cơ bản");
 
             int n = Integer.parseInt(sc.nextLine());
 
             if(n == 1){
-                System.out.println("Nhap ma de tim kiem theo ma");
+                System.out.println("Nhập mã để tìm kiếm theo mã");
                 String maTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i< arrNhanVien.length;i++){
@@ -96,10 +96,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
                        find = true;
                     }
                 }
-                if(!find) System.out.println("khong tim thay");
+                if(!find) System.out.println("Không tìm thấy mã " + maTimKiem);
             }
             if(n == 2){
-                System.out.println("Nhap ten de tim kiem theo ten");
+                System.out.println("Nhập tên để tìm kiếm theo tên : ");
                 String tenTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
@@ -108,10 +108,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("khong tim thay");
+                if(!find) System.out.println("Không tìm thấy " + tenTimKiem);
             }
             if(n == 3){
-                System.out.println("Nhap so dien thoai tim kiem theo so dien thoai");
+                System.out.println("Nhập số điện thoại cần tìm kiếm:");
                 String soDienThoaiTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
@@ -120,10 +120,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("khong tim thay");
+                if(!find) System.out.println("Không tìm thấy " + soDienThoaiTimKiem);
             }
             if(n == 4){
-                System.out.println("Nhap gioi tinh de tim kiem theo gioi tinh");
+                System.out.println("Nhập giới tính cần tìm : ");
                 String gioiTinhTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
@@ -132,10 +132,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("khong tim thay");
+                if(!find) System.out.println("Không tìm thấy " + gioiTinhTimKiem);
             }
             if(n == 5){
-                System.out.println("Nhap luong co ban de tim kiem theo luong co ban");
+                System.out.println("Nhập lương cơ bản cần tìm : ");
                 String luongCoBanTimKiem = sc.nextLine();
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
@@ -144,7 +144,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("khong tim thay");
+                if(!find) System.out.println("Không tìm thấy " + luongCoBanTimKiem);
             }
 
             if(n == 6){
@@ -165,22 +165,22 @@ public class DanhSachNhanVien implements IThaoTac_2{
 //                System.out.println(line);
                 String arr[] = line.split(";");
                 if(arr[0].substring(0,2).equals("NV")){
-                    System.out.println("Ma Nhan Vien : " + arr[0]);
-                    System.out.println("Ten Nhan Vien : " + arr[1]);
-                    System.out.println("So dien thoai nhan vien : " +  arr[2]);
-                    System.out.println("gioi tinh : " + arr[3]);
-                    System.out.println("luong co ban : " + arr[4]);
-                    System.out.println("gio lam : " + arr[5]);
-                    System.out.println("tong luong : " + arr[6]);
+                    System.out.println("Mã nhân viên : " + arr[0]);
+                    System.out.println("Tên nhân viên : : " + arr[1]);
+                    System.out.println("Số điện thoại : " +  arr[2]);
+                    System.out.println("Giới tính : " + arr[3]);
+                    System.out.println("Lương cơ bản : " + arr[4]);
+                    System.out.println("Giờ làm : " + arr[5]);
+                    System.out.println("Tổng lương nhân viên: " + arr[6]);
                 }
                 if(arr[0].substring(0,2).equals("QL")){
-                    System.out.println("Ma Quan ly : " + arr[0]);
-                    System.out.println("Ten Quan ly : " + arr[1]);
-                    System.out.println("So dien thoai Quan ly : " + arr[2]);
-                    System.out.println("gioi tinh Quan ly : " + arr[3]);
-                    System.out.println("luong co ban Quan ly : " + arr[4]);
-                    System.out.println("Phu cap quan ly : " + arr[5]);
-                    System.out.println("tong luong quan ly : " + arr[6]);
+                    System.out.println("Mã quản lý :" + arr[0]);
+                    System.out.println("Tên quản lý : " + arr[1]);
+                    System.out.println("Số điện thoại : " + arr[2]);
+                    System.out.println("Giới tính : " + arr[3]);
+                    System.out.println("Lương cơ bản : " + arr[4]);
+                    System.out.println("Phụ cấp : " + arr[5]);
+                    System.out.println("Tổng lương quản lý : " + arr[6]);
 
                 }
             }
@@ -237,7 +237,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void ghiFile() {
         if(soLuong == 0){
-            System.out.println("Danh sach trong \n");
+            System.out.println("Danh sách trống \n");
             return;
         }
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("NhanVien.txt"))){
@@ -360,7 +360,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void Xuat() {
         if (arrNhanVien == null || arrNhanVien.length == 0) {
-            System.out.println("Danh sach nhan vien trong.");
+            System.out.println("Danh sách nhân viên trống.");
             return;
         }
         for(int i = 0;i<arrNhanVien.length;i++){
@@ -373,10 +373,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
     @Override
     public void Sua() {
         if(soLuong == 0){
-            System.out.println("Danh sach trong \n");
+            System.out.println("Danh sách nhân viên trống.");
             return;
         }
-        System.out.println("Vui Long Nhap Vao Ma De Sua");
+        System.out.println("Vui lòng nhập vào mã để sửa : ");
         String maSua = sc.nextLine();
         boolean find = false;
         for(int i = 0;i< arrNhanVien.length;i++){
@@ -386,7 +386,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 find = true;
             }
         }
-        if(!find) System.out.println("khong tim thay");
+        if(!find) System.out.println("Không tìm thấy mã" + maSua + " trong danh sách");
     }
 
 
@@ -425,10 +425,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
             }
 
         }
-        System.out.println("So Luong Nhan Vien" + soLuongNhanVien);
-        System.out.println("So Luong Quan Ly" + soLuongQuanLy);
+        System.out.println("Số lượng nhân viên :  " + soLuongNhanVien);
+        System.out.println("Số lượng quản lý : " + soLuongQuanLy);
 
-        System.out.println("Quan Ly va nhan vien co luong lon nhat: \n");
+        System.out.println("các quản lý và nhân viên có lương lớn nhất : \n");
 
         for(int i = 0;i<arrNhanVienFile.length;i++){
             if(arrNhanVienFile[i] instanceof QuanLy){
@@ -445,7 +445,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
             }
         }
 
-        System.out.println("Quan ly va nhan vien co luong lon nhat va nho nhat: \n");
+        System.out.println("các quản lý và nhân viên có lương nhỏ nhất : \n");
 
         for(int i = 0;i<arrNhanVienFile.length;i++){
             if(arrNhanVienFile[i] instanceof QuanLy){
@@ -462,10 +462,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
             }
         }
 
-        System.out.println("Tong Luong Cua Quan Ly : " + tongLuongQuanLy + "\n");
-        System.out.println("Tong Luong Cua Nhan Vien : " + tongLuongNhanVien + "\n");
-        System.out.println("Tong Luong Trung Binh Cua Quan Ly : " + tongLuongQuanLy/soLuongQuanLy + "\n");
-        System.out.println("Tong Luong Trung Binh Cua Nhan Vien : " + tongLuongNhanVien/soLuongNhanVien + "\n");
+        System.out.println("Tổng lương của quản lý : " + tongLuongQuanLy + "\n");
+        System.out.println("Tổng lương của nhân viên : " + tongLuongNhanVien + "\n");
+        System.out.println("ương trung bình của quản lý : " + tongLuongQuanLy/soLuongQuanLy + "\n");
+        System.out.println("Lương trung bình của nhân viên  :" + tongLuongNhanVien/soLuongNhanVien + "\n");
     }
 
 }
