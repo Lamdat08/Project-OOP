@@ -14,7 +14,7 @@ public class HoaDon implements IThaoTac {
     private SanPham[] sanpham;  // Mảng sản phẩm trong hóa đơn
     private int[] soLuongSP;  // Mảng số lượng sản phẩm
     private String phuongThucThanhToan;  // Phương thức thanh toán
-
+    private boolean Status;
 
     public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
         this.dssp = dssp;
@@ -22,6 +22,16 @@ public class HoaDon implements IThaoTac {
         this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
         this.soLuongSP = new int[10];    // Khởi tạo mảng số lượng sản phẩm với kích thước ban đầu
     }
+   HoaDon(){
+       this.setStatus(true);
+   }
+   public boolean getStatus() {
+       return Status;
+   }
+
+   public void setStatus(boolean Status) {
+       this.Status = Status;
+   }
 
     public String getMaHD() {
         return maHD;
