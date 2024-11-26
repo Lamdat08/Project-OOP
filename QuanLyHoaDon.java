@@ -52,7 +52,7 @@ public class QuanLyHoaDon {
                     DShd.Xuat();  // Xuất danh sách hóa đơn
                     break;
                 case 7:
-                    DShd.ThongKe();  // Thống kê hóa đơn
+                    DShd.ThongKe(1);  // Thống kê hóa đơn
                     break;
                 case 8:
                     DShd.docFile();  // Đọc và xuất file HoaDon.txt
