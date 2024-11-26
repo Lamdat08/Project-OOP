@@ -27,8 +27,9 @@ public class QuanLyHoaDon {
             System.out.println("6. Xuất danh sách hóa đơn");
             System.out.println("7. Thống kê hóa đơn");
             System.out.println("8. Đọc và xuất file HoaDon.txt");
+            System.out.println("9. Ghi file HoaDon.txt");
             System.out.println("0. Thoát");
-            System.out.print("Chọn chức năng (0-8): ");
+            System.out.print("Chọn chức năng (0-9): ");
             luaChon = Integer.parseInt(sc.nextLine());
 
             switch (luaChon) {
@@ -56,6 +57,9 @@ public class QuanLyHoaDon {
                 case 8:
                     DShd.docFile();  // Đọc và xuất file HoaDon.txt
                     break;
+                case 9:
+                    DShd.ghiFile();
+                    break;   
                 case 0:
                     System.out.println("Thoát chương trình.");
                     break;
