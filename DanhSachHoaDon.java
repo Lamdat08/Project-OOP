@@ -15,7 +15,13 @@ public class DanhSachHoaDon {
     private DanhSachSanPham dssp; // For creating HoaDon objects
     private DanhSachKhachHang dskh; // For creating HoaDon objects
 
-    public DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+    // public DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+    //     this.dssp = dssp;
+    //     this.dskh = dskh;
+    //     this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
+    //     this.Nhap();
+    // }
+    public DanhSachHoaDon() {
         this.dssp = dssp;
         this.dskh = dskh;
         this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
