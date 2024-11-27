@@ -35,12 +35,15 @@ public class QuanLySanPham {
     public void menuQuanLySanPham(){
         while(true){
             menuQLSP();
-            System.out.print("Nhập lựa chọn : ");
+            System.out.print("Nhập lựa chọn quản lý sản phẩm từ 1-4: ");
             int luaChon1 = Integer.parseInt(sc.nextLine());
-            while(luaChon1 < 1 || luaChon1 > 4){
+            String inputLuaChon1 = Integer.toString(luaChon1);
+            String regex1 = "^[1-4]$";
+            while(!inputLuaChon1.matches(regex1)){
                 menuQLSP();
                 System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
                 luaChon1 = Integer.parseInt(sc.nextLine());
+                inputLuaChon1 = Integer.toString(luaChon1);
             }
             if (luaChon1 == 1) {
                 DanhSachSanPham.docFile();
@@ -52,12 +55,15 @@ public class QuanLySanPham {
                 while (true) {
 
                     menuSanPham();
-                    System.out.print("Nhập lựa chọn : ");
+                    System.out.print("Nhập lựa chọn thao tác từ 1-8: ");
                     int luaChon2 = Integer.parseInt(sc.nextLine());
-                    while (luaChon2 < 1 || luaChon2 > 8) {
+                    String inputLuaChon2 = Integer.toString(luaChon1);
+                    String regex2 = "^[1-8]$";
+                    while (!inputLuaChon2.matches(regex2)) {
                         menuSanPham();
                         System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 8: ");
                         luaChon2 = Integer.parseInt(sc.nextLine());
+                        inputLuaChon2 = Integer.toString(luaChon1);
                     }
 
                     if (luaChon2 == 1) {
@@ -83,12 +89,15 @@ public class QuanLySanPham {
                     }
                     else{
                         menuThoat();
-                        System.out.print("Nhập lựa chọn: ");
+                        System.out.print("Nhập lựa chọn thoát từ 1-3: ");
                         int exit = Integer.parseInt(sc.nextLine());
-                        while (exit < 1 || exit > 3) {
+                        String inputExit = Integer.toString(exit);
+                        String regexExit = "^[1-3]$";
+                        while (!inputExit.matches(regexExit)) {
                             menuThoat();
                             System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 3: ");
                             exit = Integer.parseInt(sc.nextLine());
+                            inputExit = Integer.toString(exit);
                         }
 
                         if (exit == 1) {

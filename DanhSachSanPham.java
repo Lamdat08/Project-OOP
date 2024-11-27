@@ -3,7 +3,7 @@ package Project_OOP;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class DanhSachSanPham implements IThaoTac_2 {
 
@@ -93,14 +93,15 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
-        int slSP;
-        do{
-            System.out.println("Nhập số lượng sản phẩm muốn thêm: ");
+        System.out.println("Nhập số lượng sản phẩm muốn thêm: ");
+        int slSP = Integer.parseInt(sc.nextLine());
+        String inputSLSP = Integer.toString(slSP);
+        String regex = "^[1-9]+$";
+        while(!inputSLSP.matches(regex)){
+            System.out.println("Không hợp lệ, vui lòng nhập số lượng sản phẩm > 0: ");
             slSP = Integer.parseInt(sc.nextLine());
-            if(slSP <= 0){
-                System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0: ");
-            }
-        } while(slSP <= 0);
+            inputSLSP = Integer.toString(slSP);
+        }
 
         soLuongSanPham += slSP;
         DSSP = Arrays.copyOf(DSSP, DSSP.length + slSP);
@@ -108,13 +109,16 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         int slSPBanDau = DSSP.length - slSP;
         for(int i = slSPBanDau; i < DSSP.length; i++){
+            String regex1 = "^(1|2)$";
             menuNhap();
             System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
-            while(luaChon != 1 && luaChon != 2){
+            String inputLuaChon = Double.toString(luaChon);
+            while(!inputLuaChon.matches(regex1)){
                 menuNhap();
                 System.out.println("Không có loại sản phẩm này, mới nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
+                inputLuaChon = Double.toString(luaChon);
             }
 
             if(luaChon == 1){
@@ -143,6 +147,15 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         System.out.println("Nhập mã sản phẩm muốn xoá: ");
         String maSP_Xoa = sc.nextLine();
+        while(maSP_Xoa == null || maSP_Xoa.trim().isEmpty()) {
+            System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
+            maSP_Xoa = sc.nextLine().trim();
+        }
+        String regexMaSP = "^(TA|NU)[0-9]{3}$";
+        while(!maSP_Xoa.matches(regexMaSP)){
+            System.out.println("Mã sản phẩm phải bắt đầu với TA hoặc NU, vui lòng nhập lại: ");
+            maSP_Xoa = sc.nextLine().trim();
+        }
         boolean kq = false;
         for(int i = 0; i < DSSP.length - 1; i++){
             if(DSSP[i].getMaSP().equals(maSP_Xoa)){
@@ -169,16 +182,18 @@ public class DanhSachSanPham implements IThaoTac_2 {
             System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!!\n");
             return;
         }
-
+        String regex = "^[1-6]$";
         while(true){
             boolean kq;
             menuTimKiem();
             System.out.println("Nhập loại sản phẩm muốn thêm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
-            while(luaChon < 1 || luaChon > 6){
+            String inputLuaChon = Double.toString(luaChon);
+            while(!inputLuaChon.matches(regex)){
                 menuNhap();
                 System.out.println("Không có loại sản phẩm này, mời nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
+                inputLuaChon = Double.toString(luaChon);
             }
 
             switch(luaChon){
@@ -192,7 +207,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     String regexMaSP = "^(TA|NU)[0-9]{3}$";
                     while(!maSP_TimKiem.matches(regexMaSP)){
                         System.out.println("Mã sản phẩm phải bắt đầu với TA hoặc NU, vui lòng nhập lại: ");
-                        maSP_TimKiem = sc.nextLine();
+                        maSP_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
@@ -254,7 +269,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     break;
                 case 4:
-                    System.out.println("Nhập giá tiền của san phẩm cần tìm: ");
+                    System.out.println("Nhập giá tiền của sản phẩm cần tìm: ");
                     double giaTienSP_TimKiem = Double.parseDouble(sc.nextLine());
                     String inputGiaTien = Double.toString(giaTienSP_TimKiem);
                     while(inputGiaTien.trim().isEmpty()){
@@ -304,9 +319,6 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 case 6:
                     System.out.println("Thoát tìm kiếm sản phẩm");
                     return;
-                default:
-                    System.out.println("Không có lựa chọn tìm kiếm sản phẩm này");
-                    break;
             }
         }
 
@@ -345,6 +357,15 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         System.out.println("Nhập mã của sản phẩm cần sửa: ");
         String maSP_Sua = sc.nextLine();
+        while(maSP_Sua == null || maSP_Sua.trim().isEmpty()) {
+            System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
+            maSP_Sua = sc.nextLine().trim();
+        }
+        String regexMaSP = "^(TA|NU)[0-9]{3}$";
+        while(!maSP_Sua.matches(regexMaSP)){
+            System.out.println("Mã sản phẩm phải bắt đầu với TA hoặc NU, vui lòng nhập lại: ");
+            maSP_Sua = sc.nextLine().trim();
+        }
         boolean kq = false;
 
         for(int i = 0; i < DSSP.length; i++){
@@ -437,7 +458,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 return;
             }
 
-            //Tìm vị trí sản phẩm đầu tiên không bị xoá
+            //Tìm vị trí sản phẩm đầu tiên có status = true (không bị xoá)
             int viTri = 0;
             for ( int i = 0 ; i < DSSP.length ; i++ ){
                 if (DSSP[i].getStatus()){
@@ -546,6 +567,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 maxDSSP_SoLuong[i].Xuat();
                 System.out.println("-------------------------------------");
             }
+            System.out.println("7.Tổng số lượng các sản phẩm: " + tongSoLuong);
+
             System.out.println("\t \t -----xxxxx----- ");
 
             System.out.println("-------------------------------------");
@@ -657,6 +680,9 @@ public class DanhSachSanPham implements IThaoTac_2 {
                 maxDSSP_SoLuong[i].Xuat();
                 System.out.println("-------------------------------------");
             }
+
+            System.out.println("7.Tổng số lượng các sản phẩm: " + tongSoLuong);
+
             System.out.println("\t \t -----xxxxx----- ");
 
             System.out.println("-------------------------------------");
