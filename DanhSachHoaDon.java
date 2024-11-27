@@ -34,6 +34,7 @@ public class DanhSachHoaDon {
 
     public void setDSHD(HoaDon[] DSHD) {
         this.DSHD = DSHD;
+
     }
 
     // Nhập danh sách hóa đơn từ file

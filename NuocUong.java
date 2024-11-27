@@ -52,7 +52,7 @@ public class NuocUong extends SanPham{
     @Override
     public void Xuat(){
         super.Xuat();
-        System.out.println("Loại thức ăn: " + getLoaiNuoc());
+        System.out.println("Loại nước uống : " + getLoaiNuoc());
     }
 
     @Override

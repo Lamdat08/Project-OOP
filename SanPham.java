@@ -161,7 +161,7 @@ public class SanPham implements IThaoTac {
         System.out.println("Giá tiền của sản phẩm : " + getGiaTien());
         System.out.println("Tiền vốn của sản phẩm : " + getTienVon());
         System.out.println("Lợi nhuận của sản phẩm : " + LoiNhuan());
-        System.out.println("\\n-------------------\"");
+        System.out.println("\n-------------------\"");
     }
 
     public void Sua(){

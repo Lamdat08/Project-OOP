@@ -93,14 +93,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
-        if (DSSP == null) {
-            System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!! ");
-            return;
-        }
-        if(DSSP.length == 0){
-            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
-            return;
-        }
+//        if (DSSP == null) {
+//            System.out.println("Danh sách sản phẩm chưa được khởi tạo. Vui lòng khởi tạo danh sách sản phẩm trước.!!! ");
+//            return;
+//        }
+//        if(DSSP.length == 0){
+//            System.out.println("Danh sách sản phẩm hiện tại đang trống. Vui lòng thêm sản phẩm.!!! \n");
+//            return;
+//        }
 
         int slSP;
         do{

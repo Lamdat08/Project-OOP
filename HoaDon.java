@@ -8,10 +8,10 @@ public class HoaDon implements IThaoTac {
 
     private String maHD;
     private String thoiGian;
-    private DanhSachKhachHang dskh;  // Danh sách khách hàng
-    private KhachHang khachHang;  // Khách hàng cho hóa đơn
-    private DanhSachSanPham dssp;  // Danh sách sản phẩm
-    private SanPham[] sanpham;  // Mảng sản phẩm trong hóa đơn
+    private DanhSachKhachHang dskh = new DanhSachKhachHang();  // Danh sách khách hàng
+    private KhachHang khachHang = new KhachHang();  // Khách hàng cho hóa đơn
+    private DanhSachSanPham dssp = new DanhSachSanPham();  // Danh sách sản phẩm
+    private SanPham[] sanpham ;  // Mảng sản phẩm trong hóa đơn
     private int[] soLuongSP;  // Mảng số lượng sản phẩm
     private String phuongThucThanhToan;  // Phương thức thanh toán
     private boolean Status;

@@ -90,15 +90,15 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
     public void Them() {
         System.out.println("\n \t \t---------THÊM KHÁCH HÀNG--------");
-
-        if (DSKH == null) {
-            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng khởi tạo danh sách khách hàng trước");
-            return;
-        }
-        if (DSKH.length == 0) {
-            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
-            return;
-        }
+//
+//        if (DSKH == null) {
+//            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng khởi tạo danh sách khách hàng trước");
+//            return;
+//        }
+//        if (DSKH.length == 0) {
+//            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+//            return;
+//        }
 
         int slKH;
         do {
