@@ -5,17 +5,14 @@ import java.util.Scanner;
 public class QuanLyHoaDon {
 
     private DanhSachHoaDon DShd = new DanhSachHoaDon();  // Đối tượng DanhSachHoaDon
-    private DanhSachSanPham dssp = new DanhSachSanPham() ; // For creating HoaDon objects
-    private DanhSachKhachHang dskh = new DanhSachKhachHang()
-            ;
+
+
     // Phương thức khởi tạo
 //     public QuanLyHoaDon() {
 //         DShd = new DanhSachHoaDon(dssp, dskh);  // Khởi tạo đối tượng DanhSachHoaDon
 //     }
-   public QuanLyHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+   public QuanLyHoaDon() {
 
-        this.dssp=dssp;  // Khởi tạo đối tượng DanhSachHoaDon
-        this.dskh=dskh;
     }
 
     // Phương thức hiển thị menu cho người dùng
@@ -65,7 +62,7 @@ public class QuanLyHoaDon {
                     break;
                 case 9:
                     DShd.ghiFile();
-                    break;   
+                    break;
                 case 0:
                     System.out.println("Thoát chương trình.");
                     break;
