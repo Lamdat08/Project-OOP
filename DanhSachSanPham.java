@@ -394,6 +394,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     e.printStackTrace();
                 }
             }
+            br.close();
+            fr.close();
         }
         catch (Exception e) {
             System.out.println("Lỗi đọc file SanPham.txt: \n");

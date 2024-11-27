@@ -369,6 +369,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     e.printStackTrace();
                 }
             }
+            br.close();
+            fr.close();
         } catch (Exception e) {
             System.out.println("Lỗi đọc file KhachHang.txt\n");
             e.printStackTrace();

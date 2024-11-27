@@ -1,0 +1,6 @@
+TA001;Burger;10;25000.00;15000.00;Thức ăn nhanh
+NU001;Sting;15;1000.00;5000.00;Nước giải khát
+NU002;Aquafina;20;5000.00;3000.00;Nước tinh khiết
+TA002;Pizza;13;50000.00;35000.00;Thức ăn nhanh
+TA003;Cơm chiên cá mặn;6;30000.00;15000.00;Thức ăn trưa
+NU003;Cà phê lon Nestle;9;10000.00;5000.00;Thức uống khác
