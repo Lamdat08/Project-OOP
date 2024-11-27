@@ -12,8 +12,7 @@ public class DanhSachHoaDon {
 
     static Scanner sc = new Scanner(System.in);
 
-    private DanhSachSanPham dssp; // For creating HoaDon objects
-    private DanhSachKhachHang dskh; // For creating HoaDon objects
+
 
     // public DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
     //     this.dssp = dssp;
@@ -22,8 +21,7 @@ public class DanhSachHoaDon {
     //     this.Nhap();
     // }
     public DanhSachHoaDon() {
-        this.dssp = dssp;
-        this.dskh = dskh;
+
         this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
         this.Nhap();
     }
@@ -363,7 +361,7 @@ public class DanhSachHoaDon {
 
                 // In chi tiết thông tin của hóa đơn từ mảng strings
                 System.out.println("Mã Hóa Đơn: " + strings[0] + " - Tên Khách Hàng: " + strings[1] + " - Tổng Tiền: " + strings[4]);
-                // Bạn có thể điều chỉnh chỉ mục nếu cấu trúc file có sự thay đổi. 
+                // Bạn có thể điều chỉnh chỉ mục nếu cấu trúc file có sự thay đổi.
                 // Ở đây tôi đang giả sử tổng tiền là phần tử ở chỉ mục 4.
             }
 
