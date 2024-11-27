@@ -38,22 +38,101 @@ public class NhanVienPartTime extends NhanVien{
         Scanner sc = new Scanner(System.in);
 //        System.out.println("nhap ma nhan vien");
 //        setMaNhanVien(sc.nextLine());
-       String maNhanVien;
-        do{
-            System.out.println("Nhập mã nhân viên ( bắt đầu với 'NV' ) : ");
-            maNhanVien = sc.nextLine();
-        }while(!maNhanVien.startsWith("NV"));
-        setMaNhanVien(maNhanVien);
-        System.out.println("Nhập vào tên nhân viên : ");
-        setTenNhanVien(sc.nextLine());
-        System.out.println("Nhập vào số điện thoại nhân viên :");
-        setSoDienThoai(sc.nextLine());
-        System.out.println("Nhập vào giới tính :");
-        setGioiTinh(sc.nextLine());
-        System.out.println("Nhập lương cơ bản : ");
-        setLuongCoBan(Double.parseDouble(sc.nextLine()));
-        System.out.println("Nhập số giờ làm : ");
-        setGioLam(Double.parseDouble(sc.nextLine()));
+//       String maNhanVien;
+//        do{
+//            System.out.println("Nhập mã nhân viên ( bắt đầu với 'NV' ) : ");
+//            maNhanVien = sc.nextLine();
+//        }while(!maNhanVien.startsWith("NV"));
+        String regex = "^NV\\d+$";
+        String MaNV;
+        do {
+            System.out.printf("Nhập vào mã NVPT : ");
+            MaNV = sc.nextLine();
+            if (!MaNV.matches(regex))
+                System.out.println("Mã nhân viên phải bắt đầu bằng NV và sau đó là các chữ số, vui lòng nhập lại mã nhân viên .");
+        }while (!MaNV.matches(regex));
+        setMaNhanVien(MaNV);
+
+//        System.out.println("Nhập vào tên nhân viên : ");
+//        setTenNhanVien(sc.nextLine());
+
+        String TenNV;
+        do {
+            System.out.printf("Nhập vào ten : ");
+            TenNV = sc.nextLine();
+            if (!TenNV.matches(regexLetters))
+                System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
+        }while (!TenNV.matches(regexLetters));
+        setTenNhanVien(TenNV);
+
+
+//        System.out.println("Nhập vào số điện thoại nhân viên :");
+//        setSoDienThoai(sc.nextLine());
+        String SDT;
+        do {
+            do {
+                System.out.printf("Nhập vào SDT : ");
+                SDT = sc.nextLine();
+                if (!SDT.matches(regNumbers))
+                    System.out.println("Sai dinh dang");
+            }while (!SDT.matches(regNumbers));
+
+           if ( SDT.length() != 10)
+               System.out.println("SDT co 10 so");
+        }while (SDT.length() == 10 );
+        setSoDienThoai(SDT);
+
+//        System.out.println("Nhập vào giới tính :");
+//        setGioiTinh(sc.nextLine());
+
+        String gt;
+        do {
+            do {
+                System.out.printf("Nhập vào gioi tinh : ");
+                gt = sc.nextLine();
+                if (!gt.matches(regexLetters))
+                    System.out.println("Sai dinh dang");
+            }while (!gt.matches(regexLetters));
+
+        }while (gt.toLowerCase().matches("nam") || gt.toLowerCase().matches("nu"));
+        setGioiTinh(gt.toLowerCase());
+
+
+//        System.out.println("Nhập lương cơ bản : ");
+//        setLuongCoBan(Double.parseDouble(sc.nextLine()));
+        String LCB;
+        do {
+            do {
+                System.out.printf("Nhập vào luong co ban : ");
+                LCB = sc.nextLine();
+                if (!LCB.matches(regNumbers))
+                    System.out.println("Sai dinh dang");
+            }while (!LCB.matches(regNumbers));
+
+            if (Double.parseDouble(LCB) < 0)
+                System.out.println("LCB > 0");
+        }while (Double.parseDouble(LCB) < 0 );
+        setLuongCoBan(Double.parseDouble(LCB));
+
+
+
+
+//        System.out.println("Nhập số giờ làm : ");
+//        setGioLam(Double.parseDouble(sc.nextLine()));
+        String gio;
+        do {
+            do {
+                System.out.printf("Nhập vào gio lam : ");
+                gio = sc.nextLine();
+                if (!gio.matches(regDoubleNums))
+                    System.out.println("Sai dinh dang");
+            }while (!gio.matches(regDoubleNums));
+
+            if (Double.parseDouble(gio) < 0)
+                System.out.println("gio > 0");
+        }while (Double.parseDouble(gio) < 0 );
+        setGioLam(Double.parseDouble(gio));
+
     }
 
 
@@ -76,32 +155,114 @@ public class NhanVienPartTime extends NhanVien{
             System.out.println("2-Thay đổi tên nhân viên. ");
             System.out.println("3-Thay đổi số điện thoại. ");
             System.out.println("4-Thay đổi giới tính. ");
-            System.out.println("5-TThay đổi lương cơ bản. ");
+            System.out.println("5-Thay đổi lương cơ bản. ");
             System.out.println("6-Thay đổi số giờ làm. ");
-            int n = Integer.parseInt(sc.nextLine());
+            System.out.println("7-Thoat");
+            int n = 0;
+            boolean validInput= false;
+            while (!validInput)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    n = Integer.parseInt(sc.nextLine());
+
+                    if ( n < 1 || n > 7) {
+                        validInput = false;
+                        System.out.println("0 < n < 8");
+                    }
+                    else
+                        validInput = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
+
             if (n == 1) {
-                System.out.println("Thay đổi mã nhân viên thành : ");
-                setMaNhanVien(sc.nextLine());
+                String regex = "^NV\\d+$";
+                String MaNV;
+                do {
+                    System.out.printf("Nhập vào mã NVPT : ");
+                    MaNV = sc.nextLine();
+                    if (!MaNV.matches(regex))
+                        System.out.println("Mã nhân viên phải bắt đầu bằng NV và sau đó là các chữ số, vui lòng nhập lại mã nhân viên .");
+                }while (!MaNV.matches(regex));
+                setMaNhanVien(MaNV);
             }
             if (n == 2) {
-                System.out.println("Thay đổi tên nhân viên thành : ");
-                setTenNhanVien(sc.nextLine());
+                String TenNV;
+                do {
+                    System.out.printf("Nhập vào ten : ");
+                    TenNV = sc.nextLine();
+                    if (!TenNV.matches(regexLetters))
+                        System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
+                }while (!TenNV.matches(regexLetters));
+                setMaNhanVien(TenNV);
             }
+
             if (n == 3) {
-                System.out.println("Thay đổi số điện thoại thành : ");
-                setSoDienThoai(sc.nextLine());
+                String SDT;
+                do {
+                    do {
+                        System.out.printf("Nhập vào SDT : ");
+                        SDT = sc.nextLine();
+                        if (!SDT.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!SDT.matches(regNumbers));
+
+                    if ( SDT.length() != 10)
+                        System.out.println("SDT co 10 so");
+                }while (SDT.length() == 10 );
+                setSoDienThoai(SDT);
             }
             if (n == 4) {
-                System.out.println("Thay đổi giới tính thành : ");
-                setGioiTinh(sc.nextLine());
+                String gioiTinhTimKiem;
+                while (true){
+                    do {
+                        System.out.printf("Nhập vào gioi tinh : ");
+                        gioiTinhTimKiem = sc.nextLine();
+                        if (!gioiTinhTimKiem.matches(regexLetters))
+                            System.out.println("Sai dinh dang");
+                    }while (!gioiTinhTimKiem.matches(regexLetters));
+                    if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
+                        break;
+                    else
+                        System.out.println("Nhap nam hoac nu.");
+
+
+                }
+                setGioiTinh(gioiTinhTimKiem.toLowerCase());
             }
             if (n == 5) {
-                System.out.println("Thay đổi lương cơ bản thành :");
-                setLuongCoBan(Double.parseDouble(sc.nextLine()));
+                String LCB;
+                do {
+                    do {
+                        System.out.printf("Nhập vào luong co ban : ");
+                        LCB = sc.nextLine();
+                        if (!LCB.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!LCB.matches(regNumbers));
+
+                    if (Double.parseDouble(LCB) < 0)
+                        System.out.println("LCB > 0");
+                }while (Double.parseDouble(LCB) < 0 );
+                setLuongCoBan(Double.parseDouble(LCB));
             }
+
             if (n == 6) {
-                System.out.println("Thay đổi số giờ làm thành :");
-                setGioLam(Double.parseDouble(sc.nextLine()));
+                String gio;
+                do {
+                    do {
+                        System.out.printf("Nhập vào gio lam : ");
+                        gio = sc.nextLine();
+                        if (!gio.matches(regDoubleNums))
+                            System.out.println("Sai dinh dang");
+                    }while (!gio.matches(regDoubleNums));
+
+                    if (Double.parseDouble(gio) < 0)
+                        System.out.println("gio > 0");
+                }while (Double.parseDouble(gio) < 0 );
+                setGioLam(Double.parseDouble(gio));
             }
             if (n == 7) {
                 break;

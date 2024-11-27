@@ -56,11 +56,24 @@ public class QuanLyNhanVien {
             System.out.println("7 - Chọn xóa");
             System.out.println("8 - Thống kê");
             System.out.println("9 - Chọn thoát");
-            int n;
-            do {
-                System.out.printf("Nhap lua chon : ");
-                n = Integer.parseInt(sc.nextLine());
-            }while (n < 1 || n > 9);
+            int n=0;
+            boolean validInput2= false;
+            while (!validInput2)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    n = Integer.parseInt(sc.nextLine());
+
+                    if ( n < 1 || n > 9) {
+                        validInput2 = false;
+                        System.out.println("0 < n < 10");
+                    }
+                    else
+                        validInput2 = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
 
             if (n == 1) {
                 dsnv.Xuat();

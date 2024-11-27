@@ -15,14 +15,25 @@ public class QuanLySuKien {
             System.out.println("3.Các thao tác khác.");
             System.out.println("4.Thoát.");
             int x;
-            do {
-                System.out.printf("Nhập lựa chọn : ");
-                x = sc.nextInt();
-                sc.nextLine();
-                if ( x < 1 || x > 4 )
-                    System.out.println("Nhập lựa chọn từ 1->4 !! ");
-            } while (x < 1 || x > 4);
+            int b = 0;
+            boolean validInput= false;
+            while (!validInput)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    b = Integer.parseInt(sc.nextLine());
 
+                    if ( b < 1 || b > 4) {
+                        validInput = false;
+                        System.out.println("0 < b < 4");
+                    }
+                    else
+                        validInput = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+             x = b;
             if (x == 1)
                 DanhSachSuKien.docFile();
 
@@ -41,14 +52,24 @@ public class QuanLySuKien {
                     System.out.println("6.Ghi file.");
                     System.out.println("7.Thống kê danh sách đang chỉnh sửa");
                     System.out.println("8.Thoát.");
-                    int c;
-                    do {
-                        System.out.printf("Nhập lựa chọn : ");
-                        c = sc.nextInt();
-                        sc.nextLine();
-                        if (c < 1 || c > 8)
-                            System.out.println("Nhập lựa chọn từ 1->8 !! ");
-                    } while (c < 1 || c > 8);
+                    int c = 0;
+                    boolean validInput2= false;
+                    while (!validInput2)
+                    {
+                        try {
+                            System.out.printf("Nhập lựa chọn : ");
+                            c = Integer.parseInt(sc.nextLine());
+
+                            if ( c < 1 || c > 8) {
+                                validInput2 = false;
+                                System.out.println("0 < c < 9");
+                            }
+                            else
+                                validInput2 = true;
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
 
                     if (c == 1)
                         DSsk.Xuat();
@@ -80,11 +101,24 @@ public class QuanLySuKien {
                         System.out.println("1.Ghi file rồi thoát.");
                         System.out.println("2.Thoát.");
                         System.out.println("3.Quay trở lại.");
-                        int exit;
-                        do {
-                            System.out.println("");
-                            exit = sc.nextInt(); sc.nextLine();
-                        }while (exit < 1 || exit > 3  );
+                        int exit = 0;
+                        boolean validInput3= false;
+                        while (!validInput3)
+                        {
+                            try {
+                                System.out.printf("Nhập lựa chọn : ");
+                                exit = Integer.parseInt(sc.nextLine());
+
+                                if ( exit < 1 || exit > 3) {
+                                    validInput3 = false;
+                                    System.out.println("0 < exit < 4");
+                                }
+                                else
+                                    validInput3 = true;
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                        }
 
                         if (exit == 1 )
                         {

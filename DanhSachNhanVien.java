@@ -28,8 +28,18 @@ public class DanhSachNhanVien implements IThaoTac_2{
             System.out.println("Danh sách trống \n");
             return;
         }
-        System.out.println("Nhập mã để xóa : ");
-        String maXoa = sc.nextLine();
+
+        String maXoa;
+        String regexNV = "^NV\\d+$";
+        String regexQL = "^QL\\d+$";
+        do {
+            System.out.printf("Nhập vào mã nhan vien : ");
+            maXoa = sc.nextLine();
+            if (!maXoa.matches(regexNV) || !maXoa.matches(regexQL))
+                System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+        }while (!maXoa.matches(regexNV) || !maXoa.matches(regexQL));
+
+
         boolean find = false;
 
         for(int i = 0;i< arrNhanVien.length;i++){
@@ -83,12 +93,39 @@ public class DanhSachNhanVien implements IThaoTac_2{
             System.out.println("3 - Tìm kiếm theo SĐT");
             System.out.println("4 - Tìm kiếm theo giới tính");
             System.out.println("5 - Tìm kiếm theo lương cơ bản");
+            System.out.println("6 - Thoat");
 
-            int n = Integer.parseInt(sc.nextLine());
+            int b = 0;
+            boolean validInput= false;
+            while (!validInput)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    b = Integer.parseInt(sc.nextLine());
+
+                    if ( b < 1 || b > 6) {
+                        validInput = false;
+                        System.out.println("0 < b < 6");
+                    }
+                    else
+                        validInput = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            int n = b;
+
 
             if(n == 1){
-                System.out.println("Nhập mã để tìm kiếm theo mã");
-                String maTimKiem = sc.nextLine();
+                String maTimKiem;
+                String regexNV = "^NV\\d+$";
+                String regexQL = "^QL\\d+$";
+                do {
+                    System.out.printf("Nhập vào mã nhan vien : ");
+                    maTimKiem = sc.nextLine();
+                    if (!maTimKiem.matches(regexNV) || !maTimKiem.matches(regexQL))
+                        System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+                }while (!maTimKiem.matches(regexNV) || !maTimKiem.matches(regexQL));
                 boolean find = false;
                 for(int i = 0;i< arrNhanVien.length;i++){
                     if(arrNhanVien[i].getMaNhanVien().equals(maTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -99,8 +136,14 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 if(!find) System.out.println("Không tìm thấy mã " + maTimKiem);
             }
             if(n == 2){
-                System.out.println("Nhập tên để tìm kiếm theo tên : ");
-                String tenTimKiem = sc.nextLine();
+                String tenTimKiem;
+                do {
+                    System.out.printf("Nhập vào ten : ");
+                    tenTimKiem = sc.nextLine();
+                    if (!tenTimKiem.matches(regexLetters))
+                        System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
+                }while (!tenTimKiem.matches(regexLetters));
+
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
                     if(arrNhanVien[i].getTenNhanVien().equals(tenTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -111,8 +154,19 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 if(!find) System.out.println("Không tìm thấy " + tenTimKiem);
             }
             if(n == 3){
-                System.out.println("Nhập số điện thoại cần tìm kiếm:");
-                String soDienThoaiTimKiem = sc.nextLine();
+                String soDienThoaiTimKiem;
+                do {
+                    do {
+                        System.out.printf("Nhập vào SDT : ");
+                        soDienThoaiTimKiem = sc.nextLine();
+                        if (!soDienThoaiTimKiem.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!soDienThoaiTimKiem.matches(regNumbers));
+
+                    if ( soDienThoaiTimKiem.length() != 10)
+                        System.out.println("SDT co 10 so");
+                }while (soDienThoaiTimKiem.length() == 10 );
+
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
                     if(arrNhanVien[i].getTenNhanVien().equals(soDienThoaiTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -123,8 +177,23 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 if(!find) System.out.println("Không tìm thấy " + soDienThoaiTimKiem);
             }
             if(n == 4){
-                System.out.println("Nhập giới tính cần tìm : ");
-                String gioiTinhTimKiem = sc.nextLine();
+                String gioiTinhTimKiem;
+                while (true){
+                    do {
+                        System.out.printf("Nhập vào gioi tinh : ");
+                        gioiTinhTimKiem = sc.nextLine();
+                        if (!gioiTinhTimKiem.matches(regexLetters))
+                            System.out.println("Sai dinh dang");
+                    }while (!gioiTinhTimKiem.matches(regexLetters));
+                    if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
+                        break;
+                    else
+                        System.out.println("Nhap nam hoac nu.");
+
+
+                }
+
+
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
                     if(arrNhanVien[i].getTenNhanVien().equals(gioiTinhTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -135,8 +204,19 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 if(!find) System.out.println("Không tìm thấy " + gioiTinhTimKiem);
             }
             if(n == 5){
-                System.out.println("Nhập lương cơ bản cần tìm : ");
-                String luongCoBanTimKiem = sc.nextLine();
+                String luongCoBanTimKiem;
+                do {
+                    do {
+                        System.out.printf("Nhập vào luong co ban : ");
+                        luongCoBanTimKiem = sc.nextLine();
+                        if (!luongCoBanTimKiem.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!luongCoBanTimKiem.matches(regNumbers));
+
+                    if (Double.parseDouble(luongCoBanTimKiem) < 0)
+                        System.out.println("LCB > 0");
+                }while (Double.parseDouble(luongCoBanTimKiem) < 0 );
+
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
                     if(arrNhanVien[i].getTenNhanVien().equals(luongCoBanTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -378,8 +458,19 @@ public class DanhSachNhanVien implements IThaoTac_2{
             System.out.println("Danh sách nhân viên trống.");
             return;
         }
-        System.out.println("Vui lòng nhập vào mã để sửa : ");
-        String maSua = sc.nextLine();
+        String maSua;
+        String regexNV = "^NV\\d+$";
+        String regexQL = "^QL\\d+$";
+        while (true){
+            System.out.printf("Nhập vào mã nhan vien : ");
+            maSua = sc.nextLine();
+            if (maSua.matches(regexNV) || maSua.matches(regexQL))
+                break;
+            else
+                System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+        }
+
+
         boolean find = false;
         for(int i = 0;i< arrNhanVien.length;i++){
             if(arrNhanVien[i].getMaNhanVien().equals(maSua) && arrNhanVien[i].isTrangThai() == true){

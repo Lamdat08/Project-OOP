@@ -81,16 +81,18 @@ public class DanhSachSuKien implements  IThaoTac_2 {
     @Override
     public void Them() {
         System.out.println("\n \t \t---------Thêm---------");
-
-
-        int x;
+        String a;
         do {
+            do {
             System.out.printf("Nhập số lượng phần tử thêm vào : ");
-            x = sc.nextInt();
-            sc.nextLine();
-            if (x <= 0)
-                System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
-        } while (x <= 0);
+            a = sc.nextLine();
+            }while (!a.matches(regNumbers));
+                if (Integer.parseInt(a) <= 0)
+                    System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
+        } while (Integer.parseInt(a) <= 0);
+
+        int x = Integer.parseInt(a);
+
         sl+= x;
 
         int prevLength = DSSK.length;
@@ -110,9 +112,15 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm sự kiện. \n");
             return;
         }
+        String s;
+        String regex = "^SK\\d+$";
+        do {
+            System.out.printf("Nhập vào mã sự kiện : ");
+            s = sc.nextLine();
+            if (!s.matches(regex))
+                System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+        }while (!s.matches(regex));
 
-        System.out.printf("Nhập vào mã cần sửa : ");
-        String s = sc.nextLine();
         boolean isFind = false;
 
         for ( int i = 0 ; i < DSSK.length ; i++ ){
@@ -137,8 +145,15 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             return;
         }
 
-        System.out.print("Nhập vào mã cần xóa: ");
-        String x = sc.nextLine();
+        String x;
+        String regex = "^SK\\d+$";
+        do {
+            System.out.printf("Nhập vào mã sự kiện : ");
+            x = sc.nextLine();
+            if (!x.matches(regex))
+                System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+        }while (!x.matches(regex));
+
         boolean isFound = false;
 
         for (int i = 0; i < DSSK.length; i++) {
@@ -168,7 +183,6 @@ public class DanhSachSuKien implements  IThaoTac_2 {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
         while (true) {
-            int x;
             System.out.println("1.Tìm kiếm theo mã sự kiện.");
             System.out.println("2.Tìm kiếm theo tên sự kiện.");
             System.out.println("3.Tìm kiếm theo thời gian bắt đầu.");
@@ -177,13 +191,27 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.println("6.Tìm kiếm theo tiền vốn.");
             System.out.println("7.Tìm kiếm theo tình trạng.");
             System.out.println("8.Thoát.");
-            do {
-                System.out.printf("Nhập lựa chọn : ");
-                x = sc.nextInt(); sc.nextLine();
-                if (x < 1 || x > 8)
-                    System.out.println("Vui lòng nhập lựa từ 1 -> 8 !");
-            } while (x < 1 || x > 8);
 
+
+            int b = 0;
+            boolean validInput= false;
+            while (!validInput)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    b = Integer.parseInt(sc.nextLine());
+
+                    if ( b < 1 || b > 8) {
+                        validInput = false;
+                        System.out.println("0 < b < 9");
+                    }
+                    else
+                        validInput = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            int x = b;
             System.out.println();
 
             if (x == 1) {

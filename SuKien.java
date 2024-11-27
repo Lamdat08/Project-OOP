@@ -1,5 +1,6 @@
 package Project_OOP;
-import java.security.PublicKey;
+
+import java.util.regex.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -13,6 +14,7 @@ public class SuKien implements  IThaoTac{
     private double DoanhThu;
     private double TienVon;
     private boolean Status;
+
 
     Scanner sc = new Scanner(System.in);
     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -32,8 +34,13 @@ public class SuKien implements  IThaoTac{
     }
 
     public void setMaSK() {
-        System.out.printf("Nhập vào mã sự kiện : ");
-        MaSK = sc.nextLine();
+        String regex = "^SK\\d+$";
+        do {
+            System.out.printf("Nhập vào mã sự kiện : ");
+            MaSK = sc.nextLine();
+            if (!MaSK.matches(regex))
+                System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+        }while (!MaSK.matches(regex));
     }
 
     public void setStatus(boolean status){
@@ -41,8 +48,13 @@ public class SuKien implements  IThaoTac{
     }
 
     public void setTenSK() {
-        System.out.printf("Nhập vào tên sự kiện : ");
-        TenSK = sc.nextLine();
+        do {
+            System.out.printf("Nhập vào tên sự kiện : ");
+            TenSK = sc.nextLine();
+            if (!TenSK.matches(regexLetters))
+                System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
+        }while (!TenSK.matches(regexLetters));
+
     }
 
     public void setThoiGianBatDau(){
@@ -76,15 +88,35 @@ public class SuKien implements  IThaoTac{
     }
 
     public void setDoanhThu(){
-        System.out.printf("Nhập vào doanh thu : ");
-        DoanhThu = sc.nextDouble();
-        sc.nextLine();
+        String DT;
+        do {
+            do {
+                System.out.printf("Nhập vào doanh thu : ");
+                DT = sc.nextLine();
+                if (!DT.matches(regNumbers))
+                System.out.println("Sai dinh dang");
+            }while (!DT.matches(regNumbers));
+
+                if (Double.parseDouble(DT) < 0)
+                    System.out.println("DT > 0");
+        }while (Double.parseDouble(DT) < 0 );
+            DoanhThu = Double.parseDouble(DT);
     }
 
     public void setTienVon(){
-        System.out.printf("Nhập vào tiền vốn : ");
-        TienVon = sc.nextDouble();
-        sc.nextLine();
+        String TV;
+        do {
+            do {
+                System.out.printf("Nhập vào tiền vốn : ");
+                TV = sc.nextLine();
+                if (!TV.matches(regNumbers))
+                    System.out.println("Sai dinh dang");
+            }while (!TV.matches(regNumbers));
+
+            if (Double.parseDouble(TV) < 0)
+                System.out.println("DT > 0");
+        }while (Double.parseDouble(TV) < 0 );
+        TienVon = Double.parseDouble(TV);
     }
 
     public String getMaSK(){
@@ -173,13 +205,31 @@ public class SuKien implements  IThaoTac{
             System.out.println("6.Tiền vốn.");
             System.out.println("7.Thoát.");
 
-            do {
-                System.out.printf("Nhập lựa chọn : ");
-                c = sc.nextInt();
-                sc.nextLine();
-            }while (c < 1 || c > 7);
+//            do {
+//                System.out.printf("Nhập lựa chọn : ");
+//                c = sc.nextInt();
+//                sc.nextLine();
+//            }while (c < 1 || c > 7);
+            int b = 0;
+            boolean validInput= false;
+            while (!validInput)
+            {
+                try {
+                    System.out.printf("Nhập lựa chọn : ");
+                    b = Integer.parseInt(sc.nextLine());
 
-            switch (c){
+                    if ( b < 1 || b > 8) {
+                        validInput = false;
+                        System.out.println("0 < b < 9");
+                    }
+                    else
+                        validInput = true;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
+            switch (b){
                 case 1 :
                     this.setMaSK();
                     System.out.println("Sửa thành công !");
