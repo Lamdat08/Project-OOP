@@ -1,42 +1,37 @@
 package Project_OOP;
 
+import Project_OOP.IThaoTac;
+import Project_OOP.KhachHang;
+import Project_OOP.SanPham;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
 public class HoaDon implements IThaoTac {
 
     static Scanner sc = new Scanner(System.in);
 
     private String maHD;
     private String thoiGian;
-    private DanhSachKhachHang dskh = new DanhSachKhachHang();  // Danh sách khách hàng
-    private KhachHang khachHang = new KhachHang();  // Khách hàng cho hóa đơn
-    private DanhSachSanPham dssp = new DanhSachSanPham();  // Danh sách sản phẩm
-    private SanPham[] sanpham ;  // Mảng sản phẩm trong hóa đơn
-    private int[] soLuongSP;  // Mảng số lượng sản phẩm
-    private String phuongThucThanhToan;  // Phương thức thanh toán
+    private KhachHang[] khachHang=new KhachHang[0];
+    private KhachHang khachhangtheodon=new KhachHang();
+    private SanPham[] sanpham=new SanPham[0];
+    private SanPham[] sanphamtheodon=new SanPham[0];
+    private int[] soLuongSP=new int[0];
+    private String phuongThucThanhToan;
     private boolean Status;
 
-    //    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-//        this.dssp = dssp;
-//        this.dskh = dskh;
-//        this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
-//        this.soLuongSP = new int[10];    // Khởi tạo mảng số lượng sản phẩm với kích thước ban đầu
-//    }
-    public HoaDon(){
+    public HoaDon() {
         this.setStatus(true);
-        this.dssp = dssp;
-        this.dskh = dskh;
-        this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
-        this.soLuongSP = new int[10];
-    }
-    public boolean getStatus() {
-        return Status;
+        this.loadKhachHangFromFile();
+        this.loadSanPhamFromFile();
+
     }
 
-    public void setStatus(boolean Status) {
-        this.Status = Status;
-    }
-
+    // Getter and Setter methods
     public String getMaHD() {
         return maHD;
     }
@@ -46,7 +41,6 @@ public class HoaDon implements IThaoTac {
             System.out.println("Mã hóa đơn không được để trống. Vui lòng nhập lại mã hóa đơn: ");
             maHD = sc.nextLine().trim();
         }
-        // Assuming maHD should follow a specific pattern, adjust the regex if needed
         String regex = "^HD\\d+$";
         while (!Pattern.matches(regex, maHD)) {
             System.out.println("Mã hóa đơn không hợp lệ. Vui lòng nhập lại mã hóa đơn (HDxxxx): ");
@@ -64,7 +58,6 @@ public class HoaDon implements IThaoTac {
             System.out.println("Thời gian không được để trống. Vui lòng nhập lại thời gian: ");
             thoiGian = sc.nextLine().trim();
         }
-        // Assuming time is in a valid date format (e.g., "yyyy-MM-dd")
         String regex = "^(\\d{4})-(\\d{2})-(\\d{2})$";
         while (!Pattern.matches(regex, thoiGian)) {
             System.out.println("Thời gian không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd: ");
@@ -73,20 +66,12 @@ public class HoaDon implements IThaoTac {
         this.thoiGian = thoiGian;
     }
 
-    public DanhSachKhachHang getDskh() {
-        return dskh;
+    public KhachHang getKhachHang() {
+        return khachHang[0];
     }
 
-    public void setDskh(DanhSachKhachHang dskh) {
-        this.dskh = dskh;
-    }
-
-    public DanhSachSanPham getDssp() {
-        return dssp;
-    }
-
-    public void setDssp(DanhSachSanPham dssp) {
-        this.dssp = dssp;
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang[0] = khachHang;
     }
 
     public SanPham[] getSanpham() {
@@ -117,14 +102,102 @@ public class HoaDon implements IThaoTac {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public boolean getStatus() {
+        return Status;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public void setStatus(boolean status) {
+        Status = status;
     }
 
+    // Method to load KhachHang data from file
+    public void loadKhachHangFromFile() {
+        String fileName = "KhachHang.txt";
+        File file = new File(fileName);
+
+        if (!file.exists()) {
+            System.out.println("File không tồn tại: " + fileName);
+            return;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            int index = 0;
+            // Initial empty array (can grow as needed)
+            khachHang = new KhachHang[0];
+
+            while ((line = br.readLine()) != null) {
+                String[] strings = line.split(";");
+                try {
+                    // Create a new KhachHang object
+                    KhachHang kh = new ThanhVien(strings[0], strings[1], strings[2], strings[3], strings[4], Integer.parseInt(strings[5]));
+
+                    // Resize the array by copying the existing array to a new one with 1 additional space
+                    khachHang = Arrays.copyOf(khachHang, khachHang.length + 1);
+
+                    // Add the new KhachHang at the last index of the array
+                    khachHang[khachHang.length - 1] = kh;
+
+                    index++;
+                } catch (Exception e) {
+                    System.out.println("Lỗi khi xử lý dòng: " + line);
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println("Đọc thành công dữ liệu khách hàng từ file.");
+
+        } catch (IOException e) {
+            System.out.println("Lỗi khi đọc file: " + e.getMessage());
+        }
+    }
+
+
+    // Method to load SanPham data from file
+    public void loadSanPhamFromFile() {
+        String fileName = "SanPham.txt";
+        File file = new File(fileName);
+
+        if (!file.exists()) {
+            System.out.println("File không tồn tại: " + fileName);
+            return;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            int index = 0;
+            // Initial empty array for sanpham
+            sanpham = new SanPham[0];
+
+            while ((line = br.readLine()) != null) {
+                String[] strings = line.split(";");
+                try {
+                    // Resize the array as needed
+                    sanpham = Arrays.copyOf(sanpham, sanpham.length + 1); // Add one more space
+
+                    // Add the appropriate SanPham object
+                    if (strings[0].startsWith("TA")) {
+                        sanpham[sanpham.length - 1] = new ThucAn(strings[0], strings[1], Integer.parseInt(strings[2]),
+                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    } else if (strings[0].startsWith("NU")) {
+                        sanpham[sanpham.length - 1] = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]),
+                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+                    }
+                    index++;
+                } catch (Exception e) {
+                    System.out.println("Lỗi khi xử lý dòng: " + line);
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println("Đọc thành công dữ liệu sản phẩm từ file.");
+
+        } catch (IOException e) {
+            System.out.println("Lỗi khi đọc file: " + e.getMessage());
+        }
+    }
+
+    // Nhap method
     @Override
     public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
@@ -135,21 +208,22 @@ public class HoaDon implements IThaoTac {
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
-        for (KhachHang x : dskh.getDSKH()) {
+        for (KhachHang x : khachHang) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
-                this.khachHang = x;
+                khachhangtheodon=x;
             }
         }
 
         int i = 0;
         while (i < sanpham.length) {
+            soLuongSP=Arrays.copyOf(soLuongSP,soLuongSP.length+1);
             System.out.println("Nhập tên sản phẩm: ");
             String tenSP = sc.nextLine();
             boolean timSP = false;
             System.out.println("Nhập số lượng sản phẩm: ");
             int sl = Integer.parseInt(sc.nextLine());
-
-            for (SanPham x : dssp.getDSSP()) {
+            this.soLuongSP[soLuongSP.length-1]=sl;
+            for (SanPham x : sanpham) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
                     sanpham[i] = x;
                     soLuongSP[i] = sl;
@@ -167,11 +241,11 @@ public class HoaDon implements IThaoTac {
             System.out.println("2. Không");
             int luaChon = Integer.parseInt(sc.nextLine());
             if (luaChon == 2) break;
-
-            // Tăng chỉ số sản phẩm
+            if( luaChon==1 ){
+                sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length+1);
+            }
             i++;
 
-            // Nếu hết chỗ trong mảng, thoát vòng lặp
             if (i == sanpham.length) {
                 System.out.println("Danh sách sản phẩm đã đầy.");
                 break;
@@ -182,43 +256,13 @@ public class HoaDon implements IThaoTac {
         this.phuongThucThanhToan = sc.nextLine();
     }
 
-    @Override
-    public String toString() {
-        String result = "Hóa đơn: ";
-        result += "Mã hóa đơn: " + getMaHD() + ", Thời gian: " + getThoiGian();
-        result += ", Khách hàng: " + khachHang.toString();
-
-        for (int i = 0; i < sanpham.length; i++) {
-            if (sanpham[i] != null) {
-                String loai;
-                // Kiểm tra loại sản phẩm
-                if (sanpham[i] instanceof NuocUong) {
-                    loai = "Nước uống";
-                } else if (sanpham[i] instanceof ThucAn) {
-                    loai = "Thực ăn";
-                } else {
-                    loai = "Không xác định";  // Trường hợp khác, nếu có
-                }
-
-                // Thêm thông tin sản phẩm vào chuỗi kết quả
-                result += " Sản phẩm " + (i + 1) + ": " + sanpham[i].toString()
-                        + ", Loại: " + loai
-                        + ", Số lượng: " + soLuongSP[i]
-                        + ", Giá: " + sanpham[i].getGiaTien()
-                        + ", Thành tiền: " + soLuongSP[i] * sanpham[i].getGiaTien();
-            }
-        }
-
-        result += ", Phương thức thanh toán: " + getPhuongThucThanhToan();
-        return result;
-    }
-
+    // Xuat method
     @Override
     public void Xuat() {
         System.out.println(toString());
     }
 
-
+    // TongTien method
     public double TongTien() {
         double tongTien = 0;
         for (int i = 0; i < sanpham.length; i++) {
@@ -229,6 +273,7 @@ public class HoaDon implements IThaoTac {
         return tongTien;
     }
 
+    // Sua method
     public void Sua() {
         System.out.println("Chọn thông tin cần sửa:");
         System.out.println("1. Mã hóa đơn");
@@ -243,48 +288,25 @@ public class HoaDon implements IThaoTac {
         switch (luaChon) {
             case 1:
                 System.out.print("Nhập lại mã hóa đơn: ");
-                this.maHD = sc.nextLine();
+                setMaHD(sc.nextLine());
                 break;
             case 2:
                 System.out.print("Nhập lại thời gian: ");
-                this.thoiGian = sc.nextLine();
+                setThoiGian(sc.nextLine());
                 break;
             case 3:
                 System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
                 String sdtKH = sc.nextLine();
-                boolean timKhachHang = false;
-                for (KhachHang kh : dskh.getDSKH()) {
-                    if (sdtKH.equalsIgnoreCase(kh.getSDT())) {
-                        this.khachHang = kh;
-                        timKhachHang = true;
-                        break;
-                    }
-                }
-                if (!timKhachHang) {
-                    System.out.println("Không tìm thấy khách hàng với số điện thoại này.");
-                }
                 break;
             case 4:
-                // Thêm sản phẩm vào hóa đơn
                 boolean themSP = false;
                 for (int i = 0; i < sanpham.length; i++) {
                     if (sanpham[i] == null) {
                         System.out.println("Nhập tên sản phẩm: ");
                         String tenSP = sc.nextLine();
-                        boolean timSP = false;
-                        for (SanPham sp : dssp.getDSSP()) {
-                            if (tenSP.equalsIgnoreCase(sp.getTenSP())) {
-                                sanpham[i] = sp;
-                                System.out.println("Nhập số lượng sản phẩm: ");
-                                soLuongSP[i] = Integer.parseInt(sc.nextLine());
-                                themSP = true;
-                                timSP = true;
-                                break;
-                            }
-                        }
-                        if (!timSP) {
-                            System.out.println("Không tìm thấy sản phẩm.");
-                        }
+                        System.out.println("Nhập số lượng sản phẩm: ");
+                        soLuongSP[i] = Integer.parseInt(sc.nextLine());
+                        themSP = true;
                         break;
                     }
                 }
@@ -293,7 +315,6 @@ public class HoaDon implements IThaoTac {
                 }
                 break;
             case 5:
-                // Xóa sản phẩm từ hóa đơn
                 System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanpham.length - 1) + "): ");
                 int chiSoXoa = Integer.parseInt(sc.nextLine());
                 if (chiSoXoa >= 0 && chiSoXoa < sanpham.length && sanpham[chiSoXoa] != null) {
@@ -301,8 +322,8 @@ public class HoaDon implements IThaoTac {
                         sanpham[i] = sanpham[i + 1];
                         soLuongSP[i] = soLuongSP[i + 1];
                     }
-                    sanpham[9] = null;  // Xóa sản phẩm cuối cùng
-                    soLuongSP[9] = 0;  // Reset số lượng sản phẩm cuối cùng
+                    sanpham[9] = null;
+                    soLuongSP[9] = 0;
                     System.out.println("Sản phẩm đã được xóa.");
                 } else {
                     System.out.println("Chỉ số sản phẩm không hợp lệ.");
@@ -310,10 +331,32 @@ public class HoaDon implements IThaoTac {
                 break;
             case 6:
                 System.out.print("Nhập lại phương thức thanh toán: ");
-                this.phuongThucThanhToan = sc.nextLine();
+                setPhuongThucThanhToan(sc.nextLine());
                 break;
             default:
                 System.out.println("Lựa chọn không hợp lệ!");
         }
+    }
+
+    // toString method
+    @Override
+    public String toString() {
+        String result = "Mã hóa đơn: " + maHD + "\n";
+        result += "Thời gian: " + thoiGian + "\n";
+        result += "Khách hàng: " + (khachHang != null && khachHang.length > 0 ? khachHang[0].getTenKH() : "Chưa có") + "\n";
+        result += "Sản phẩm: \n";
+
+        if (sanpham != null && soLuongSP != null && sanpham.length == soLuongSP.length) {
+            for (int i = 0; i < sanpham.length; i++) {
+                if (sanpham[i] != null && soLuongSP[i] > 0) {
+                    result += sanpham[i].getTenSP() + " - " + soLuongSP[i] + " x " + sanpham[i].getGiaTien() + "\n";
+                }
+            }
+        } else {
+            result += "Sản phẩm không có trong danh sách.\n";
+        }
+
+        result += "Phương thức thanh toán: " + phuongThucThanhToan;
+        return result;
     }
 }
