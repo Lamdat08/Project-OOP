@@ -8,12 +8,12 @@ public class QuanLyHoaDon {
     private DanhSachSanPham dssp; // For creating HoaDon objects
     private DanhSachKhachHang dskh;
     // Phương thức khởi tạo
-    // public QuanLyHoaDon() {
-    //     DShd = new DanhSachHoaDon(dssp, dskh);  // Khởi tạo đối tượng DanhSachHoaDon
-    // }
+//     public QuanLyHoaDon() {
+//         DShd = new DanhSachHoaDon(dssp, dskh);  // Khởi tạo đối tượng DanhSachHoaDon
+//     }
    public QuanLyHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-        this.dssp=dssp  // Khởi tạo đối tượng DanhSachHoaDon
-        this.dskh=dskh
+        this.dssp=dssp;  // Khởi tạo đối tượng DanhSachHoaDon
+        this.dskh=dskh;
     }
 
     // Phương thức hiển thị menu cho người dùng

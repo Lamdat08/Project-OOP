@@ -55,7 +55,7 @@ public class DanhSachHoaDon {
                 try {
                     // Code để tạo HoaDon từ dữ liệu file
                     // Bạn cần điều chỉnh phần này dựa trên cách bạn implement HoaDon
-                    HoaDon hd = new HoaDon(dssp,dskh);
+                    HoaDon hd = new HoaDon();
                     DSHD[soLuongHoaDon] = hd;
                     soLuongHoaDon++;
                 } catch (Exception e) {
@@ -102,7 +102,7 @@ public class DanhSachHoaDon {
 
         int slHDBanDau = DSHD.length - slHD;
         for (int i = slHDBanDau; i < DSHD.length; i++) {
-            HoaDon hd = new HoaDon(dssp, dskh);
+            HoaDon hd = new HoaDon();
             hd.Nhap(); // Giả sử HoaDon có phương thức Nhap()
             DSHD[i] = hd;
         }

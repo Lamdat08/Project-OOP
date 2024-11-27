@@ -16,37 +16,32 @@ public class HoaDon implements IThaoTac {
     private String phuongThucThanhToan;  // Phương thức thanh toán
     private boolean Status;
 
-    // public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-    //     this.dssp = dssp;
-    //     this.dskh = dskh;
-    //     this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
-    //     this.soLuongSP = new int[10];    // Khởi tạo mảng số lượng sản phẩm với kích thước ban đầu
-    // }
-   HoaDon(){
+//    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+//        this.dssp = dssp;
+//        this.dskh = dskh;
+//        this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
+//        this.soLuongSP = new int[10];    // Khởi tạo mảng số lượng sản phẩm với kích thước ban đầu
+//    }
+    public HoaDon(){
         this.setStatus(true);
         this.dssp = dssp;
         this.dskh = dskh;
         this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
-        this.soLuongSP = new int[10]; 
-   }
-   public boolean getStatus() {
-       return Status;
-   }
+        this.soLuongSP = new int[10];
+    }
+    public boolean getStatus() {
+        return Status;
+    }
 
-   public void setStatus(boolean Status) {
-       this.Status = Status;
-   }
+    public void setStatus(boolean Status) {
+        this.Status = Status;
+    }
 
     public String getMaHD() {
         return maHD;
     }
 
-
     public void setMaHD(String maHD) {
-        while (maHD == null || maHD.isEmpty() || !Pattern.matches("^HD\\d+$", maHD)) {
-            System.out.println("Mã hóa đơn phải bắt đầu bằng 'HD' và theo sau là các chữ số, vui lòng nhập lại.");
-            maHD = sc.nextLine().trim();
-        }
         this.maHD = maHD;
     }
 
@@ -55,13 +50,8 @@ public class HoaDon implements IThaoTac {
     }
 
     public void setThoiGian(String thoiGian) {
-        while (thoiGian == null || thoiGian.isEmpty() || !Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$", thoiGian)) {
-            System.out.println("Thời gian không hợp lệ. Vui lòng nhập đúng định dạng yyyy-MM-dd.");
-            thoiGian = sc.nextLine().trim();
-        }
         this.thoiGian = thoiGian;
     }
-
 
     public DanhSachKhachHang getDskh() {
         return dskh;
@@ -99,12 +89,7 @@ public class HoaDon implements IThaoTac {
         return phuongThucThanhToan;
     }
 
-  public void setPhuongThucThanhToan(String phuongThucThanhToan) {
-        while (phuongThucThanhToan == null || phuongThucThanhToan.isEmpty() || 
-               !(phuongThucThanhToan.equalsIgnoreCase("Cash") || phuongThucThanhToan.equalsIgnoreCase("Credit Card"))) {
-            System.out.println("Phương thức thanh toán không hợp lệ. Vui lòng nhập lại (Cash hoặc Credit Card).");
-            phuongThucThanhToan = sc.nextLine().trim();
-        }
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
@@ -116,110 +101,29 @@ public class HoaDon implements IThaoTac {
         this.khachHang = khachHang;
     }
 
-    // @Override
-    // public void Nhap() {
-    //     System.out.print("Nhập mã hóa đơn: ");
-    //     this.maHD = sc.nextLine();
-
-    //     System.out.print("Nhập thời gian: ");
-    //     this.thoiGian = sc.nextLine();
-
-    //     System.out.println("Nhập SDT khách hàng: ");
-    //     String sdtKH = sc.nextLine();
-    //     for (KhachHang x : dskh.getDSKH()) {
-    //         if (sdtKH.equalsIgnoreCase(x.getSDT())) {
-    //             this.khachHang = x;
-    //         }
-    //     }
-
-    //     int i = 0;
-    //     while (i < sanpham.length) {
-    //         System.out.println("Nhập tên sản phẩm: ");
-    //         String tenSP = sc.nextLine();
-    //         boolean timSP = false;
-    //         System.out.println("Nhập số lượng sản phẩm: ");
-    //         int sl = Integer.parseInt(sc.nextLine());
-
-    //         for (SanPham x : dssp.getDSSP()) {
-    //             if (tenSP.equalsIgnoreCase(x.getTenSP())) {
-    //                 sanpham[i] = x;
-    //                 soLuongSP[i] = sl;
-    //                 timSP = true;
-    //                 break;
-    //             }
-    //         }
-
-    //         if (!timSP) {
-    //             System.out.println("Không tìm thấy sản phẩm.");
-    //         }
-
-    //         System.out.println("Bạn muốn thêm sản phẩm không?");
-    //         System.out.println("1. Có");
-    //         System.out.println("2. Không");
-    //         int luaChon = Integer.parseInt(sc.nextLine());
-    //         if (luaChon == 2) break;
-
-    //         // Tăng chỉ số sản phẩm
-    //         i++;
-
-    //         // Nếu hết chỗ trong mảng, thoát vòng lặp
-    //         if (i == sanpham.length) {
-    //             System.out.println("Danh sách sản phẩm đã đầy.");
-    //             break;
-    //         }
-    //     }
-
-    //     System.out.print("Nhập phương thức thanh toán: ");
-    //     this.phuongThucThanhToan = sc.nextLine();
-    // }
-       @Override
-        public void Nhap() {
-        // Mã hóa đơn
+    @Override
+    public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
-        this.setMaHD(sc.nextLine().trim());
+        this.maHD = sc.nextLine();
 
-        // Thời gian
-        System.out.print("Nhập thời gian (yyyy-MM-dd): ");
-        this.setThoiGian(sc.nextLine().trim());
+        System.out.print("Nhập thời gian: ");
+        this.thoiGian = sc.nextLine();
 
-        // Số điện thoại khách hàng
         System.out.println("Nhập SDT khách hàng: ");
-        String sdtKH = sc.nextLine().trim();
-        while (sdtKH == null || sdtKH.isEmpty() || !Pattern.matches("^0\\d{9}$", sdtKH)) {
-            System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại (định dạng: 0XXXXXXXXX).");
-            sdtKH = sc.nextLine().trim();
-        }
-        boolean foundCustomer = false;
+        String sdtKH = sc.nextLine();
         for (KhachHang x : dskh.getDSKH()) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
                 this.khachHang = x;
-                foundCustomer = true;
-                break;
             }
         }
-        if (!foundCustomer) {
-            System.out.println("Không tìm thấy khách hàng với số điện thoại này.");
-        }
 
-        // Tên sản phẩm và số lượng
         int i = 0;
         while (i < sanpham.length) {
             System.out.println("Nhập tên sản phẩm: ");
-            String tenSP = sc.nextLine().trim();
-            while (tenSP == null || tenSP.isEmpty()) {
-                System.out.println("Tên sản phẩm không được để trống. Vui lòng nhập lại.");
-                tenSP = sc.nextLine().trim();
-            }
-            
+            String tenSP = sc.nextLine();
             boolean timSP = false;
             System.out.println("Nhập số lượng sản phẩm: ");
-            int sl = 0;
-            try {
-                sl = Integer.parseInt(sc.nextLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("Số lượng sản phẩm không hợp lệ. Vui lòng nhập lại.");
-                continue;
-            }
+            int sl = Integer.parseInt(sc.nextLine());
 
             for (SanPham x : dssp.getDSSP()) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
@@ -237,23 +141,23 @@ public class HoaDon implements IThaoTac {
             System.out.println("Bạn muốn thêm sản phẩm không?");
             System.out.println("1. Có");
             System.out.println("2. Không");
-            int luaChon = Integer.parseInt(sc.nextLine().trim());
+            int luaChon = Integer.parseInt(sc.nextLine());
             if (luaChon == 2) break;
 
+            // Tăng chỉ số sản phẩm
             i++;
 
-            // If the product list is full, exit
+            // Nếu hết chỗ trong mảng, thoát vòng lặp
             if (i == sanpham.length) {
                 System.out.println("Danh sách sản phẩm đã đầy.");
                 break;
             }
         }
 
-        // Phương thức thanh toán
         System.out.print("Nhập phương thức thanh toán: ");
-        this.setPhuongThucThanhToan(sc.nextLine().trim());
+        this.phuongThucThanhToan = sc.nextLine();
     }
-}
+
     @Override
     public String toString() {
         String result = "Hóa đơn: ";
