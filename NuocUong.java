@@ -17,8 +17,9 @@ public class NuocUong extends SanPham{
 
     public void menuSua(){
         System.out.println("Chọn thông tin cần sửa : ");
-        System.out.println("0.Sửa loại nước uống");
-        super.Sua();
+        System.out.println("1.Sửa loại nước uống");
+        System.out.println("2.Sửa thông tin khác của sản phẩm");
+        System.out.println("3.Thoát sửa loại nước uống");
     }
 
     public String getLoaiNuoc() {
@@ -60,15 +61,26 @@ public class NuocUong extends SanPham{
         while(true){
             menuSua();
             System.out.print("Nhập lựa chọn sửa sản phẩm: ");
-            int luaChon = Integer.parseInt(sc.nextLine());
-            if(luaChon == 0){
-                System.out.println("Nhập loại nước uống mới: ");
-                setLoaiNuoc(sc.nextLine());
+            int luaChon = Integer.parseInt(sc.nextLine().trim());
+            String inputLuaChon = Integer.toString(luaChon);
+            String regex = "^[1-3]$";
+            while(!inputLuaChon.matches(regex)){
+                menuSua();
+                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                luaChon = Integer.parseInt(sc.nextLine().trim());
             }
-            else{
-                super.Sua();
+            switch(luaChon){
+                case 1:
+                    System.out.println("Nhập loại nước uống mới: ");
+                    setLoaiNuoc(sc.nextLine());
+                    break;
+                case 2:
+                    super.Sua();
+                    break;
+                case 3:
+                    System.out.println("Thoát sửa loại nước uống");
+                    return;
             }
-            break;
         }
     }
 }
