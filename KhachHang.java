@@ -46,8 +46,9 @@ public class KhachHang implements IThaoTac {
             System.out.println("Mã khách hàng không được để trống. Vui lòng nhập mã khách hàng: ");
             maKH = sc.nextLine().trim();
         }
-        while (!maKH.startsWith("KH")) {
-            System.out.println("Mã khách hàng phải bắt đầu bằng KH, vui lòng nhập lại mã khách hàng.");
+        String regex = "^KH\\d+$";
+        while (!Pattern.matches(regex, maKH)) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các chữ số, vui lòng nhập lại mã khách hàng.");
             maKH = sc.nextLine().trim();
         }
         this.maKH = maKH;

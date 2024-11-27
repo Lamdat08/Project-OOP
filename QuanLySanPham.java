@@ -87,7 +87,7 @@ public class QuanLySanPham {
                         int exit = Integer.parseInt(sc.nextLine());
                         while (exit < 1 || exit > 3) {
                             menuThoat();
-                            System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
+                            System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 3: ");
                             exit = Integer.parseInt(sc.nextLine());
                         }
 

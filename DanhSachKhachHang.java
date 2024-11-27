@@ -1,7 +1,5 @@
 package Project_OOP;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -11,7 +9,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
     static Scanner sc = new Scanner(System.in);
 
-    private int soLuongKhachHang;
+    private static int soLuongKhachHang;
     private KhachHang[] DSKH;
     private KhachHang[] DSKH_File;
 
@@ -19,7 +17,6 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         this.DSKH = new KhachHang[5]; //ít nhất 5 khách hàng
         this.Nhap();
     }
-
 
     public int getSoLuongKhachHang() {
         return soLuongKhachHang;
@@ -68,6 +65,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                 if (soLuongKhachHang == DSKH.length) {
                     DSKH = Arrays.copyOf(DSKH, DSKH.length + 5);
                 }
+
                 strings = line.split(";");
                 try {
                     KhachHang kh = new ThanhVien(strings[0],strings[1],strings[2],strings[3],strings[4],Integer.parseInt(strings[5]));
@@ -352,7 +350,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
     }
 
-    public void docFile() {
+    public static void docFile() {
         System.out.println("\"\\n--------ĐỌC FILE KhachHang.txt--------\"");
 
         String line;
@@ -366,8 +364,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     KhachHang kh = new ThanhVien(strings[0],strings[1],strings[2],strings[3],strings[4],Integer.parseInt(strings[5]));
                     kh.Xuat();
                     System.out.println("------------------------------\n");
-                    br.close();
-                    fr.close();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -417,7 +414,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             return;
         }
 
-        int brozoneCount = 0;
+        int bronzeCount = 0;
         int silverCount = 0;
         int goldCount = 0;
 
@@ -425,8 +422,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             if (kh instanceof ThanhVien) {
                 ThanhVien tv = (ThanhVien) kh;
                 switch (tv.rank()) {
-                    case "Brozone":
-                        brozoneCount++;
+                    case "Bronze":
+                        bronzeCount++;
                         break;
                     case "Silver":
                         silverCount++;
@@ -438,18 +435,14 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
         }
 
-        System.out.println("Số lượng thành viên rank Brozone: " + brozoneCount);
+        System.out.println("Số lượng thành viên rank Bronze: " + bronzeCount);
         System.out.println("Số lượng thành viên rank Silver: " + silverCount);
         System.out.println("Số lượng thành viên rank Gold: " + goldCount);
 
-        if (brozoneCount > silverCount + goldCount) {
+        if (bronzeCount > silverCount + goldCount) {
             System.out.println("Lượng khách hàng chủ yếu là người mới.");
         } else {
             System.out.println("Lượng khách hàng chủ yếu là người cũ.");
         }
     }
-
-
-
-
 }

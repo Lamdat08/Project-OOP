@@ -389,8 +389,6 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     sp.Xuat();
                     System.out.println("--------------------------------\n");
-                    br.close();
-                    fr.close();
                 }
                 catch (Exception e){
                     e.printStackTrace();
