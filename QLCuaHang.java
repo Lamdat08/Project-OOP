@@ -13,7 +13,7 @@ public class QLCuaHang {
     QuanLySuKien qlsk = new QuanLySuKien();
     QuanLyNhanVien qlnv = new QuanLyNhanVien();
     QuanLySanPham qlsp = new QuanLySanPham();
-    QuanLyHoaDon qlhd = new QuanLyHoaDon();
+    QuanLyHoaDon qlhd = new QuanLyHoaDon(qlsp.dssp ,qlkh.dskh);
     QuanLyKhachHang qlkh = new QuanLyKhachHang();
 
     public void Menu()
