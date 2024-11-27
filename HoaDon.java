@@ -1,7 +1,7 @@
 package Project_OOP;
 
 import java.util.Scanner;
-
+import java.util.regex.Pattern;
 public class HoaDon implements IThaoTac {
 
     static Scanner sc = new Scanner(System.in);
@@ -16,7 +16,7 @@ public class HoaDon implements IThaoTac {
     private String phuongThucThanhToan;  // Phương thức thanh toán
     private boolean Status;
 
-//    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
+    //    public HoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
 //        this.dssp = dssp;
 //        this.dskh = dskh;
 //        this.sanpham = new SanPham[10];  // Khởi tạo mảng sản phẩm với kích thước ban đầu
@@ -42,6 +42,16 @@ public class HoaDon implements IThaoTac {
     }
 
     public void setMaHD(String maHD) {
+        while (maHD == null || maHD.trim().isEmpty()) {
+            System.out.println("Mã hóa đơn không được để trống. Vui lòng nhập lại mã hóa đơn: ");
+            maHD = sc.nextLine().trim();
+        }
+        // Assuming maHD should follow a specific pattern, adjust the regex if needed
+        String regex = "^HD\\d+$";
+        while (!Pattern.matches(regex, maHD)) {
+            System.out.println("Mã hóa đơn không hợp lệ. Vui lòng nhập lại mã hóa đơn (HDxxxx): ");
+            maHD = sc.nextLine().trim();
+        }
         this.maHD = maHD;
     }
 
@@ -50,6 +60,16 @@ public class HoaDon implements IThaoTac {
     }
 
     public void setThoiGian(String thoiGian) {
+        while (thoiGian == null || thoiGian.trim().isEmpty()) {
+            System.out.println("Thời gian không được để trống. Vui lòng nhập lại thời gian: ");
+            thoiGian = sc.nextLine().trim();
+        }
+        // Assuming time is in a valid date format (e.g., "yyyy-MM-dd")
+        String regex = "^(\\d{4})-(\\d{2})-(\\d{2})$";
+        while (!Pattern.matches(regex, thoiGian)) {
+            System.out.println("Thời gian không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd: ");
+            thoiGian = sc.nextLine().trim();
+        }
         this.thoiGian = thoiGian;
     }
 
@@ -90,6 +110,10 @@ public class HoaDon implements IThaoTac {
     }
 
     public void setPhuongThucThanhToan(String phuongThucThanhToan) {
+        while (phuongThucThanhToan == null || phuongThucThanhToan.trim().isEmpty()) {
+            System.out.println("Phương thức thanh toán không được để trống. Vui lòng nhập lại phương thức thanh toán: ");
+            phuongThucThanhToan = sc.nextLine().trim();
+        }
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
