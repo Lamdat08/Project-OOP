@@ -15,7 +15,7 @@ public class NuocUong extends SanPham{
         this.loaiNuoc = loaiNuoc;
     }
 
-    public void menuSua(){
+    public void menuSuaNuocUong(){
         System.out.println("Chọn thông tin cần sửa : ");
         System.out.println("1.Sửa loại nước uống");
         System.out.println("2.Sửa thông tin khác của sản phẩm");
@@ -59,13 +59,13 @@ public class NuocUong extends SanPham{
     @Override
     public void Sua(){
         while(true){
-            menuSua();
+            menuSuaNuocUong();
             System.out.print("Nhập lựa chọn sửa sản phẩm: ");
             int luaChon = Integer.parseInt(sc.nextLine().trim());
             String inputLuaChon = Integer.toString(luaChon);
             String regex = "^[1-3]$";
             while(!inputLuaChon.matches(regex)){
-                menuSua();
+                menuSuaNuocUong();
                 System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine().trim());
             }

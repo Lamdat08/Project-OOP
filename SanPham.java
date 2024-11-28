@@ -15,13 +15,13 @@ public class SanPham implements IThaoTac {
 
     private boolean status;
 
-    public void menuSua(){
+    public void menuSuaSanPham(){
         System.out.println("1.Mã sản phẩm.");
         System.out.println("2.Tên sản phẩm.");
         System.out.println("3.Số lượng của sản phẩm.");
         System.out.println("4.Giá tiền của sản phẩm.");
         System.out.println("5.Tiền vốn của sản phẩm.");
-        System.out.println("6.Thoát sửa sản phẩm");
+        System.out.println("6.Thoát sửa thông tin khác của sản phẩm");
     }
 
     public SanPham() {
@@ -110,8 +110,8 @@ public class SanPham implements IThaoTac {
         }
         while(!inputGiaTien.matches(regex)){
             System.out.println("Giá tiền của sản phẩm không hợp lệ. Vui lòng nhập lại: ");
-            soLuong = Integer.parseInt(sc.nextLine().trim());
-            inputGiaTien = Integer.toString(soLuong);
+            giaTien = Double.parseDouble(sc.nextLine().trim());
+            inputGiaTien = Double.toString(giaTien);
         }
         this.giaTien = giaTien;
     }
@@ -129,8 +129,8 @@ public class SanPham implements IThaoTac {
         }
         while(!inputTienVon.matches(regex)){
             System.out.println("Tiền vốn của sản phẩm không hợp lệ. Vui lòng nhập lại: ");
-            soLuong = Integer.parseInt(sc.nextLine().trim());
-            inputTienVon = Integer.toString(soLuong);
+            tienVon = Double.parseDouble(sc.nextLine().trim());
+            inputTienVon = Double.toString(tienVon);
         }
         this.tienVon = tienVon;
     }
@@ -172,13 +172,13 @@ public class SanPham implements IThaoTac {
 
     public void Sua(){
         while(true){
-            menuSua();
+            menuSuaSanPham();
             System.out.print("Nhập lựa chọn sửa sản phẩm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
             String inputLuaChon = Integer.toString(luaChon);
             String regex = "^[1-6]$";
             while(!inputLuaChon.matches(regex)){
-                menuSua();
+                menuSuaSanPham();
                 System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
             }

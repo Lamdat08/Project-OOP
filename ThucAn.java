@@ -14,11 +14,11 @@ public class ThucAn extends SanPham {
         this.loaiThucAn = loaiThucAn;
     }
 
-    public void menuSua(){
+    public void menuSuaThucAn(){
         System.out.println("Chọn thông tin cần sửa : ");
         System.out.println("1. Sửa loại thức ăn");
         System.out.println("2.Sửa thông tin khác của sản phẩm");
-        System.out.println("3.Thoát sửa loại nước uống");
+        System.out.println("3.Thoát sửa loại thức ăn");
     }
     public String getLoaiThucAn() {
         return loaiThucAn;
@@ -57,13 +57,13 @@ public class ThucAn extends SanPham {
     @Override
     public void Sua(){
         while(true){
-            menuSua();
+            menuSuaThucAn();
             System.out.print("Nhập lựa chọn sửa sản phẩm: ");
             int luaChon = Integer.parseInt(sc.nextLine().trim());
             String inputLuaChon = Integer.toString(luaChon);
             String regex = "^[1-3]$";
             while(!inputLuaChon.matches(regex)){
-                menuSua();
+                menuSuaThucAn();
                 System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine().trim());
             }
@@ -76,7 +76,7 @@ public class ThucAn extends SanPham {
                     super.Sua();
                     break;
                 case 3:
-                    System.out.println("Thoát sửa loại thức an");
+                    System.out.println("Thoát sửa loại thức ăn");
                     return;
             }
         }
