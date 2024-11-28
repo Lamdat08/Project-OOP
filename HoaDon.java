@@ -374,28 +374,23 @@ public class HoaDon implements IThaoTac {
     // toString method
     @Override
     public String toString() {
-        String result = "Mã hóa đơn: " + maHD + ";";
-        result += "Thời gian: " + thoiGian + ";";
-        result += "Khách hàng: " + (getKhachhangtheodon() != null  ? getKhachhangtheodon().getTenKH() : "Chưa có") + ";";
-        result += "Sản phẩm: ;";
+        String result =   maHD + ";";
+        result +=  thoiGian + ";";
+        result +=  (getKhachhangtheodon() != null  ? getKhachhangtheodon().getTenKH() : "Khách hàng chưa có") + ";";
 
         if (sanphamtheodon != null && soLuongSP != null && sanphamtheodon.length == soLuongSP.length) {
             for (int i = 0; i < sanphamtheodon.length; i++) {
                 if (getSanphamtheodon()[i] != null && soLuongSP[i] > 0) {
-                    result += getSanphamtheodon()[i].getTenSP() + " - " + soLuongSP[i] + " x " + sanphamtheodon[i].getGiaTien()+ ";";
+                    result += getSanphamtheodon()[i].getTenSP() + "-" + soLuongSP[i] + "-" + sanphamtheodon[i].getGiaTien()+ ",";
                 }
             }
         } else {
             result += "Sản phẩm không có trong danh sách.;";
-            System.out.println(khachhangtheodon.getTenKH());
-            for (int i = 0; i < sanphamtheodon.length; i++) {
-                System.out.println(sanphamtheodon[i].getTenSP());
-            }
         }
-        result += "Tổng tiền: "+ TongTien()+";";
+        result += TongTien()+";";
 
 
-        result += "Phương thức thanh toán: " + phuongThucThanhToan;
+        result +=  phuongThucThanhToan;
         return result;
     }
 }
