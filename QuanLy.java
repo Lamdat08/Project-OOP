@@ -35,10 +35,10 @@ public class QuanLy extends NhanVien {
         String regex = "^QL\\d+$";
         String MaNV;
         do {
-            System.out.printf("Nhập vào mã quan ly  : ");
+            System.out.printf("Nhập vào mã quản lý : ");
             MaNV = sc.nextLine();
             if (!MaNV.matches(regex))
-                System.out.println("Mã quan ly phải bắt đầu bằng QL và sau đó là các chữ số, vui lòng nhập lại mã quan ly .");
+                System.out.println("Mã quản lý phải bắt đầu bằng QL và sau đó là các chữ số, vui lòng nhập lại mã quản lý.");
         }while (!MaNV.matches(regex));
         setMaNhanVien(MaNV);
 
@@ -46,7 +46,7 @@ public class QuanLy extends NhanVien {
 //        setTenNhanVien(sc.nextLine());
         String TenNV;
         do {
-            System.out.printf("Nhập vào ten : ");
+            System.out.printf("Nhập vào tên quản lý: ");
             TenNV = sc.nextLine();
             if (!TenNV.matches(regexLetters))
                 System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
@@ -59,14 +59,14 @@ public class QuanLy extends NhanVien {
         String SDT;
         do {
             do {
-                System.out.printf("Nhập vào SDT : ");
+                System.out.printf("Nhập vào số điện thoại : ");
                 SDT = sc.nextLine();
                 if (!SDT.matches(regNumbers))
-                    System.out.println("Sai dinh dang");
+                    System.out.println("Vui lòng chỉ nhập số !");
             }while (!SDT.matches(regNumbers));
 
             if ( SDT.length() != 10)
-                System.out.println("SDT co 10 so");
+                System.out.println("Vui lòng nhập đúng 10 số !");
         }while (SDT.length() == 10 );
         setSoDienThoai(SDT);
 
@@ -77,10 +77,10 @@ public class QuanLy extends NhanVien {
         String gt;
         do {
             do {
-                System.out.printf("Nhập vào gioi tinh : ");
+                System.out.printf("Nhập vào giới tính : ");
                 gt = sc.nextLine();
                 if (!gt.matches(regexLetters))
-                    System.out.println("Sai dinh dang");
+                    System.out.println("Vui lòng chỉ nhập chữ ");
             }while (!gt.matches(regexLetters));
 
         }while (gt.toLowerCase().matches("nam") || gt.toLowerCase().matches("nu"));
@@ -92,29 +92,30 @@ public class QuanLy extends NhanVien {
         String LCB;
         do {
             do {
-                System.out.printf("Nhập vào luong co ban : ");
+                System.out.printf("Nhập vào lương cơ bản : ");
+
                 LCB = sc.nextLine();
                 if (!LCB.matches(regNumbers))
-                    System.out.println("Sai dinh dang");
+                    System.out.println("Vui lòng chỉ nhập số ! ");
             }while (!LCB.matches(regNumbers));
 
-            if (Double.parseDouble(LCB) < 0)
-                System.out.println("LCB > 0");
-        }while (Double.parseDouble(LCB) < 0 );
+            if (Double.parseDouble(LCB) <= 0)
+                System.out.println("Lương phải lớn hơn 0.");
+        }while (Double.parseDouble(LCB) <= 0 );
         setLuongCoBan(Double.parseDouble(LCB));
 
         String PC;
         do {
             do {
-                System.out.printf("Nhập vào luong co ban : ");
+                System.out.printf("Nhập vào phụ cấp : ");
                 PC = sc.nextLine();
                 if (!PC.matches(regNumbers))
-                    System.out.println("Sai dinh dang");
+                    System.out.println("Vui lòng chỉ nhập số ! ");
             }while (!PC.matches(regNumbers));
 
-            if (Double.parseDouble(PC) < 0)
-                System.out.println("PC > 0");
-        }while (Double.parseDouble(PC) < 0 );
+            if (Double.parseDouble(PC) <= 0)
+                System.out.println("Phụ cấp lớn hơn 0.");
+        }while (Double.parseDouble(PC) <= 0 );
         setLuongCoBan(Double.parseDouble(PC));
     }
 
@@ -151,12 +152,12 @@ public class QuanLy extends NhanVien {
 
                     if ( n < 1 || n > 7) {
                         validInput = false;
-                        System.out.println("0 < n < 7");
+                        System.out.println("Vui lòng nhập lựa chọn từ 1 -> 7 : ");
                     }
                     else
                         validInput = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Vui lòng chỉ nhập số !");
                 }
             }
 
@@ -164,17 +165,17 @@ public class QuanLy extends NhanVien {
                 String regex = "^QL\\d+$";
                 String MaNV;
                 do {
-                    System.out.printf("Nhập vào mã QL : ");
+                    System.out.printf("Nhập vào mã quản lý : ");
                     MaNV = sc.nextLine();
                     if (!MaNV.matches(regex))
-                        System.out.println("Mã nhân viên phải bắt đầu bằng QL và sau đó là các chữ số, vui lòng nhập lại mã nhân viên .");
+                        System.out.println("Mã quản lý  phải bắt đầu bằng QL và sau đó là các chữ số, vui lòng nhập lại mã quản lý  .");
                 }while (!MaNV.matches(regex));
                 setMaNhanVien(MaNV);
             }
             if (n == 2) {
                 String TenNV;
                 do {
-                    System.out.printf("Nhập vào ten : ");
+                    System.out.printf("Nhập vào tên quản lý : ");
                     TenNV = sc.nextLine();
                     if (!TenNV.matches(regexLetters))
                         System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
@@ -185,14 +186,14 @@ public class QuanLy extends NhanVien {
                 String SDT;
                 do {
                     do {
-                        System.out.printf("Nhập vào SDT : ");
+                        System.out.printf("Nhập vào số điện thoại : ");
                         SDT = sc.nextLine();
                         if (!SDT.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Vui lòng chỉ nhập số !");
                     }while (!SDT.matches(regNumbers));
 
                     if ( SDT.length() != 10)
-                        System.out.println("SDT co 10 so");
+                        System.out.println("Vui lòng nhập đúng 10 số !");
                 }while (SDT.length() == 10 );
                 setSoDienThoai(SDT);
             }
@@ -200,15 +201,15 @@ public class QuanLy extends NhanVien {
                 String gioiTinhTimKiem;
                 while (true){
                     do {
-                        System.out.printf("Nhập vào gioi tinh : ");
+                        System.out.printf("Nhập vào giới tính : ");
                         gioiTinhTimKiem = sc.nextLine();
                         if (!gioiTinhTimKiem.matches(regexLetters))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Vui lòng chỉ nhập chữ ");
                     }while (!gioiTinhTimKiem.matches(regexLetters));
                     if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
                         break;
                     else
-                        System.out.println("Nhap nam hoac nu.");
+                        System.out.println("Vui lòng nhập giới tính hợp lý ( nam hoac nu ).");
                 }
                 setGioiTinh(gioiTinhTimKiem);
             }
@@ -216,14 +217,14 @@ public class QuanLy extends NhanVien {
                 String LCB;
                 do {
                     do {
-                        System.out.printf("Nhập vào luong co ban : ");
+                        System.out.printf("Nhập vào lương cơ bản : ");
                         LCB = sc.nextLine();
                         if (!LCB.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Vui lòng chỉ nhập số ! ");
                     }while (!LCB.matches(regNumbers));
 
                     if (Double.parseDouble(LCB) < 0)
-                        System.out.println("LCB > 0");
+                        System.out.println("Lương phải lớn hơn 0.");
                 }while (Double.parseDouble(LCB) < 0 );
                 setLuongCoBan(Double.parseDouble(LCB));
             }
@@ -232,14 +233,14 @@ public class QuanLy extends NhanVien {
                 String PC;
                 do {
                     do {
-                        System.out.printf("Nhập vào luong co ban : ");
+                        System.out.printf("Nhập vào phụ cấp : ");
                         PC = sc.nextLine();
                         if (!PC.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Vui lòng chỉ nhập số ! ");
                     }while (!PC.matches(regNumbers));
 
                     if (Double.parseDouble(PC) < 0)
-                        System.out.println("PC > 0");
+                        System.out.println("Phụ cấp lớn hơn 0.");
                 }while (Double.parseDouble(PC) < 0 );
                 setLuongCoBan(Double.parseDouble(PC));
             }
