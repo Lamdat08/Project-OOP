@@ -221,10 +221,10 @@ public class HoaDon implements IThaoTac {
     @Override
     public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
-        this.maHD = sc.nextLine();
+        setMaHD(sc.nextLine().trim());
 
         System.out.print("Nhập thời gian: ");
-        this.thoiGian = sc.nextLine();
+        setThoiGian(sc.nextLine().trim());
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
