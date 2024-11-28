@@ -49,7 +49,7 @@ public class QLCuaHang {
                         break;
 
                     case 2:
-//                        qlhd.menu();
+                       qlhd.menu();
                         break;
 
                     case 3:
