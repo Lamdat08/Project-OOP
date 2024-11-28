@@ -6,7 +6,7 @@ import Project_OOP.SanPham;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.List;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -30,6 +30,26 @@ public class HoaDon implements IThaoTac {
         this.loadSanPhamFromFile();
 
     }
+
+
+
+    public KhachHang getKhachhangtheodon() {
+        return khachhangtheodon;
+    }
+
+    public void setKhachhangtheodon(KhachHang khachhangtheodon) {
+        this.khachhangtheodon = khachhangtheodon;
+    }
+
+    public SanPham[] getSanphamtheodon() {
+        return sanphamtheodon;
+    }
+
+    public void setSanphamtheodon(SanPham[] sanphamtheodon) {
+        this.sanphamtheodon = sanphamtheodon;
+    }
+
+
 
     // Getter and Setter methods
     public String getMaHD() {
@@ -201,10 +221,10 @@ public class HoaDon implements IThaoTac {
     @Override
     public void Nhap() {
         System.out.print("Nhập mã hóa đơn: ");
-        this.maHD = sc.nextLine();
+        setMaHD(sc.nextLine().trim());
 
         System.out.print("Nhập thời gian: ");
-        this.thoiGian = sc.nextLine();
+        setThoiGian(sc.nextLine().trim());
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
@@ -225,7 +245,8 @@ public class HoaDon implements IThaoTac {
             this.soLuongSP[soLuongSP.length-1]=sl;
             for (SanPham x : sanpham) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
-                    sanpham[i] = x;
+                    sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length+1);
+                    sanphamtheodon[sanphamtheodon.length-1]=x;
                     soLuongSP[i] = sl;
                     timSP = true;
                     break;
@@ -265,9 +286,9 @@ public class HoaDon implements IThaoTac {
     // TongTien method
     public double TongTien() {
         double tongTien = 0;
-        for (int i = 0; i < sanpham.length; i++) {
-            if (sanpham[i] != null) {
-                tongTien += sanpham[i].getGiaTien() * soLuongSP[i];
+        for (int i = 0; i < sanphamtheodon.length; i++) {
+            if (sanphamtheodon[i] != null) {
+                tongTien += sanphamtheodon[i].getGiaTien() * soLuongSP[i];
             }
         }
         return tongTien;
@@ -297,6 +318,11 @@ public class HoaDon implements IThaoTac {
             case 3:
                 System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
                 String sdtKH = sc.nextLine();
+                for (KhachHang x : khachHang) {
+                    if (sdtKH.equalsIgnoreCase(x.getSDT())) {
+                        khachhangtheodon=x;
+                    }
+                }
                 break;
             case 4:
                 boolean themSP = false;
@@ -341,20 +367,26 @@ public class HoaDon implements IThaoTac {
     // toString method
     @Override
     public String toString() {
-        String result = "Mã hóa đơn: " + maHD + "\n";
-        result += "Thời gian: " + thoiGian + "\n";
-        result += "Khách hàng: " + (khachHang != null && khachHang.length > 0 ? khachHang[0].getTenKH() : "Chưa có") + "\n";
-        result += "Sản phẩm: \n";
+        String result = "Mã hóa đơn: " + maHD + ";";
+        result += "Thời gian: " + thoiGian + ";";
+        result += "Khách hàng: " + (getKhachhangtheodon() != null  ? getKhachhangtheodon().getTenKH() : "Chưa có") + ";";
+        result += "Sản phẩm: ;";
 
-        if (sanpham != null && soLuongSP != null && sanpham.length == soLuongSP.length) {
-            for (int i = 0; i < sanpham.length; i++) {
-                if (sanpham[i] != null && soLuongSP[i] > 0) {
-                    result += sanpham[i].getTenSP() + " - " + soLuongSP[i] + " x " + sanpham[i].getGiaTien() + "\n";
+        if (sanphamtheodon != null && soLuongSP != null && sanphamtheodon.length == soLuongSP.length) {
+            for (int i = 0; i < sanphamtheodon.length; i++) {
+                if (getSanphamtheodon()[i] != null && soLuongSP[i] > 0) {
+                    result += getSanphamtheodon()[i].getTenSP() + " - " + soLuongSP[i] + " x " + sanphamtheodon[i].getGiaTien()+ ";";
                 }
             }
         } else {
-            result += "Sản phẩm không có trong danh sách.\n";
+            result += "Sản phẩm không có trong danh sách.;";
+            System.out.println(khachhangtheodon.getTenKH());
+            for (int i = 0; i < sanphamtheodon.length; i++) {
+                System.out.println(sanphamtheodon[i].getTenSP());
+            }
         }
+        result += "Tổng tiền: "+ TongTien()+";";
+
 
         result += "Phương thức thanh toán: " + phuongThucThanhToan;
         return result;
