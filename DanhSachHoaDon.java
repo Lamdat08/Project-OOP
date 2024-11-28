@@ -145,7 +145,7 @@ public class DanhSachHoaDon {
         }
 
         System.out.println("Nhập mã hóa đơn cần sửa: ");
-        String maHD_Sua = sc.nextLine();
+        String maHD_Sua = sc.nextLine().trim();
 
         boolean timThay = false;
         for (int i = 0; i < DSHD.length; i++) {
