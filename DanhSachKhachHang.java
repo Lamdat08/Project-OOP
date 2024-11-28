@@ -174,8 +174,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             switch (luachon) {
                 case 1:
                     System.out.println("Nhập mã khách hàng cần tìm: ");
-                    String maKH_TimKiem = sc.nextLine();
-                    while (maKH_TimKiem == null || maKH_TimKiem.trim().isEmpty()) {
+                    String maKH_TimKiem = sc.nextLine().trim();
+                    while (maKH_TimKiem.trim().isEmpty()) {
                         System.out.println("Mã khách hàng không được để trống, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
@@ -186,7 +186,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getMaKH().equals(maKH_TimKiem)) {
+                        if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_TimKiem)) {
                             DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
@@ -198,8 +198,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     break;
                 case 2:
                     System.out.println("Nhập tên khách hàng cần tìm: ");
-                    String tenKhachHang_TimKiem = sc.nextLine();
-                    while (tenKhachHang_TimKiem == null || tenKhachHang_TimKiem.trim().isEmpty()) {
+                    String tenKhachHang_TimKiem = sc.nextLine().trim();
+                    while (tenKhachHang_TimKiem.isEmpty()) {
                         System.out.println("Tên khách hàng không được để trống, vui lòng nhập lại: ");
                         tenKhachHang_TimKiem = sc.nextLine().trim();
                     }
@@ -210,7 +210,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getTenKH().equals(tenKhachHang_TimKiem)) {
+                        if (DSKH[i].getTenKH().equalsIgnoreCase(tenKhachHang_TimKiem)) {
                             DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
@@ -222,32 +222,32 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     break;
                 case 3:
                     System.out.println("Nhập số điện thoại của khách hàng cần tìm: ");
-                    String soDienKhachHang_TimKiem = sc.nextLine();
-                    while (soDienKhachHang_TimKiem == null || soDienKhachHang_TimKiem.trim().isEmpty()) {
+                    String soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
+                    while (soDienThoaiKhachHang_TimKiem.trim().isEmpty()) {
                         System.out.println("Số điện thoại không được để trống, vui lòng nhập lại: ");
-                        soDienKhachHang_TimKiem = sc.nextLine().trim();
+                        soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
                     }
                     String regexSDT = "^[0-9]{10,11}$";
-                    while (!Pattern.matches(regexSDT, soDienKhachHang_TimKiem)) {
+                    while (!Pattern.matches(regexSDT, soDienThoaiKhachHang_TimKiem)) {
                         System.out.println("Số điện thoại không hợp lệ, hãy nhập số điện thoại chỉ có 10 hoặc 11 chữ số");
-                        soDienKhachHang_TimKiem = sc.nextLine().trim();
+                        soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getSDT().equals(soDienKhachHang_TimKiem)) {
+                        if (DSKH[i].getSDT().equals(soDienThoaiKhachHang_TimKiem)) {
                             DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
                         }
                     }
                     if (!kq) {
-                        System.out.println("Không tìm thấy khách hàng có số điện thoại: " + soDienKhachHang_TimKiem);
+                        System.out.println("Không tìm thấy khách hàng có số điện thoại: " + soDienThoaiKhachHang_TimKiem);
                     }
                     break;
                 case 4:
                     System.out.println("Nhập địa chỉ khách hàng cần tìm: ");
-                    String diaChiKhachHang_TimKiem = sc.nextLine();
-                    while (diaChiKhachHang_TimKiem == null || diaChiKhachHang_TimKiem.trim().isEmpty()) {
+                    String diaChiKhachHang_TimKiem = sc.nextLine().trim();
+                    while (diaChiKhachHang_TimKiem.trim().isEmpty()) {
                         System.out.println("Địa chỉ không được để trống, vui lòng nhập địa chỉ khách hàng: ");
                         diaChiKhachHang_TimKiem = sc.nextLine().trim();
                     }
@@ -259,7 +259,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getDiaChi().equals(diaChiKhachHang_TimKiem)) {
+                        if (DSKH[i].getDiaChi().equalsIgnoreCase(diaChiKhachHang_TimKiem)) {
                             DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
@@ -271,8 +271,8 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     break;
                 case 5:
                     System.out.println("Nhập giới tính khách hàng cần tìm: ");
-                    String gioiTinhKhachHang_TimKiem = sc.nextLine();
-                    while (gioiTinhKhachHang_TimKiem == null || gioiTinhKhachHang_TimKiem.isEmpty()) {
+                    String gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
+                    while (gioiTinhKhachHang_TimKiem.isEmpty()) {
                         System.out.println("Giới tính khách hàng không được để trống, vui lòng nhập giới tính: ");
                         gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
                     }

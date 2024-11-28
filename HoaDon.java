@@ -228,26 +228,31 @@ public class HoaDon implements IThaoTac {
 
         System.out.println("Nhập SDT khách hàng: ");
         String sdtKH = sc.nextLine();
+        // Look for the customer by their phone number
         for (KhachHang x : khachHang) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
-                khachhangtheodon=x;
+                khachhangtheodon = x;
+                break;  // Exit the loop as soon as the customer is found
             }
         }
 
         int i = 0;
-        while (i < sanpham.length) {
-            soLuongSP=Arrays.copyOf(soLuongSP,soLuongSP.length+1);
+        // Use the dynamic length of sanphamtheodon instead of sanpham.length
+        while (true) {
             System.out.println("Nhập tên sản phẩm: ");
-            String tenSP = sc.nextLine();
+            String tenSP = sc.nextLine();  // Read product name
             boolean timSP = false;
+
             System.out.println("Nhập số lượng sản phẩm: ");
-            int sl = Integer.parseInt(sc.nextLine());
-            this.soLuongSP[soLuongSP.length-1]=sl;
+            int sl = Integer.parseInt(sc.nextLine());  // Read quantity
+            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Resize quantity array to match new product
+            soLuongSP[soLuongSP.length - 1] = sl;  // Store the quantity
+
+            // Look for the product by name
             for (SanPham x : sanpham) {
                 if (tenSP.equalsIgnoreCase(x.getTenSP())) {
-                    sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length+1);
-                    sanphamtheodon[sanphamtheodon.length-1]=x;
-                    soLuongSP[i] = sl;
+                    sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
+                    sanphamtheodon[sanphamtheodon.length - 1] = x;  // Add selected product to the order list
                     timSP = true;
                     break;
                 }
@@ -257,22 +262,24 @@ public class HoaDon implements IThaoTac {
                 System.out.println("Không tìm thấy sản phẩm.");
             }
 
+            // Ask the user if they want to add another product
             System.out.println("Bạn muốn thêm sản phẩm không?");
             System.out.println("1. Có");
             System.out.println("2. Không");
-            int luaChon = Integer.parseInt(sc.nextLine());
-            if (luaChon == 2) break;
-            if( luaChon==1 ){
-                sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length+1);
-            }
-            i++;
+            int luaChon = Integer.parseInt(sc.nextLine());  // Read user's choice
 
-            if (i == sanpham.length) {
+            if (luaChon == 2) {
+                break;  // Exit the loop if the user doesn't want to add more products
+            }
+
+            // Prevent overflow if the array size exceeds the available slots
+            if (sanphamtheodon.length >= sanpham.length) {
                 System.out.println("Danh sách sản phẩm đã đầy.");
-                break;
+                break;  // Exit the loop if the product list is full
             }
         }
 
+        // Get payment method from user
         System.out.print("Nhập phương thức thanh toán: ");
         this.phuongThucThanhToan = sc.nextLine();
     }
