@@ -57,7 +57,7 @@ public class ThanhVien extends KhachHang {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(";%d%s", getDiemTichLuy(), rank());
+        return super.toString() + String.format(";%d;%s", getDiemTichLuy(), rank());
     }
 
     @Override
