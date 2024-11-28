@@ -137,7 +137,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         String maKH_Xoa = sc.nextLine();
         boolean kq = false;
         for (int i = 0; i < DSKH.length - 1; i++) {
-            if (DSKH[i].getMaKH().equals(maKH_Xoa)) {
+            if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_Xoa)) {
                 kq = true;
                 DSKH[i].setStatus(false);
                 System.out.println("Xóa khách hàng thành công !\n----------------");
@@ -146,7 +146,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             }
         }
         if (!kq) {
-            System.out.println("Không tìm thấy mã khách hàng" + maKH_Xoa + "muốn xóa");
+            System.out.println("Không tìm thấy mã khách hàng" + maKH_Xoa + " muốn xóa");
         }
     }
 
@@ -179,17 +179,19 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         System.out.println("Mã khách hàng không được để trống, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
-                    String regexMaKH = "^KH\\d+$";
+                    String regexMaKH = "^KH|kH|Kh|kh\\d+$";
                     while (!Pattern.matches(regexMaKH, maKH_TimKiem)) {
                         System.out.println("Mã khách hàng phải bắt đầu là KH và sau đó là các chữ số, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_TimKiem)) {
-                            DSKH[i].Xuat();
-                            kq = true;
-                            System.out.println("\n \t--------------------");
+                        if (DSKH[i].getStatus()) {
+                            if (maKH_TimKiem.equalsIgnoreCase(DSKH[i].getMaKH())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                                System.out.println("\n \t--------------------");
+                            }
                         }
                     }
                     if (!kq) {
@@ -276,13 +278,14 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         System.out.println("Giới tính khách hàng không được để trống, vui lòng nhập giới tính: ");
                         gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
                     }
-                    while (!gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nam") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nu") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Khac")) {
-                        System.out.println("Giới tính không hợp lệ, chỉ được phép nhập vào Nam Nu hoặc Khac");
+
+                    while (!gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nam") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nữ") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Khác")) {
+                        System.out.println("Giới tính không hợp lệ, chỉ được phép nhập vào Nam Nữ hoặc Khác");
                         gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getGioiTinh().equals(gioiTinhKhachHang_TimKiem)) {
+                        if (DSKH[i].getGioiTinh().equalsIgnoreCase(gioiTinhKhachHang_TimKiem)) {
                             DSKH[i].Xuat();
                             kq = true;
                             System.out.println("\n \t--------------------");
@@ -316,13 +319,15 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
         System.out.println("\t   Thông tin của danh sách khách hàng \n--------------------------");
         for (int i = 0; i < DSKH.length; i++) {
-            DSKH[i].Xuat();
-            System.out.println("\t--------------");
+            if (DSKH[i].getStatus()) {
+                DSKH[i].Xuat();
+                System.out.println("\t--------------");
+            }
         }
     }
 
     public void Sua() {
-        System.out.println("\n \t \t---------SỬA SẢN PHẨM--------");
+        System.out.println("\n \t \t---------SỬA KHÁCH HÀNG--------");
 
         if (DSKH == null) {
             System.out.println("Danh sách khách hàng chưa được khởi tạo.");
@@ -334,15 +339,26 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
 
         System.out.println("Nhập mã của khách hàng cần sửa: ");
-        String maKH_Sua = sc.nextLine();
+        String maKH_Sua = sc.nextLine().trim();
+        while (maKH_Sua.isEmpty()) {
+            System.out.println("Mã khách hàng cần sửa không được để trống, vui lòng nhập mã khách hàng !");
+            maKH_Sua = sc.nextLine().trim();
+        }
+        String regex = "^KH|kH|Kh|kh\\d+$";
+        while (!Pattern.matches(regex, maKH_Sua)) {
+            System.out.println("Mã khách phải phải bắt đầu bằng KH và sau đó là các số, vui lòng nhập lại !");
+            maKH_Sua = sc.nextLine().trim();
+        }
         boolean kq = false;
 
         for (int i = 0; i < DSKH.length; i++) {
-            if (DSKH[i].getMaKH().equals(maKH_Sua)) {
-                DSKH[i].Sua();
-                DSKH[i].Xuat();
-                kq = true;
-                System.out.println("Sửa khách hàng " + maKH_Sua + " thành công ! \n--------------------");
+            if (DSKH[i].getStatus()) {
+                if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_Sua)) {
+                    DSKH[i].Sua();
+                    DSKH[i].Xuat();
+                    kq = true;
+                    System.out.println("Sửa khách hàng " + maKH_Sua + " thành công !");
+                }
             }
         }
         if (!kq) {
@@ -390,7 +406,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         try {
             FileWriter fw = new FileWriter("KhachHang.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            for (int i = 0; i < DSKH.length; i++) {
+            for (int i = DSKH_File.length; i < DSKH.length; i++) {
                 bw.write(DSKH[i].toString());
                 bw.newLine();
             }
