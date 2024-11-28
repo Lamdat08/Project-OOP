@@ -245,7 +245,7 @@ public class DanhSachHoaDon {
 
         boolean timThay = false;
         for (HoaDon hd : DSHD) {
-            if (hd.getKhachHang().getSDT().equalsIgnoreCase(sdt)) {
+            if (hd.getKhachhangtheodon().getSDT().equalsIgnoreCase(sdt)) {
                 hd.Xuat();
                 timThay = true;
                 break;
