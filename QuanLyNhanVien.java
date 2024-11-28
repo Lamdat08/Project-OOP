@@ -66,12 +66,13 @@ public class QuanLyNhanVien {
 
                     if ( n < 1 || n > 9) {
                         validInput2 = false;
-                        System.out.println("0 < n < 10");
+                        System.out.println("Nhập số từ 1 đến 9");
                     }
                     else
                         validInput2 = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+//                    System.out.println(e);
+                    System.out.println("Chỉ nhập số");
                 }
             }
 

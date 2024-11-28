@@ -32,12 +32,17 @@ public class DanhSachNhanVien implements IThaoTac_2{
         String maXoa;
         String regexNV = "^NV\\d+$";
         String regexQL = "^QL\\d+$";
-        do {
+        while(true){
             System.out.printf("Nhập vào mã nhan vien : ");
             maXoa = sc.nextLine();
-            if (!maXoa.matches(regexNV) || !maXoa.matches(regexQL))
+            if (maXoa.matches(regexNV) || maXoa.matches(regexQL)){
+                break;
+            }
+            else{
                 System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
-        }while (!maXoa.matches(regexNV) || !maXoa.matches(regexQL));
+
+            }
+        }
 
 
         boolean find = false;
@@ -60,13 +65,31 @@ public class DanhSachNhanVien implements IThaoTac_2{
         System.out.println("1 - Nhập danh sách nhân viên");
         System.out.println("2 - Nhập danh sách quản lý");
 
-        int luaChon;
+        int luaChon = 0;
+        boolean isValid = false;
+//
+//        do{
+//
+//            luaChon = Integer.parseInt(sc.nextLine());
+//
+//        }while(luaChon != 1 && luaChon != 2);
+        while(!isValid){
+            try{
+                luaChon = Integer.parseInt(sc.nextLine());
+                if(luaChon == 1 || luaChon == 2){
+                    isValid = true;
+                }
+                else{
+                    System.out.println("Lựa chọn phải là 1 hoặc 2");
+                }
+            }catch(Exception e){
+//                System.out.println(e);
+                System.out.println("Chỉ nhập số");
+            }
+        }
 
-        do{
 
-            luaChon = Integer.parseInt(sc.nextLine());
 
-        }while(luaChon != 1 && luaChon != 2);
 
         if(luaChon == 1){
             NhanVienPartTime x = new NhanVienPartTime();
@@ -105,12 +128,13 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
                     if ( b < 1 || b > 6) {
                         validInput = false;
-                        System.out.println("0 < b < 6");
+                        System.out.println("Nhập từ 1 đến 6");
                     }
                     else
                         validInput = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+//                    System.out.println(e);
+                    System.out.println("Chỉ được nhập số");
                 }
             }
             int n = b;
@@ -268,6 +292,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
+//            System.out.println();
         }
     }
 
@@ -557,7 +582,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
         System.out.println("Tổng lương của quản lý : " + tongLuongQuanLy + "\n");
         System.out.println("Tổng lương của nhân viên : " + tongLuongNhanVien + "\n");
-        System.out.println("ương trung bình của quản lý : " + tongLuongQuanLy/soLuongQuanLy + "\n");
+        System.out.println("Lương trung bình của quản lý : " + tongLuongQuanLy/soLuongQuanLy + "\n");
         System.out.println("Lương trung bình của nhân viên  :" + tongLuongNhanVien/soLuongNhanVien + "\n");
     }
 

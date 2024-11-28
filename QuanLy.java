@@ -67,24 +67,27 @@ public class QuanLy extends NhanVien {
 
             if ( SDT.length() != 10)
                 System.out.println("Vui lòng nhập đúng 10 số !");
-        }while (SDT.length() == 10 );
+        }while (SDT.length() != 10 );
         setSoDienThoai(SDT);
 
 
 //        System.out.println("Nhập giới tính");
 //        setGioiTinh(sc.nextLine());
 
-        String gt;
-        do {
+        String gioiTinhTimKiem;
+        while (true){
             do {
                 System.out.printf("Nhập vào giới tính : ");
-                gt = sc.nextLine();
-                if (!gt.matches(regexLetters))
+                gioiTinhTimKiem = sc.nextLine();
+                if (!gioiTinhTimKiem.matches(regexLetters))
                     System.out.println("Vui lòng chỉ nhập chữ ");
-            }while (!gt.matches(regexLetters));
-
-        }while (gt.toLowerCase().matches("nam") || gt.toLowerCase().matches("nu"));
-        setGioiTinh(gt.toLowerCase());
+            }while (!gioiTinhTimKiem.matches(regexLetters));
+            if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
+                break;
+            else
+                System.out.println("Vui lòng nhập giới tính hợp lý ( nam hoac nu ).");
+        }
+        setGioiTinh(gioiTinhTimKiem.toLowerCase());
 
 
 //        System.out.println("Nhập lương cơ bản");
@@ -194,7 +197,7 @@ public class QuanLy extends NhanVien {
 
                     if ( SDT.length() != 10)
                         System.out.println("Vui lòng nhập đúng 10 số !");
-                }while (SDT.length() == 10 );
+                }while (SDT.length() != 10 );
                 setSoDienThoai(SDT);
             }
             if (n == 4) {
