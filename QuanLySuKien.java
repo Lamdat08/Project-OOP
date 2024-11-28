@@ -62,12 +62,12 @@ public class QuanLySuKien {
 
                             if ( c < 1 || c > 8) {
                                 validInput2 = false;
-                                System.out.println("0 < c < 9");
+                                System.out.println("vui lòng nhập lựa chọn từ 1 -> 8");
                             }
                             else
                                 validInput2 = true;
                         } catch (Exception e) {
-                            System.out.println(e);
+                            System.out.println("Vui lòng chỉ nhập số !");
                         }
                     }
 
@@ -111,12 +111,12 @@ public class QuanLySuKien {
 
                                 if ( exit < 1 || exit > 3) {
                                     validInput3 = false;
-                                    System.out.println("0 < exit < 4");
+                                    System.out.println("vui lòng nhập lựa chọn từ 1 -> 3");
                                 }
                                 else
                                     validInput3 = true;
                             } catch (Exception e) {
-                                System.out.println(e);
+                                System.out.println("Vui lòng chỉ nhập số !");
                             }
                         }
 

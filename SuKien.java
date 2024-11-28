@@ -94,7 +94,7 @@ public class SuKien implements  IThaoTac{
                 System.out.printf("Nhập vào doanh thu : ");
                 DT = sc.nextLine();
                 if (!DT.matches(regNumbers))
-                System.out.println("Sai dinh dang");
+                System.out.println("Sai định dạng, vui lòng chỉ nhập số");
             }while (!DT.matches(regNumbers));
 
                 if (Double.parseDouble(DT) < 0)
@@ -110,7 +110,7 @@ public class SuKien implements  IThaoTac{
                 System.out.printf("Nhập vào tiền vốn : ");
                 TV = sc.nextLine();
                 if (!TV.matches(regNumbers))
-                    System.out.println("Sai dinh dang");
+                    System.out.println("Sai định dạng, vui lòng chỉ nhập số");
             }while (!TV.matches(regNumbers));
 
             if (Double.parseDouble(TV) < 0)
@@ -218,14 +218,14 @@ public class SuKien implements  IThaoTac{
                     System.out.printf("Nhập lựa chọn : ");
                     b = Integer.parseInt(sc.nextLine());
 
-                    if ( b < 1 || b > 8) {
+                    if ( b < 1 || b > 7) {
                         validInput = false;
-                        System.out.println("0 < b < 9");
+                        System.out.println("vui lòng nhập lựa chọn từ 1 -> 7");
                     }
                     else
                         validInput = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Vui lòng chỉ nhập số !");
                 }
             }
 

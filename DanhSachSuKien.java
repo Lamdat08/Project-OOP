@@ -85,10 +85,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
         do {
             do {
             System.out.printf("Nhập số lượng phần tử thêm vào : ");
-            a = sc.nextLine();
+                a = sc.nextLine();
+                if ( !a.matches(regNumbers))
+                    System.out.println("Vui lòng chỉ nhập số !");
             }while (!a.matches(regNumbers));
                 if (Integer.parseInt(a) <= 0)
                     System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
+
         } while (Integer.parseInt(a) <= 0);
 
         int x = Integer.parseInt(a);
@@ -203,20 +206,26 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
                     if ( b < 1 || b > 8) {
                         validInput = false;
-                        System.out.println("0 < b < 9");
+                        System.out.println("vui lòng nhập lựa chọn từ 1 -> 8");
                     }
                     else
                         validInput = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Vui lòng chỉ nhập số !");
                 }
             }
             int x = b;
             System.out.println();
 
             if (x == 1) {
-                System.out.printf("Nhập mã sự kiện cần tìm : ");
-                String s = sc.nextLine();
+                String regex = "^SK\\d+$";
+                String s;
+                do {
+                    System.out.printf("Nhập vào mã sự kiện : ");
+                    s = sc.nextLine();
+                    if (!s.matches(regex))
+                        System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+                }while (!s.matches(regex));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
                     if (DSSK[i].getMaSK().equals(s)) {
@@ -230,8 +239,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             }
 
             else if (x == 2) {
-                System.out.printf("Nhập tên sự kiện cần tìm : ");
-                String s = sc.nextLine();
+                String s;
+                do {
+                    System.out.printf("Nhập vào tên sự kiện : ");
+                    s = sc.nextLine();
+                    if (!s.matches(regexLetters))
+                        System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
+                }while (!s.matches(regexLetters));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
                     if (DSSK[i].getTenSK().equals(s)) {
@@ -306,14 +320,19 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             else if (x == 5){
                 double s;
                 boolean isFind = false;
+                String DT;
                 do {
-                    System.out.printf("Nhập vào doanh thu cần tìm : ");
-                    s = sc.nextDouble();
-                    sc.nextLine();
-                    if ( s < 0 ){
-                        System.out.println("Vui lòng nhập doanh thu >= 0 !");
-                    }
-                }while (s < 0);
+                    do {
+                        System.out.printf("Nhập vào doanh thu : ");
+                        DT = sc.nextLine();
+                        if (!DT.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!DT.matches(regNumbers));
+
+                    if (Double.parseDouble(DT) < 0)
+                        System.out.println("DT > 0");
+                }while (Double.parseDouble(DT) < 0 );
+                s = Double.parseDouble(DT);
 
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
                     if (DSSK[i].getDoanhThu() == s ){
@@ -330,15 +349,20 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
             else if (x == 6){
                 double s;
-                boolean isFind = false;
+                String TV;
                 do {
-                    System.out.printf("Nhập vào tiền vốn cần tìm : ");
-                    s = sc.nextDouble();
-                    sc.nextLine();
-                    if ( s < 0 ){
-                        System.out.println("Vui lòng nhập tiền vốn >= 0 !");
-                    }
-                }while (s < 0);
+                    do {
+                        System.out.printf("Nhập vào tiền vốn : ");
+                        TV = sc.nextLine();
+                        if (!TV.matches(regNumbers))
+                            System.out.println("Sai dinh dang");
+                    }while (!TV.matches(regNumbers));
+
+                    if (Double.parseDouble(TV) < 0)
+                        System.out.println("DT > 0");
+                }while (Double.parseDouble(TV) < 0 );
+                s = Double.parseDouble(TV);
+                boolean isFind = false;
 
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
                     if (DSSK[i].getTienVon() == s ){
@@ -354,18 +378,27 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             }
 
             else if (x == 7) {
-                int s;
+                int s = 0;
+                boolean isValid = false;
                 boolean isFind = false;
                 System.out.println("1.Thiệt hại.");
                 System.out.println("2.Bình thường.");
                 System.out.println("3.Lời.");
                 System.out.println("4.Thoát.");
-                do{
-                    System.out.println("Nhập lựa chọn : ");
-                    s = sc.nextInt();
-                    if ( s < 0 || s > 4)
-                        System.out.println("Vui lòng nhập lựa chọn từ 1 -> 4");
-                }while (s < 0 || s > 4);
+                while (!isValid) {
+                    try {
+                        System.out.println("Nhập lựa chọn : ");
+                        s = Integer.parseInt(sc.nextLine());
+                        if (s < 0 || s > 4) {
+                            System.out.println("Vui lòng nhập lựa chọn từ 1 -> 4");
+                            isValid = false;
+                        }
+                        else
+                            isValid = true;
+                    } catch (Exception e) {
+                        System.out.println("Vui lòng chỉ nhập số !");
+                    };
+                }
 
                 if ( s == 1 ){
                     for (int i = 0 ; i < DSSK.length ; i++ ){
