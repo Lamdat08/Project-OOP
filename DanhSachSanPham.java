@@ -187,12 +187,12 @@ public class DanhSachSanPham implements IThaoTac_2 {
         while(true){
             boolean kq;
             menuTimKiem();
-            System.out.println("Nhập loại sản phẩm muốn thêm: ");
+            System.out.println("Nhập lựa chọn tìm kiếm: ");
             int luaChon = Integer.parseInt(sc.nextLine());
             String inputLuaChon = Integer.toString(luaChon);
             while(!inputLuaChon.matches(regex)){
                 menuNhap();
-                System.out.println("Không có loại sản phẩm này, mời nhập lại: ");
+                System.out.println("Không có lựa chọn này, mời nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
                 inputLuaChon = Integer.toString(luaChon);
             }
