@@ -385,7 +385,7 @@ public class HoaDon implements IThaoTac {
                 System.out.println(sanphamtheodon[i].getTenSP());
             }
         }
-        result += "Sản phẩm: "+ TongTien()+"\n";
+        result += "Tổng tiền: "+ TongTien()+"\n";
 
 
         result += "Phương thức thanh toán: " + phuongThucThanhToan;
