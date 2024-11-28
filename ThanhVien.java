@@ -16,10 +16,11 @@ public class ThanhVien extends KhachHang {
         this.diemTichLuy = DiemTichLuy;
     }
 
-    public void menuSua() {
+    public void menuSuaThanhVien() {
         System.out.println("Chọn thông tin cần sửa: ");
-        System.out.println("0. Sửa điểm tích lũy");
-        super.Sua();
+        System.out.println("1 - Sửa điểm tích lũy.");
+        System.out.println("2 - Sửa thông tin khác của khách hàng.");
+        System.out.println("3 - Thoát sửa điểm tích lũy.");
     }
 
     public int getDiemTichLuy() {
@@ -68,9 +69,29 @@ public class ThanhVien extends KhachHang {
 
     @Override
     public void Sua() {
-        super.Sua();
-        System.out.println("Nhập điểm tích lũy mới: ");
-        this.setDiemTichLuy(Integer.parseInt(sc.nextLine()));
+        while (true) {
+            menuSuaThanhVien();
+            System.out.println("Nhập lựa chọn sửa Thông tin: ");
+            int luachon = Integer.parseInt(sc.nextLine());
+            String inputLuaChon = Integer.toString(luachon);
+            String regex = "^[1-3]$";
+            while (!Pattern.matches(regex, inputLuaChon)) {
+                menuSuaThanhVien();
+                System.out.println("Chỉ được nhập từ 1 - 3, vui lòng nhập lại: ");
+                luachon = Integer.parseInt(sc.nextLine().trim());
+            }
+            switch (luachon) {
+                case 1:
+                    System.out.println("Nhập điểm tích lũy mới: ");
+                    setDiemTichLuy(Integer.parseInt(sc.nextLine()));
+                    break;
+                case 2:
+                    super.Sua();
+                    break;
+                case 3:
+                    System.out.println("Thoát sửa điểm tích lũy.");
+                    return;
+            }
+        }
     }
-
 }
