@@ -253,9 +253,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
-                        if(soLuongSP_TimKiem == DSSP[i].getSoLuong()){
-                            DSSP[i].Xuat();
-                            kq = true;
+                        if(DSSP[i].getStatus()){
+                            if(soLuongSP_TimKiem == DSSP[i].getSoLuong()){
+                                DSSP[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if(!kq){
@@ -274,9 +276,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
-                        if(giaTienSP_TimKiem == DSSP[i].getGiaTien()){
-                            DSSP[i].Xuat();
-                            kq = true;
+                        if(DSSP[i].getStatus()){
+                            if(giaTienSP_TimKiem == DSSP[i].getGiaTien()){
+                                DSSP[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if(!kq){
@@ -295,9 +299,11 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
                     kq = false;
                     for(int i = 0; i < DSSP.length; i++){
-                        if(tienVonSP_TimKiem == DSSP[i].getTienVon()){
-                            DSSP[i].Xuat();
-                            kq = true;
+                        if(DSSP[i].getStatus()){
+                            if(tienVonSP_TimKiem == DSSP[i].getTienVon()){
+                                DSSP[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if(!kq){
