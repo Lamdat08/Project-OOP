@@ -1,2 +1,3 @@
-HD01;0101-01-01;Nguyễn Thị I;Sản phẩm-0:Burger-Số lượng:34-Đơn giá:25000.0,Tổng tiền:850000.0;Phương thức:tien
-HD02;0101-01-01;Trần Hải J;Sản phẩm-0:Burger-Số lượng:33-Đơn giá:25000.0,Sản phẩm-1:Burger-Số lượng:3-Đơn giá:25000.0,Sản phẩm-2:Pizza-Số lượng:3-Đơn giá:50000.0,Tổng tiền:1075000.0;Phương thức:the
+HD01;2022-02-02;Ng Van C;0938445777;Ng Van C;Burger-2-25000.0,Sting-1-1000.0,
+HD02;2022-02-02;Ng Van A;0948445777;Ng Van A;Burger-3-25000.0,Sting-1-1000.0,Burger-4-25000.0,
+HD003;2020-10-20;Le Van D;0938447777;Tien mat;Burger-2-25000.0,Sting-2-1000.0,

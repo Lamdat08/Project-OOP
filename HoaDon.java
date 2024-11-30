@@ -31,6 +31,16 @@ public class HoaDon implements IThaoTac {
 
     }
 
+    public HoaDon(String ma, String thoiGian, String PTTT, KhachHang KH, SanPham[] ListSP, int[] soluong){
+        this.maHD = ma;
+        this.thoiGian = thoiGian;
+        this.phuongThucThanhToan = PTTT;
+        this.khachhangtheodon = KH;
+        this.sanphamtheodon = ListSP;
+        this.soLuongSP =  soluong;
+        this.Status = true;
+
+    }
 
 
     public KhachHang getKhachhangtheodon() {
@@ -225,70 +235,112 @@ public class HoaDon implements IThaoTac {
 
         System.out.print("Nhập thời gian: ");
         setThoiGian(sc.nextLine().trim());
+        String regex = "^[0-9]{10,11}$";
+        String sdtKH;
+        do {
+            System.out.println("Nhập SDT khách hàng: ");
+            sdtKH = sc.nextLine();
+            if (sdtKH == null || sdtKH.trim().isEmpty())
+                System.out.println("Số điện thoại không được để trống. Vui lòng nhập số điện thoại: ");
+            while (!Pattern.matches(regex, sdtKH)) {
+                System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại: ");
+                sdtKH = sc.nextLine().trim();
+            }
+        } while (sdtKH == null || sdtKH.trim().isEmpty());
 
-        System.out.println("Nhập SDT khách hàng: ");
-        String sdtKH = sc.nextLine();
+
+        boolean isFind = false;
         // Look for the customer by their phone number
         for (KhachHang x : khachHang) {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
                 khachhangtheodon = x;
+                isFind = true;
+                System.out.println("Da tim thay khach hang. Ho va ten : " + khachhangtheodon.getTenKH());
                 break;  // Exit the loop as soon as the customer is found
             }
+
         }
 
-        int i = 0;
-        // Use the dynamic length of sanphamtheodon instead of sanpham.length
+        if (!isFind) {
+            System.out.println("Khong tim thay khach hang theo sdt. Vui long nhap vao ten khach hang : ");
+            String TenKH = sc.nextLine();
+            khachhangtheodon.setSDT(sdtKH);
+            khachhangtheodon.setTenKH(TenKH);
+        }
+
+//            System.out.println("Nhập tên sản phẩm: ");
+//            String tenSP = sc.nextLine();  // Read product name
+//            boolean timSP = false;
+//
+//            System.out.println("Nhập số lượng sản phẩm: ");
+//            int sl = Integer.parseInt(sc.nextLine());  // Read quantity
+//            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Resize quantity array to match new product
+//            soLuongSP[soLuongSP.length - 1] = sl;  // Store the quantity
+//
+//            // Look for the product by name
+//            for (SanPham x : sanpham) {
+//                if (tenSP.equalsIgnoreCase(x.getTenSP())) {
+//                    sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
+//                    sanphamtheodon[sanphamtheodon.length - 1] = x;  // Add selected product to the order list
+//                    timSP = true;
+//                    break;
+//                }
+//            }
+//
+//            if (!timSP) {
+//                System.out.println("Không tìm thấy sản phẩm.");
+//            }
+//
+//            // Ask the user if they want to add another product
+//            System.out.println("Bạn muốn thêm sản phẩm không?");
+//            System.out.println("1. Có");
+//            System.out.println("2. Không");
+//            int luaChon = Integer.parseInt(sc.nextLine());  // Read user's choice
+//
+//            if (luaChon == 2) {
+//                break;  // Exit the loop if the user doesn't want to add more products
+//            }
+//
+//            // Prevent overflow if the array size exceeds the available slots
+//            if (sanphamtheodon.length >= sanpham.length) {
+//                System.out.println("Danh sách sản phẩm đã đầy.");
+//                break;  // Exit the loop if the product list is full
+//            }
+        System.out.println("\n------------------------\n Chon san pham qua stt : ");
+        for (int j = 0; j < sanpham.length; j++) {
+            System.out.println(j + 1 + "." + sanpham[j].getMaSP() + " - " + sanpham[j].getTenSP() + " - $ : " + sanpham[j].getGiaTien() + " || ");
+        }
+
+        int index = 0;
         while (true) {
-            System.out.println("Nhập tên sản phẩm: ");
-            String tenSP = sc.nextLine();  // Read product name
-            boolean timSP = false;
-
-            System.out.println("Nhập số lượng sản phẩm: ");
-            int sl = Integer.parseInt(sc.nextLine());  // Read quantity
-            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Resize quantity array to match new product
-            soLuongSP[soLuongSP.length - 1] = sl;  // Store the quantity
-
-            // Look for the product by name
-            for (SanPham x : sanpham) {
-                if (tenSP.equalsIgnoreCase(x.getTenSP())) {
-                    sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
-                    sanphamtheodon[sanphamtheodon.length - 1] = x;  // Add selected product to the order list
-                    timSP = true;
+            int s = -1;
+            while (s < 1 || s > sanpham.length) {
+                System.out.printf("Chon san pham qua thu tu  hoac bam 0 de ket thuc : ");
+                s = Integer.parseInt(sc.nextLine());
+                if (s == 0)
                     break;
-                }
+                if (s < 1 || s > sanpham.length)
+                    System.out.println("Vui long nhap dung thu tu.");
             }
-
-            if (!timSP) {
-                System.out.println("Không tìm thấy sản phẩm.");
+            if (s == 0) {
+                break;
             }
-
-            // Ask the user if they want to add another product
-            System.out.println("Bạn muốn thêm sản phẩm không?");
-            System.out.println("1. Có");
-            System.out.println("2. Không");
-            int luaChon = Integer.parseInt(sc.nextLine());  // Read user's choice
-
-            if (luaChon == 2) {
-                break;  // Exit the loop if the user doesn't want to add more products
-            }
-
-            // Prevent overflow if the array size exceeds the available slots
-            if (sanphamtheodon.length >= sanpham.length) {
-                System.out.println("Danh sách sản phẩm đã đầy.");
-                break;  // Exit the loop if the product list is full
-            }
+            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
+            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length+1);
+            sanphamtheodon[index] = sanpham[s-1];
+//            System.out.println(sanpham[s-1]);
+            int sl;
+            System.out.printf("Nhap vao so luong " + sanpham[s-1].getTenSP() + " : ");
+            sl = Integer.parseInt(sc.nextLine());
+            soLuongSP[index] = sl;
+            index++;
         }
-
-        // Get payment method from user
         System.out.print("Nhập phương thức thanh toán: ");
         this.phuongThucThanhToan = sc.nextLine();
+
     }
 
-    // Xuat method
-    @Override
-    public void Xuat() {
-        System.out.println(toString());
-    }
+
 
     // TongTien method
     public double TongTien() {
@@ -399,21 +451,42 @@ public class HoaDon implements IThaoTac {
     public String toString() {
         String result =   maHD + ";";
         result +=  thoiGian + ";";
-        result +=  (getKhachhangtheodon() != null  ? getKhachhangtheodon().getTenKH() : "Khách hàng chưa có") + ";";
-
+        result +=  (getKhachhangtheodon().getTenKH() != null  ? getKhachhangtheodon().getTenKH() :khachhangtheodon.getTenKH() ) + ";" +khachhangtheodon.getSDT() + ";";
+        result +=  phuongThucThanhToan +";";
         if (sanphamtheodon != null && soLuongSP != null && sanphamtheodon.length == soLuongSP.length) {
             for (int i = 0; i < sanphamtheodon.length; i++) {
                 if (getSanphamtheodon()[i] != null && soLuongSP[i] > 0) {
-                    result += "Sản phẩm-"+ i+ ":"+ getSanphamtheodon()[i].getTenSP() +"-" + "Số lượng:"+  + soLuongSP[i] + "-" + "Đơn giá:" +sanphamtheodon[i].getGiaTien()+ ",";
+                    result += getSanphamtheodon()[i].getTenSP() +"-" + soLuongSP[i] + "-" +sanphamtheodon[i].getGiaTien()+ ",";
                 }
             }
         } else {
             result += "Sản phẩm không có trong danh sách.;";
         }
-        result += "Tổng tiền:"+TongTien()+";";
 
 
-        result += "Phương thức:" + phuongThucThanhToan;
         return result;
     }
+
+    // Xuat method
+    @Override
+    public void Xuat() {
+        String ChiTiet = String.format(" %-20s | %-15s | %-10s | %-10s |", "Ten san pham", "Gia tien", "SL", "Tong" );
+        System.out.println("\nThong tin hoa don : ");
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("\t \t \t \t \t \t Ma hoa don : "+this.getMaHD());
+        System.out.println("Thoi gian : " + this.getThoiGian());
+        System.out.println("Khach hang : " + getKhachhangtheodon().getTenKH() + "\t SDT : " + getKhachhangtheodon().getSDT());
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("\t \t \t \t \t \t CHI TIET");
+
+        for ( int i = 0 ; i < getSanphamtheodon().length ; i++ ){
+            ChiTiet += "\n" + String.format(" %-20s | %-15s | %-10s | %-10s |", getSanphamtheodon()[i].getTenSP(),
+                    getSanphamtheodon()[i].getGiaTien(), getSoLuongSP()[i], getSanphamtheodon()[i].getGiaTien()*getSoLuongSP()[i] );
+        }
+        System.out.println(ChiTiet);
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Phuong thuc thanh toan : " + this.getPhuongThucThanhToan());
+        System.out.println("Tong cong : " + this.TongTien());
+    }
+
 }

@@ -2,27 +2,21 @@ package Project_OOP;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class DanhSachHoaDon {
 
     private static int soLuongHoaDon;
-    private HoaDon[] DSHD;         // Đổi từ danhSachHoaDon thành DSHD
-    private HoaDon[] DSHD_File;    // Đổi từ danhSachHoaDon_File thành DSHD_File
-
+    private HoaDon[] DSHD;         // Mảng chứa các hóa đơn
+    private HoaDon[] DSHD_File;    // Mảng lưu trữ hóa đơn lấy từ file
     static Scanner sc = new Scanner(System.in);
+    static KhachHang[] DSKH;
+    static SanPham[] DSSP;
 
-
-
-    // public DanhSachHoaDon(DanhSachSanPham dssp, DanhSachKhachHang dskh) {
-    //     this.dssp = dssp;
-    //     this.dskh = dskh;
-    //     this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
-    //     this.Nhap();
-    // }
     public DanhSachHoaDon() {
+        this.DSHD = new HoaDon[1]; // Khởi tạo mảng hóa đơn với dung lượng ban đầu là 5
 
-        this.DSHD = new HoaDon[5]; // Ít nhất 5 hóa đơn
         this.Nhap();
     }
 
@@ -32,7 +26,6 @@ public class DanhSachHoaDon {
 
     public void setDSHD(HoaDon[] DSHD) {
         this.DSHD = DSHD;
-
     }
 
     // Nhập danh sách hóa đơn từ file
@@ -40,26 +33,74 @@ public class DanhSachHoaDon {
         System.out.println("\n \t \t---------TẠO DANH SÁCH HÓA ĐƠN TỪ FILE HoaDon.txt---------");
 
         String line;
-        String[] strings = new String[6];
+        String[] strings = new String[5];
         try {
             FileReader fr = new FileReader("HoaDon.txt");
             BufferedReader br = new BufferedReader(fr);
 
             while ((line = br.readLine()) != null) {
+                // Kiểm tra nếu mảng DSHD đã đầy thì tăng kích thước
                 if (soLuongHoaDon == DSHD.length) {
                     DSHD = Arrays.copyOf(DSHD, DSHD.length + 5);
                 }
 
+                KhachHang n = new KhachHang();
                 strings = line.split(";");
-                try {
-                    // Code để tạo HoaDon từ dữ liệu file
-                    // Bạn cần điều chỉnh phần này dựa trên cách bạn implement HoaDon
-                    HoaDon hd = new HoaDon();
-                    DSHD[soLuongHoaDon] = hd;
-                    soLuongHoaDon++;
-                } catch (Exception e) {
-                    e.printStackTrace();
+                boolean isFound = false;
+
+                // Tìm khách hàng trong danh sách DSKhachHang
+                for (KhachHang x : DSKH) {
+                    if (strings[3].equals(x.getSDT())) {
+                        n = x;
+                        isFound = true;
+                        break;
+                    }
                 }
+
+                // Nếu không tìm thấy khách hàng, tạo mới khách hàng
+                if (!isFound) {
+                    n.setSDT(strings[3]);
+                    n.setTenKH(strings[2]);
+                }
+
+                // Khởi tạo mảng chứa sản phẩm và số lượng
+                SanPham[] ListSP = new SanPham[1];
+                int[] SL = new int[1];
+                int index = 0;
+
+                String[] sp = strings[5].split(","); // Tách chuỗi sản phẩm từ dấu phẩy
+                if (sp[sp.length - 1].isEmpty()) {
+                    sp = Arrays.copyOf(sp, sp.length - 1);
+                }
+                for (int i = 0; i < sp.length; i++) {
+                    String[] sp_details = sp[i].split("-"); // Tách sản phẩm và số lượng bằng dấu gạch ngang
+                        for (SanPham x : DSSP) {
+                            if (sp_details[0].equals(x.getTenSP())) {
+                                if (index == ListSP.length - 1) {
+                                    ListSP = Arrays.copyOf(ListSP, ListSP.length + 5);
+                                    SL = Arrays.copyOf(SL, SL.length + 5);
+                                }
+
+                                // Lưu sản phẩm và số lượng vào mảng
+                                ListSP[index] = x;
+                                SL[index] = Integer.parseInt(sp_details[1]);
+                                index++;
+                                break;
+
+                            }
+                        }
+                }
+
+                // Cắt mảng sản phẩm và số lượng đúng với số lượng thực tế
+                if (index < ListSP.length) {
+                    ListSP = Arrays.copyOf(ListSP, index);
+                    SL = Arrays.copyOf(SL, index);
+                }
+
+                // Tạo hóa đơn và thêm vào mảng DSHD
+                HoaDon hd = new HoaDon(strings[0], strings[1], strings[2], n, ListSP, SL);
+                DSHD[soLuongHoaDon] = hd;
+                soLuongHoaDon++;
             }
 
             br.close();
@@ -69,14 +110,15 @@ public class DanhSachHoaDon {
             e.printStackTrace();
         }
 
-        // Thu hẹp mảng nếu mảng chưa đầy
+        // Thu hẹp mảng nếu số lượng hóa đơn ít hơn chiều dài mảng
         if (soLuongHoaDon < DSHD.length) {
             DSHD = Arrays.copyOf(DSHD, soLuongHoaDon);
         }
 
-        // Copy mảng hiện tại vào mảng lấy dữ liệu từ File
+        // Sao chép mảng hiện tại vào mảng lấy dữ liệu từ File
         DSHD_File = Arrays.copyOf(DSHD, DSHD.length);
     }
+
 
     // Thêm hóa đơn mới
     public void Them() {
@@ -355,14 +397,32 @@ public class DanhSachHoaDon {
 
             while ((line = br.readLine()) != null) {
                 strings = line.split(";");
-
+                double total = 0;
                 // In từng dòng dữ liệu ra màn hình
-                System.out.println("Dòng dữ liệu: " + line);
+                String ChiTiet = String.format(" %-20s | %-15s | %-10s | %-10s |", "Ten san pham", "Gia tien", "SL", "Tong" );
+                System.out.println("\nThong tin hoa don : ");
+                System.out.println("--------------------------------------------------------------------------");
+                System.out.println("\t \t \t \t \t \t Ma hoa don : "+strings[0]);
+                System.out.println("Thoi gian : " + strings[1]);
+                System.out.println("Khach hang : " + strings[2] + "\t SDT : " + strings[3]);
+                System.out.println("--------------------------------------------------------------------------");
+                System.out.println("\t \t \t \t \t \t CHI TIET");
+                String[] p = strings[5].split(",");
+                if (p[p.length - 1].isEmpty()) {
+                    p = Arrays.copyOf(p, p.length - 1);
+                }
+                for ( int i = 0 ; i < p.length ; i++){
+                    String[] pd = p[i].split("-");
+                    double sum =  Double.parseDouble(pd[1]) * Double.parseDouble(pd[2]);
+                    ChiTiet += "\n" + String.format(" %-20s | %-15s | %-10s | %-10s |", pd[0],
+                            pd[1], pd[2], sum);
+                    total += sum;
+                }
+                System.out.println(ChiTiet);
+                System.out.println("---------------------------------------------------------------------------");
+                System.out.println("Phuong thuc thanh toan : " + strings[4]);
+                System.out.println("Tong cong : " + total );
 
-                // In chi tiết thông tin của hóa đơn từ mảng strings
-                System.out.println("Mã Hóa Đơn: " + strings[0] + " - Tên Khách Hàng: " + strings[1] + " - Tổng Tiền: " + strings[4]);
-                // Bạn có thể điều chỉnh chỉ mục nếu cấu trúc file có sự thay đổi.
-                // Ở đây tôi đang giả sử tổng tiền là phần tử ở chỉ mục 4.
             }
 
             br.close();

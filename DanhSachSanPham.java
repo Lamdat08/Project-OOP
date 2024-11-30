@@ -89,6 +89,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
         //Copy mảng hiện tại đang chỉnh sửa vào mảng lấy dữ liệu từ File
         DSSP_File = Arrays.copyOf(DSSP, DSSP.length);
+        DanhSachHoaDon.DSSP = Arrays.copyOf(DSSP_File,DSSP_File.length);
     }
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
