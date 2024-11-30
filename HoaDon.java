@@ -332,31 +332,54 @@ public class HoaDon implements IThaoTac {
                 }
                 break;
             case 4:
-                boolean themSP = false;
-                for (int i = 0; i < sanpham.length; i++) {
-                    if (sanpham[i] == null) {
-                        System.out.println("Nhập tên sản phẩm: ");
-                        String tenSP = sc.nextLine();
-                        System.out.println("Nhập số lượng sản phẩm: ");
-                        soLuongSP[i] = Integer.parseInt(sc.nextLine());
-                        themSP = true;
-                        break;
+                while (true) {
+                    System.out.println("Nhập tên sản phẩm: ");
+                    String tenSP = sc.nextLine();  // Read product name
+                    boolean timSP = false;
+
+                    System.out.println("Nhập số lượng sản phẩm: ");
+                    int sl = Integer.parseInt(sc.nextLine());  // Read quantity
+                    soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Resize quantity array to match new product
+                    soLuongSP[soLuongSP.length - 1] = sl;  // Store the quantity
+
+                    // Look for the product by name
+                    for (SanPham x : sanpham) {
+                        if (tenSP.equalsIgnoreCase(x.getTenSP())) {
+                            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
+                            sanphamtheodon[sanphamtheodon.length - 1] = x;  // Add selected product to the order list
+                            timSP = true;
+                            break;
+                        }
                     }
-                }
-                if (!themSP) {
-                    System.out.println("Không còn chỗ để thêm sản phẩm.");
+
+                    if (!timSP) {
+                        System.out.println("Không tìm thấy sản phẩm.");
+                    }
+
+                    // Ask the user if they want to add another product
+                    System.out.println("Bạn muốn thêm sản phẩm không?");
+                    System.out.println("1. Có");
+                    System.out.println("2. Không");
+                    luaChon = Integer.parseInt(sc.nextLine());  // Read user's choice
+
+                    if (luaChon == 2) {
+                        break;  // Exit the loop if the user doesn't want to add more products
+                    }
                 }
                 break;
+
+
             case 5:
-                System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanpham.length - 1) + "): ");
+                System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanphamtheodon.length - 1) + "): ");
                 int chiSoXoa = Integer.parseInt(sc.nextLine());
-                if (chiSoXoa >= 0 && chiSoXoa < sanpham.length && sanpham[chiSoXoa] != null) {
-                    for (int i = chiSoXoa; i < sanpham.length - 1; i++) {
-                        sanpham[i] = sanpham[i + 1];
+                if (chiSoXoa >= 0 && chiSoXoa < sanphamtheodon.length && sanphamtheodon[chiSoXoa] != null) {
+                    for (int i = chiSoXoa; i < sanphamtheodon.length - 1; i++) {
+                        sanphamtheodon[i] = sanphamtheodon[i + 1];
                         soLuongSP[i] = soLuongSP[i + 1];
                     }
-                    sanpham[9] = null;
-                    soLuongSP[9] = 0;
+                    sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length-1);
+                    soLuongSP=Arrays.copyOf(soLuongSP,soLuongSP.length-1);
+                    
                     System.out.println("Sản phẩm đã được xóa.");
                 } else {
                     System.out.println("Chỉ số sản phẩm không hợp lệ.");
@@ -381,16 +404,16 @@ public class HoaDon implements IThaoTac {
         if (sanphamtheodon != null && soLuongSP != null && sanphamtheodon.length == soLuongSP.length) {
             for (int i = 0; i < sanphamtheodon.length; i++) {
                 if (getSanphamtheodon()[i] != null && soLuongSP[i] > 0) {
-                    result += getSanphamtheodon()[i].getTenSP() + "-" + soLuongSP[i] + "-" + sanphamtheodon[i].getGiaTien()+ ",";
+                    result += "Sản phẩm-"+ i+ ":"+ getSanphamtheodon()[i].getTenSP() +"-" + "Số lượng:"+  + soLuongSP[i] + "-" + "Đơn giá:" +sanphamtheodon[i].getGiaTien()+ ",";
                 }
             }
         } else {
             result += "Sản phẩm không có trong danh sách.;";
         }
-        result += TongTien()+";";
+        result += "Tổng tiền:"+TongTien()+";";
 
 
-        result +=  phuongThucThanhToan;
+        result += "Phương thức:" + phuongThucThanhToan;
         return result;
     }
 }
