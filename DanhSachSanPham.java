@@ -3,7 +3,6 @@ package Project_OOP;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.*;
 
 public class DanhSachSanPham implements IThaoTac_2 {
 
@@ -75,13 +74,12 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     soLuongSanPham++;
                 }
                 catch (Exception e){
-                    e.printStackTrace();
+                    System.out.println("Lỗi tạo danh sách sản phẩm từ file SanPham.txt ");
                 }
             }
         }
         catch (Exception e){
             System.out.println("Lỗi đọc file SanPham.txt: ");
-            e.printStackTrace();
         }
         //Thu hẹp mảng nếu mảng chưa đầy
         if(soLuongSanPham < DSSP.length){
@@ -93,13 +91,22 @@ public class DanhSachSanPham implements IThaoTac_2 {
     public void Them(){
         System.out.println("\n \t \t---------THÊM SẢN PHẨM---------");
 
-        System.out.println("Nhập số lượng sản phẩm muốn thêm: ");
-        int slSP = Integer.parseInt(sc.nextLine());
+        int slSP;
+        while(true){
+            try{
+                System.out.println("Nhập số lượng sản phẩm muốn thêm: ");
+                slSP = Integer.parseInt(sc.nextLine().trim());
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Số lượng sản phẩm không hợp lệ, vui lòng nhập lại: ");
+            }
+        }
         String inputSLSP = Integer.toString(slSP);
         String regex = "^[1-9]+$";
         while(!inputSLSP.matches(regex)){
             System.out.println("Không hợp lệ, vui lòng nhập số lượng sản phẩm > 0: ");
-            slSP = Integer.parseInt(sc.nextLine());
+            slSP = Integer.parseInt(sc.nextLine().trim());
             inputSLSP = Integer.toString(slSP);
         }
 
@@ -109,10 +116,19 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         int slSPBanDau = DSSP.length - slSP;
         for(int i = slSPBanDau; i < DSSP.length; i++){
+            int luaChon;
+            while(true){
+                try{
+                    menuNhap();
+                    System.out.println("Nhập lựa chọn: ");
+                    luaChon = Integer.parseInt(sc.nextLine().trim());
+                    break;
+                }
+                catch(NumberFormatException numberFormatException){
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
             String regex1 = "^(1|2)$";
-            menuNhap();
-            System.out.println("Nhập loại sản phẩm muốn thêm: ");
-            int luaChon = Integer.parseInt(sc.nextLine());
             String inputLuaChon = Integer.toString(luaChon);
             while(!inputLuaChon.matches(regex1)){
                 menuNhap();
@@ -158,13 +174,12 @@ public class DanhSachSanPham implements IThaoTac_2 {
             maSP_Xoa = sc.nextLine().trim();
         }
         boolean kq = false;
-        for(int i = 0; i < DSSP.length - 1; i++){
-            if(DSSP[i].getMaSP().equalsIgnoreCase(maSP_Xoa)){
+        for(int i = 0; i < DSSP.length; i++){
+            if(maSP_Xoa.equalsIgnoreCase(DSSP[i].getMaSP())){
                 kq = true;
                 DSSP[i].setStatus(false);
                 System.out.println("Xóa sản phẩm thành công!\n-------------------");
                 soLuongSanPham--;
-                break;
             }
         }
         if(!kq){
@@ -185,15 +200,24 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
         String regex = "^[1-6]$";
         while(true){
+            int luaChon;
+            while(true){
+                try{
+                    menuTimKiem();
+                    System.out.println("Nhập lựa chọn tìm kiếm: ");
+                    luaChon = Integer.parseInt(sc.nextLine().trim());
+                    break;
+                }
+                catch(NumberFormatException numberFormatException){
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
             boolean kq;
-            menuTimKiem();
-            System.out.println("Nhập lựa chọn tìm kiếm: ");
-            int luaChon = Integer.parseInt(sc.nextLine());
             String inputLuaChon = Integer.toString(luaChon);
             while(!inputLuaChon.matches(regex)){
                 menuNhap();
                 System.out.println("Không có lựa chọn này, mời nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine());
+                luaChon = Integer.parseInt(sc.nextLine().trim());
                 inputLuaChon = Integer.toString(luaChon);
             }
 
@@ -352,8 +376,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
 
         System.out.println("Nhập mã của sản phẩm cần sửa: ");
-        String maSP_Sua = sc.nextLine();
-        while(maSP_Sua == null || maSP_Sua.trim().isEmpty()) {
+        String maSP_Sua = sc.nextLine().trim();
+        while(maSP_Sua.isEmpty()) {
             System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
             maSP_Sua = sc.nextLine().trim();
         }
@@ -401,15 +425,14 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     System.out.println("--------------------------------\n");
                 }
                 catch (Exception e){
-                    e.printStackTrace();
+                    System.out.println("Lỗi xuất sản phẩm từ file SanPham.txt");
                 }
             }
             br.close();
             fr.close();
         }
         catch (Exception e) {
-            System.out.println("Lỗi đọc file SanPham.txt: \n");
-            e.printStackTrace();
+            System.out.println("Lỗi đọc file SanPham.txt \n");
         }
     }
     public void ghiFile(){
@@ -437,8 +460,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             DSSP_File = Arrays.copyOf(DSSP,DSSP.length);
         }
         catch (IOException ioException) {
-            System.out.printf("Lỗi ghi file SanPham.txt: ");
-            ioException.printStackTrace();
+            System.out.println("Lỗi ghi file SanPham.txt ");
         }
     }
 
@@ -491,10 +513,10 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     }
 
                     tongSoLuong += DSSP[i].getSoLuong();
-                    if(DSSP[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
+                    if(DSSP[i].getSoLuong() < minSP_SoLuong.getSoLuong()){
                         minSP_SoLuong = DSSP[i];
                     }
-                    if(DSSP[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
+                    if(DSSP[i].getSoLuong() > maxSP_SoLuong.getSoLuong()){
                         maxSP_SoLuong = DSSP[i];
                     }
                 }
@@ -524,7 +546,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                         minDSSP_SoLuong[indexMinSL] = DSSP[i];
                         indexMinSL++;
                     }
-                    if (DSSP[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                    if (DSSP[i].getSoLuong() == maxSP_SoLuong.getSoLuong()) {
                         if(indexMaxSL == maxDSSP_SoLuong.length){
                             maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
                         }
@@ -600,16 +622,18 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
             for (int i = 0; i < DSSP_File.length; i++) {
                 tongLoiNhuan += DSSP_File[i].LoiNhuan();
-                if (DSSP_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan())
+                if (DSSP_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
                     minSP_LoiNhuan = DSSP_File[i];
-                if (DSSP_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan())
+                }
+                if (DSSP_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()){
                     maxSP_LoiNhuan = DSSP_File[i];
+                }
 
                 tongSoLuong += DSSP_File[i].getSoLuong();
-                if(DSSP_File[i].getGiaTien() < minSP_SoLuong.getSoLuong()){
+                if(DSSP_File[i].getSoLuong() < minSP_SoLuong.getSoLuong()){
                     minSP_SoLuong = DSSP_File[i];
                 }
-                if(DSSP_File[i].getGiaTien() > maxSP_SoLuong.getSoLuong()){
+                if(DSSP_File[i].getSoLuong() > maxSP_SoLuong.getSoLuong()){
                     maxSP_SoLuong = DSSP_File[i];
                 }
             }
@@ -637,7 +661,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
                     minDSSP_SoLuong[indexMinSL] = DSSP_File[i];
                     indexMinSL++;
                 }
-                if (DSSP_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                if (DSSP_File[i].getSoLuong() == maxSP_SoLuong.getSoLuong()) {
                     if(indexMaxSL == maxDSSP_SoLuong.length){
                         maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
                     }

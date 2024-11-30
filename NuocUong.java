@@ -1,6 +1,5 @@
 package Project_OOP;
 
-import java.util.regex.Pattern;
 
 public class NuocUong extends SanPham{
 
@@ -59,9 +58,18 @@ public class NuocUong extends SanPham{
     @Override
     public void Sua(){
         while(true){
-            menuSuaNuocUong();
-            System.out.print("Nhập lựa chọn sửa sản phẩm: ");
-            int luaChon = Integer.parseInt(sc.nextLine().trim());
+            int luaChon;
+            while(true){
+                try{
+                    menuSuaNuocUong();
+                    System.out.print("Nhập lựa chọn sửa nước uống: ");
+                    luaChon = Integer.parseInt(sc.nextLine().trim());
+                    break;
+                }
+                catch(NumberFormatException numberFormatException){
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
             String inputLuaChon = Integer.toString(luaChon);
             String regex = "^[1-3]$";
             while(!inputLuaChon.matches(regex)){
