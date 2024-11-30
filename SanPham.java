@@ -1,7 +1,6 @@
 package Project_OOP;
 
 import java.util.Scanner;
-import java.util.regex.*;
 
 public class SanPham implements IThaoTac {
 
@@ -147,12 +146,36 @@ public class SanPham implements IThaoTac {
         setMaSP(sc.nextLine());
         System.out.println("Nhập tên sản phẩm: ");
         setTenSP(sc.nextLine());
-        System.out.println("Nhập số lượng của sản phẩm: ");
-        setSoLuong(Integer.parseInt(sc.nextLine()));
-        System.out.println("Nhập giá tiền của sản phẩm: ");
-        setGiaTien(Double.parseDouble(sc.nextLine()));
-        System.out.println("Nhập tiền vốn của sản phẩm: ");
-        setTienVon(Double.parseDouble(sc.nextLine()));
+        while(true){
+            try{
+                System.out.println("Nhập số lượng của sản phẩm: ");
+                setSoLuong(Integer.parseInt(sc.nextLine()));
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+            }
+        }
+        while(true){
+            try{
+                System.out.println("Nhập giá tiền của sản phẩm: ");
+                setGiaTien(Double.parseDouble(sc.nextLine()));
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+            }
+        }
+        while(true){
+            try{
+                System.out.println("Nhập tiền vốn của sản phẩm: ");
+                setTienVon(Double.parseDouble(sc.nextLine()));
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+            }
+        }
     }
 
     @Override
@@ -172,9 +195,18 @@ public class SanPham implements IThaoTac {
 
     public void Sua(){
         while(true){
-            menuSuaSanPham();
-            System.out.print("Nhập lựa chọn sửa sản phẩm: ");
-            int luaChon = Integer.parseInt(sc.nextLine());
+            int luaChon;
+            while(true){
+                try{
+                    menuSuaSanPham();
+                    System.out.print("Nhập lựa chọn sửa sản phẩm: ");
+                    luaChon = Integer.parseInt(sc.nextLine());
+                    break;
+                }
+                catch(NumberFormatException numberFormatException){
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
             String inputLuaChon = Integer.toString(luaChon);
             String regex = "^[1-6]$";
             while(!inputLuaChon.matches(regex)){
