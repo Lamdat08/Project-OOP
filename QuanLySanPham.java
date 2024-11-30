@@ -74,13 +74,13 @@ public class QuanLySanPham {
                             System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                         }
                     }
-                    String inputLuaChon2 = Integer.toString(luaChon1);
+                    String inputLuaChon2 = Integer.toString(luaChon2);
                     String regex2 = "^[1-8]$";
                     while (!inputLuaChon2.matches(regex2)) {
                         menuSanPham();
                         System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 8: ");
                         luaChon2 = Integer.parseInt(sc.nextLine().trim());
-                        inputLuaChon2 = Integer.toString(luaChon1);
+                        inputLuaChon2 = Integer.toString(luaChon2);
                     }
 
                     if (luaChon2 == 1) {
