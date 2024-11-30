@@ -6,21 +6,17 @@ public class QuanLyHoaDon {
 
     private DanhSachHoaDon DShd = new DanhSachHoaDon();  // Đối tượng DanhSachHoaDon
 
-
     // Phương thức khởi tạo
-//     public QuanLyHoaDon() {
-//         DShd = new DanhSachHoaDon(dssp, dskh);  // Khởi tạo đối tượng DanhSachHoaDon
-//     }
-   public QuanLyHoaDon() {
-
+    public QuanLyHoaDon() {
     }
 
     // Phương thức hiển thị menu cho người dùng
     public void menu() {
         Scanner sc = new Scanner(System.in);
-        int luaChon;
+        int x = 0; // Define the 'x' variable to hold user's menu choice
 
         do {
+            boolean isValid = false; // Flag for checking if input is valid
             System.out.println("\n---------QUẢN LÝ HÓA ĐƠN---------");
             System.out.println("1. Nhập danh sách hóa đơn từ file");
             System.out.println("2. Thêm hóa đơn");
@@ -33,9 +29,27 @@ public class QuanLyHoaDon {
             System.out.println("9. Ghi file HoaDon.txt");
             System.out.println("0. Thoát");
             System.out.print("Chọn chức năng (0-9): ");
-            luaChon = Integer.parseInt(sc.nextLine());
 
-            switch (luaChon) {
+            // Input validation loop for menu selection
+            while (!isValid) {
+                try {
+                    System.out.print("Nhập lựa chọn: ");
+                    x = Integer.parseInt(sc.nextLine()); // Get the user input
+
+                    // Check if the input is within the valid range (0-9)
+                    if (x < 0 || x > 9) {
+                        System.out.println("Vui lòng nhập lựa chọn từ 0 -> 9.");
+                    } else {
+                        isValid = true; // If valid, exit the loop
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Vui lòng chỉ nhập số hợp lệ!");
+                }
+            }
+
+            // Now, handle the user's choice with the validated 'x'
+            switch (x) {
                 case 1:
                     DShd.Nhap();  // Nhập danh sách hóa đơn từ file
                     break;
@@ -61,7 +75,7 @@ public class QuanLyHoaDon {
                     DShd.docFile();  // Đọc và xuất file HoaDon.txt
                     break;
                 case 9:
-                    DShd.ghiFile();
+                    DShd.ghiFile();  // Ghi file HoaDon.txt
                     break;
                 case 0:
                     System.out.println("Thoát chương trình.");
@@ -71,6 +85,8 @@ public class QuanLyHoaDon {
                     break;
             }
 
-        } while (luaChon != 0);
+        } while (x != 0);  // Exit when the user selects option 0 (Thoát)
+
+        sc.close();  // Close the scanner to prevent resource leaks
     }
 }
