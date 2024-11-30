@@ -34,27 +34,51 @@ public class QuanLyKhachHang {
     }
     public void menuQuanLyKhachHang() {
         while (true) {
-            menuQLKH();
-            System.out.println("Nhập lựa chọn: ");
-            int luaChon1 = Integer.parseInt(sc.nextLine());
-            while (luaChon1 < 1 || luaChon1 > 4) {
-                menuQLKH();
+            int luaChon1;
+            while (true) {
+                try {
+                    menuQLKH();
+                    System.out.println("Nhập lựa chọn quản lý khách hàng từ 1 - 4");
+                    luaChon1 = Integer.parseInt(sc.nextLine());
+                    break;
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
+            String inputLuaChon1 = Integer.toString(luaChon1);
+            String regex1 = "^[1-4]$";
+            while (!inputLuaChon1.matches(regex1)) {
+                menuKhachHang();
                 System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
-                luaChon1 = Integer.parseInt(sc.nextLine());
+                luaChon1 = Integer.parseInt(sc.nextLine().trim());
+                inputLuaChon1 = Integer.toString(luaChon1);
             }
             if (luaChon1 == 1) {
                 DanhSachKhachHang.docFile();
             } else if (luaChon1 == 2) {
-                dskh.Xuat();
+                dskh.thongKeKhachHang();
             } else if (luaChon1 == 3) {
                 while (true) {
-                    menuKhachHang();
-                    System.out.println("Nhập lựa chọn: ");
-                    int luaChon2 = Integer.parseInt(sc.nextLine());
-                    while (luaChon2 < 1 || luaChon2 > 8) {
+                    int luaChon2;
+                    while (true) {
+                        try {
+                            menuKhachHang();
+                            System.out.println("Nhập lựa chọn thao tác từ 1 - 8");
+                            luaChon2 = Integer.parseInt(sc.nextLine().trim());
+                            break;
+                        }
+                        catch (NumberFormatException e) {
+                            System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                        }
+                    }
+                    String inputLuaChon2 = Integer.toString(luaChon2);
+                    String regex2 = "^[1-8]$";
+                    while (!inputLuaChon2.matches(regex2)) {
                         menuKhachHang();
-                        System.out.println("Không có lựa chọn này, vui lòng nhập các lựa chọn từ 1 - 10");
-                        luaChon2 = Integer.parseInt(sc.nextLine());
+                        System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 8: ");
+                        luaChon2 = Integer.parseInt(sc.nextLine().trim());
+                        inputLuaChon2 = Integer.toString(luaChon2);
                     }
 
                     if (luaChon2 == 1) {
@@ -72,13 +96,24 @@ public class QuanLyKhachHang {
                     } else if (luaChon2 == 7) {
                         dskh.thongKeKhachHang();
                     } else {
-                        menuThoat();
-                        System.out.println("Nhập lựa chọn: ");
-                        int exit = Integer.parseInt(sc.nextLine());
-                        while (exit < 1 || exit > 3) {
+                        int exit;
+                        while (true) {
+                            try {
+                                menuKhachHang();
+                                System.out.println("Nhập lựa chọn từ 1 - 3");
+                                exit = Integer.parseInt(sc.nextLine().trim());
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                            }
+                        }
+                        String inputExit = Integer.toString(exit);
+                        String regexExit = "^[1-3]$";
+                        while (!inputExit.matches(regexExit)) {
                             menuThoat();
-                            System.out.println("Không có lựa chọn này, vui lòng nhập lựa chọn từ 1 - 3: ");
+                            System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 3: ");
                             exit = Integer.parseInt(sc.nextLine());
+                            inputExit = Integer.toString(exit);
                         }
 
                         if (exit == 1) {
@@ -89,7 +124,7 @@ public class QuanLyKhachHang {
                             System.out.println("Thoát menu các thao tác quản lý khách hàng.");
                             break;
                         } else {
-                            System.out.println("\n Quay trờ lại \n------------------------------------");
+                            System.out.println("\n Quay trở lại \n----------------------------------");
                         }
                     }
                 }
