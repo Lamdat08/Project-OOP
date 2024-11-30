@@ -15,13 +15,13 @@ public class KhachHang implements IThaoTac {
 
     private boolean status;
 
-    public void menuSua() {
-        System.out.println("1. Tên khách hàng.");
-        System.out.println("2. Tên sản phẩm.");
-        System.out.println("3. Số điện thoại của khách hàng.");
-        System.out.println("4. Địa chỉ của khách hàng");
-        System.out.println("5. Giới tính của khách hàng.");
-        System.out.println("6. Thoát sửa thông tin khách hàng.");
+    public void menuSuaKhachHang() {
+        System.out.println("1 - Mã khách hàng.");
+        System.out.println("2 - Tên khách hàng.");
+        System.out.println("3 - Số điện thoại của khách hàng.");
+        System.out.println("4 - Địa chỉ của khách hàng");
+        System.out.println("5 - Giới tính của khách hàng.");
+        System.out.println("6 - Thoát sửa thông tin khách hàng.");
     }
 
     public KhachHang() {
@@ -47,7 +47,7 @@ public class KhachHang implements IThaoTac {
             maKH = sc.nextLine().trim();
         }
         String regex = "^KH\\d+$";
-        while (!Pattern.matches(regex, maKH)) {
+        while (!maKH.matches(regex)) {
             System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các chữ số, vui lòng nhập lại mã khách hàng.");
             maKH = sc.nextLine().trim();
         }
@@ -64,7 +64,7 @@ public class KhachHang implements IThaoTac {
             tenKH = sc.nextLine().trim();
         }
         String regex = "^[a-zA-ZÀ-ỹ\\s]+$";
-        while (!Pattern.matches(regex, tenKH)) {
+        while (!tenKH.matches(regex)) {
             System.out.println("Tên khách hàng không hợp lệ. Vui lòng nhập lại: ");
             tenKH = sc.nextLine().trim();
         }
@@ -81,7 +81,7 @@ public class KhachHang implements IThaoTac {
             SDT = sc.nextLine().trim();
         }
         String regex = "^[0-9]{10,11}$";
-        while (!Pattern.matches(regex, SDT)) {
+        while (!SDT.matches(regex)) {
             System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại: ");
             SDT = sc.nextLine().trim();
         }
@@ -93,13 +93,13 @@ public class KhachHang implements IThaoTac {
     }
 
     public void setDiaChi(String diaChi) {
-        if (diaChi == null || diaChi.trim().isEmpty()) {
+        diaChi = diaChi.trim();
+        if (diaChi == null || diaChi.isEmpty()) {
             this.diaChi = "Không xác định";
             return;
         }
-        diaChi = diaChi.trim();
         String regex = "^[a-zA-Z0-9À-ỹ\\s,./-]+$";
-        while (!Pattern.matches(regex, diaChi)) {
+        while (!diaChi.matches(regex)) {
             System.out.println("Địa chỉ không hợp lệ. Vui lòng nhập lại địa chỉ: ");
             diaChi = sc.nextLine().trim();
         }
@@ -112,15 +112,15 @@ public class KhachHang implements IThaoTac {
 
     public void setGioiTinh(String gioiTinh) {
         while (true) {
-            if (gioiTinh == null || gioiTinh.trim().isEmpty()) {
+            gioiTinh = gioiTinh.trim();
+            if (gioiTinh == null || gioiTinh.isEmpty()) {
                 this.gioiTinh = "Nam";
             }
-            gioiTinh = gioiTinh.trim();
-            if (gioiTinh.equalsIgnoreCase("Nam") || gioiTinh.equalsIgnoreCase("Nu") || gioiTinh.equalsIgnoreCase("Khac")) {
+            if (gioiTinh.equalsIgnoreCase("Nam") || gioiTinh.equalsIgnoreCase("Nữ") || gioiTinh.equalsIgnoreCase("Khác")) {
                 this.gioiTinh = gioiTinh;
                 break;
             } else {
-                System.out.println("Giới tính không hợp lệ. Vui lòng nhập Nam, Nu hoặc Khac: ");
+                System.out.println("Giới tính không hợp lệ, vui lòng nhập Nam, Nữ hoặc Khác: ");
                 gioiTinh = sc.nextLine().trim();
             }
         }
@@ -141,7 +141,7 @@ public class KhachHang implements IThaoTac {
         setTenKH(sc.nextLine());
         System.out.println("Nhập số điện thoại khách hàng: ");
         setSDT(sc.nextLine());
-        System.out.println("Nhập đia chỉ khách hàng: ");
+        System.out.println("Nhập địa chỉ khách hàng: ");
         setDiaChi(sc.nextLine());
         System.out.println("Nhập giới tính khách hàng: ");
         setGioiTinh(sc.nextLine());
@@ -158,19 +158,30 @@ public class KhachHang implements IThaoTac {
         System.out.println("Số điện thoại khách hàng: " + getSDT());
         System.out.println("Địa chỉ khách hàng: " + getDiaChi());
         System.out.println("Giới tính khách hàng: " + getGioiTinh());
-        System.out.println("\\n-------------------\"");
+//        System.out.println("\\n-------------------\"");
     }
 
     public void Sua() {
         while (true) {
-            menuSua();
-            System.out.println("Nhập lựa chọn sửa thông tin khách hàng: ");
-            int luaChon = Integer.parseInt(sc.nextLine());
-            while (luaChon < 1 || luaChon > 6) {
-                menuSua();
-                System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại lựa chọn từ 1-6: ");
+            int luaChon;
+            while (true) {
+                try {
+                    menuSuaKhachHang();
+                    System.out.println("Nhập lựa chọn sửa khách hàng: ");
+                    luaChon = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Vui lòng lựa chọn là một số nguyên hợp lệ");
+                }
+            }
+            String inputLuaChon = Integer.toString(luaChon);
+            String regex = "^[1-6]$";
+            while (!inputLuaChon.matches(regex)) {
+                menuSuaKhachHang();
+                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 luaChon = Integer.parseInt(sc.nextLine());
             }
+
             switch (luaChon) {
                 case 1:
                     System.out.println("Nhập mã khách hàng mới: ");
@@ -198,5 +209,4 @@ public class KhachHang implements IThaoTac {
             }
         }
     }
-
 }
