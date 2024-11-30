@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class DanhSachHoaDon {
 
@@ -11,6 +14,7 @@ public class DanhSachHoaDon {
     private HoaDon[] DSHD;         // Mảng chứa các hóa đơn
     private HoaDon[] DSHD_File;    // Mảng lưu trữ hóa đơn lấy từ file
     static Scanner sc = new Scanner(System.in);
+    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     static KhachHang[] DSKH;
     static SanPham[] DSSP;
 
@@ -98,7 +102,7 @@ public class DanhSachHoaDon {
                 }
 
                 // Tạo hóa đơn và thêm vào mảng DSHD
-                HoaDon hd = new HoaDon(strings[0], strings[1], strings[2], n, ListSP, SL);
+                HoaDon hd = new HoaDon(strings[0], df.parse(strings[1]), strings[2], n, ListSP, SL);
                 DSHD[soLuongHoaDon] = hd;
                 soLuongHoaDon++;
             }

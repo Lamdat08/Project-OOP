@@ -6,16 +6,19 @@ import Project_OOP.SanPham;
 
 import java.io.*;
 import java.util.Arrays;
-
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class HoaDon implements IThaoTac {
 
     static Scanner sc = new Scanner(System.in);
+    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
     private String maHD;
-    private String thoiGian;
+    private Date thoiGian;
     private KhachHang[] khachHang=new KhachHang[0];
     private KhachHang khachhangtheodon=new KhachHang();
     private SanPham[] sanpham=new SanPham[0];
@@ -31,7 +34,7 @@ public class HoaDon implements IThaoTac {
 
     }
 
-    public HoaDon(String ma, String thoiGian, String PTTT, KhachHang KH, SanPham[] ListSP, int[] soluong){
+    public HoaDon(String ma, Date thoiGian, String PTTT, KhachHang KH, SanPham[] ListSP, int[] soluong){
         this.maHD = ma;
         this.thoiGian = thoiGian;
         this.phuongThucThanhToan = PTTT;
@@ -80,20 +83,20 @@ public class HoaDon implements IThaoTac {
     }
 
     public String getThoiGian() {
-        return thoiGian;
+        return df.format(thoiGian);
     }
 
-    public void setThoiGian(String thoiGian) {
-        while (thoiGian == null || thoiGian.trim().isEmpty()) {
-            System.out.println("Thời gian không được để trống. Vui lòng nhập lại thời gian: ");
-            thoiGian = sc.nextLine().trim();
+    public void setThoiGian() {
+        df.setLenient(false);
+        while (true) {
+            try {
+                System.out.printf("Nhập vào thời gian bắt đầu (dd-mm-yyyy) : ");
+                thoiGian = df.parse(sc.nextLine());
+                break;
+            } catch (ParseException e) {
+                System.out.println("Sai định dạng / Ngày không hợp lệ. ");
+            }
         }
-        String regex = "^(\\d{4})-(\\d{2})-(\\d{2})$";
-        while (!Pattern.matches(regex, thoiGian)) {
-            System.out.println("Thời gian không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd: ");
-            thoiGian = sc.nextLine().trim();
-        }
-        this.thoiGian = thoiGian;
     }
 
     public KhachHang getKhachHang() {
@@ -233,8 +236,7 @@ public class HoaDon implements IThaoTac {
         System.out.print("Nhập mã hóa đơn: ");
         setMaHD(sc.nextLine().trim());
 
-        System.out.print("Nhập thời gian: ");
-        setThoiGian(sc.nextLine().trim());
+        setThoiGian();
         String regex = "^[0-9]{10,11}$";
         String sdtKH;
         do {
@@ -313,6 +315,7 @@ public class HoaDon implements IThaoTac {
 
         int index = 0;
         while (true) {
+            boolean isExist = false;
             int s = -1;
             while (s < 1 || s > sanpham.length) {
                 System.out.printf("Chon san pham qua thu tu  hoac bam 0 de ket thuc : ");
@@ -325,15 +328,33 @@ public class HoaDon implements IThaoTac {
             if (s == 0) {
                 break;
             }
-            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
-            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length+1);
-            sanphamtheodon[index] = sanpham[s-1];
-//            System.out.println(sanpham[s-1]);
-            int sl;
-            System.out.printf("Nhap vao so luong " + sanpham[s-1].getTenSP() + " : ");
-            sl = Integer.parseInt(sc.nextLine());
-            soLuongSP[index] = sl;
-            index++;
+            else {
+                int Exist_Index = 0;
+                for ( SanPham x : sanphamtheodon) {
+                    if (x.getTenSP().equals(sanpham[s-1].getTenSP()) ){
+                        isExist = true;
+                        break;
+                    }
+                    Exist_Index++;
+                }
+                if (isExist == false ) {
+                    sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
+                    soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);
+                    sanphamtheodon[index] = sanpham[s - 1];
+                    //            System.out.println(sanpham[s-1]);
+                    int sl;
+                    System.out.printf("Nhap vao so luong " + sanpham[s - 1].getTenSP() + " : ");
+                    sl = Integer.parseInt(sc.nextLine());
+                    soLuongSP[index] = sl;
+                    index++;
+                }
+                else {
+                    int sl;
+                    System.out.printf("Nhap vao so luong " + sanpham[s - 1].getTenSP() + " : ");
+                    sl = Integer.parseInt(sc.nextLine());
+                    soLuongSP[Exist_Index] += sl;
+                }
+            }
         }
         System.out.print("Nhập phương thức thanh toán: ");
         this.phuongThucThanhToan = sc.nextLine();
@@ -372,7 +393,7 @@ public class HoaDon implements IThaoTac {
                 break;
             case 2:
                 System.out.print("Nhập lại thời gian: ");
-                setThoiGian(sc.nextLine());
+                setThoiGian();
                 break;
             case 3:
                 System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
