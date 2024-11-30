@@ -1,6 +1,7 @@
 package Project_OOP;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -72,13 +73,12 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     DSKH[soLuongKhachHang] = kh;
                     soLuongKhachHang++;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Lỗi tạo danh sách khách hàng từ file KhachHang.txt");
                 }
             }
 
         } catch (Exception e) {
             System.out.println("Lỗi đọc file KhachHang.txt: ");
-            e.printStackTrace();
         }
         //Thu hẹp mảng nếu mảng chưa đầy
         if (soLuongKhachHang < DSKH.length) {
@@ -91,24 +91,24 @@ public class DanhSachKhachHang implements IThaoTac_2 {
 
     public void Them() {
         System.out.println("\n \t \t---------THÊM KHÁCH HÀNG--------");
-//
-//        if (DSKH == null) {
-//            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng khởi tạo danh sách khách hàng trước");
-//            return;
-//        }
-//        if (DSKH.length == 0) {
-//            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
-//            return;
-//        }
 
         int slKH;
-        do {
-            System.out.println("Nhập số lượng khách hàng muốn thêm: ");
-            slKH = Integer.parseInt(sc.nextLine());
-            if (slKH <= 0) {
-                System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0");
+        while (true) {
+            try {
+                System.out.println("Nhập số lượng khách hàng muốn thêm: ");
+                slKH = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số nguyên hợp lệ: ");
             }
-        } while (slKH <= 0);
+        }
+        String inputSLKH = Integer.toString(slKH);
+        String regex = "^[1-9]+$";
+        while(!inputSLKH.matches(regex)) {
+            System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0");
+            slKH = Integer.parseInt(sc.nextLine());
+            inputSLKH = Integer.toString(slKH);
+        }
 
         soLuongKhachHang += slKH;
         DSKH = Arrays.copyOf(DSKH, DSKH.length + slKH);
@@ -162,17 +162,27 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
             return;
         }
-
+        String regex = "^[1-6]$";
         while (true) {
-            boolean kq;
-            menuTimKiem();
-            int luachon = Integer.parseInt(sc.nextLine());
-            while (luachon < 1 || luachon > 6) {
-                System.out.println("Không có lựa chọn này, mời nhập lại lựa chọn từ 1-6");
-                luachon = Integer.parseInt(sc.nextLine());
+            int luaChon;
+            while (true) {
+                try {
+                    menuTimKiem();
+                    System.out.println("Nhập lựa chọn tìm kiếm: ");
+                    luaChon = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
             }
-
-            switch (luachon) {
+            boolean kq;
+            String inputLuaChon = Integer.toString(luaChon);
+            while(!inputLuaChon.matches(regex)){
+                System.out.println("Không có lựa chọn này, mời nhập lại: ");
+                luaChon = Integer.parseInt(sc.nextLine().trim());
+                inputLuaChon = Integer.toString(luaChon);
+            }
+            switch (luaChon) {
                 case 1:
                     System.out.println("Nhập mã khách hàng cần tìm: ");
                     String maKH_TimKiem = sc.nextLine().trim();
