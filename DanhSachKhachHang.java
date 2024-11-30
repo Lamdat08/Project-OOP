@@ -137,7 +137,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         System.out.println("Nhập mã khách hàng muốn xóa: ");
         String maKH_Xoa = sc.nextLine();
         boolean kq = false;
-        for (int i = 0; i < DSKH.length - 1; i++) {
+        for (int i = 0; i < DSKH.length; i++) {
             if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_Xoa)) {
                 kq = true;
                 DSKH[i].setStatus(false);
