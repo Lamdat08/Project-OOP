@@ -70,17 +70,25 @@ public class ThanhVien extends KhachHang {
     @Override
     public void Sua() {
         while (true) {
-            menuSuaThanhVien();
-            System.out.println("Nhập lựa chọn sửa Thông tin: ");
-            int luachon = Integer.parseInt(sc.nextLine());
-            String inputLuaChon = Integer.toString(luachon);
-            String regex = "^[1-3]$";
-            while (!Pattern.matches(regex, inputLuaChon)) {
-                menuSuaThanhVien();
-                System.out.println("Chỉ được nhập từ 1 - 3, vui lòng nhập lại: ");
-                luachon = Integer.parseInt(sc.nextLine().trim());
+            int luaChon;
+            while (true) {
+                try {
+                    menuSuaThanhVien();
+                    System.out.println("Nhập lựa chọn sửa thành viên: ");
+                    luaChon = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
             }
-            switch (luachon) {
+            String inputLuaChon = Integer.toString(luaChon);
+            String regex = "^[1-3]$";
+            while (!inputLuaChon.matches(regex)) {
+                menuSuaThanhVien();
+                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                luaChon = Integer.parseInt(sc.nextLine());
+            }
+            switch (luaChon) {
                 case 1:
                     System.out.println("Nhập điểm tích lũy mới: ");
                     setDiemTichLuy(Integer.parseInt(sc.nextLine()));
