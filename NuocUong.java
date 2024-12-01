@@ -26,14 +26,18 @@ public class NuocUong extends SanPham{
     }
 
     public void setLoaiNuoc(String loaiNuoc) {
-        while(loaiNuoc == null ||loaiNuoc.trim().isEmpty()) {
-            System.out.println("Loại nước uống không được để trống, vui lòng nhập lại: ");
-            loaiNuoc = sc.nextLine().trim();
-        }
-        String regex = "^[A-Za-zÀ-ỹ\\s]+$";
-        while(!loaiNuoc.matches(regex)){
-            System.out.println("Loại nước uống không hợp lệ, vui lòng nhập lại: ");
-            loaiNuoc = sc.nextLine().trim();
+        while(true){
+            try{
+                String regex = "^[A-Za-zÀ-ỹ\\s]+$";
+                if(loaiNuoc == null ||loaiNuoc.trim().isEmpty() || !loaiNuoc.matches(regex)) {
+                    System.out.println("Loại nước uống không được để trống và phải là 1 chuỗi, vui lòng nhập lại: ");
+                    loaiNuoc = sc.nextLine().trim();
+                }
+                break;
+            }
+            catch(Exception e){
+                System.out.println("Loại nước không hợp lệ, vui lòng nhập lại.");
+            }
         }
         this.loaiNuoc = loaiNuoc;
     }

@@ -23,14 +23,18 @@ public class ThucAn extends SanPham {
         return loaiThucAn;
     }
     public void setLoaiThucAn(String loaiThucAn) {
-        while(loaiThucAn == null ||loaiThucAn.trim().isEmpty()) {
-            System.out.println("Loại thức ăn không được để trống, vui lòng nhập lại: ");
-            loaiThucAn = sc.nextLine().trim();
-        }
-        String regex = "^[A-Za-zÀ-ỹ\\s]+$";
-        while(!loaiThucAn.matches(regex)){
-            System.out.println("Loại thức ăn không hợp lệ, vui lòng nhập lại: ");
-            loaiThucAn = sc.nextLine().trim();
+        while(true){
+            try{
+                String regex = "^[A-Za-zÀ-ỹ\\s]+$";
+                if(loaiThucAn == null ||loaiThucAn.trim().isEmpty() || !loaiThucAn.matches(regex)) {
+                    System.out.println("Loại thức ăn không được để trống, vui lòng nhập lại: ");
+                    loaiThucAn = sc.nextLine().trim();
+                }
+                break;
+            }
+            catch(Exception e){
+                System.out.println("Loại thức ăn không hợp lệ, vui lòng nhập lại.");
+            }
         }
         this.loaiThucAn = loaiThucAn;
     }

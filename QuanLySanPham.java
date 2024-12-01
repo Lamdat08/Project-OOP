@@ -40,19 +40,16 @@ public class QuanLySanPham {
                     menuQLSP();
                     System.out.print("Nhập lựa chọn quản lý sản phẩm từ 1-4: ");
                     luaChon1 = Integer.parseInt(sc.nextLine().trim());
+                    String inputLuaChon1 = Integer.toString(luaChon1);
+                    String regex1 = "^[1-4]$";
+                    if(!inputLuaChon1.matches(regex1)){
+                        System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4. ");
+                    }
                     break;
                 }
                 catch(NumberFormatException numberFormatException){
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
-            }
-            String inputLuaChon1 = Integer.toString(luaChon1);
-            String regex1 = "^[1-4]$";
-            while(!inputLuaChon1.matches(regex1)){
-                menuQLSP();
-                System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
-                luaChon1 = Integer.parseInt(sc.nextLine().trim());
-                inputLuaChon1 = Integer.toString(luaChon1);
             }
             if (luaChon1 == 1) {
                 DanhSachSanPham.docFile();

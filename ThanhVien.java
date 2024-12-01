@@ -28,16 +28,28 @@ public class ThanhVien extends KhachHang {
     }
 
     public void setDiemTichLuy(int diemTichLuy) {
-        while (diemTichLuy < 0) {
-            System.out.println("Điểm tích lũy không hợp lệ (phải >= 0). Vui lòng nhập lại: ");
+
+        String regex = "^[0-9]+$";
+        while (true) {
             try {
-                diemTichLuy = Integer.parseInt(sc.nextLine());
+                String inputDiemTichLuy = Integer.toString(diemTichLuy);
+                if (inputDiemTichLuy.trim().isEmpty()) {
+                    this.diemTichLuy = 0;
+                    return;
+                }
+                if (!inputDiemTichLuy.matches(regex)) {
+                    System.out.println("Điểm tích lũy của khách hàng không hợp lệ, vui lòng nhập lại: ");
+                    diemTichLuy = Integer.parseInt(sc.nextLine().trim());
+
+                }
+                break;
             } catch (NumberFormatException e) {
-                System.out.println("Vui lòng nhập một số nguyên hợp lệ!");
+                System.out.println("Vui lòng nhâp điểm tích lũy là một số nguyên hợp lệ: ");
             }
         }
         this.diemTichLuy = diemTichLuy;
     }
+
 
 
     public String rank() {
@@ -52,8 +64,15 @@ public class ThanhVien extends KhachHang {
     @Override
     public void Nhap() {
         super.Nhap();
-        System.out.println("Nhập điểm tích lũy: ");
-        setDiemTichLuy(Integer.parseInt(sc.nextLine()));
+        while (true) {
+            try {
+                System.out.println("Nhập điểm tích lũy: ");
+                setDiemTichLuy(Integer.parseInt(sc.nextLine().trim()));
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Điểm tích lũy của khách hàng không hợp lệ, vui lòng nhập lại: ");
+            }
+        }
     }
 
     @Override
@@ -90,9 +109,15 @@ public class ThanhVien extends KhachHang {
             }
             switch (luaChon) {
                 case 1:
-                    System.out.println("Nhập điểm tích lũy mới: ");
-                    setDiemTichLuy(Integer.parseInt(sc.nextLine()));
-                    break;
+                    while (true) {
+                        try {
+                            System.out.println("Nhập điểm tích lũy mới: ");
+                            setDiemTichLuy(Integer.parseInt(sc.nextLine().trim()));
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Điểm tích lũy của khách hàng không hợp lệ, vui lòng nhập lại: ");
+                        }
+                    }
                 case 2:
                     super.Sua();
                     break;
