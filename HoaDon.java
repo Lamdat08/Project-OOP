@@ -471,7 +471,7 @@ public class HoaDon implements IThaoTac {
     @Override
     public String toString() {
         String result =   maHD + ";";
-        result +=  thoiGian + ";";
+        result +=  df.format(thoiGian) + ";";
         result +=  (getKhachhangtheodon().getTenKH() != null  ? getKhachhangtheodon().getTenKH() :khachhangtheodon.getTenKH() ) + ";" +khachhangtheodon.getSDT() + ";";
         result +=  phuongThucThanhToan +";";
         if (sanphamtheodon != null && soLuongSP != null && sanphamtheodon.length == soLuongSP.length) {
