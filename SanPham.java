@@ -40,22 +40,30 @@ public class SanPham implements IThaoTac {
         return maSP;
     }
     public void setMaSP(String maSP) {
-        String regexThucAn = "^(TA)[0-9]{3}$";
-        String regexNuocUong = "^(NU)[0-9]{3}$";
-        while(maSP == null || maSP.trim().isEmpty()) {
-            System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
-            maSP = sc.nextLine().trim();
-        }
-        if(this instanceof ThucAn){
-            while(!maSP.matches(regexThucAn)){
-                System.out.println("Mã thức ăn phải bắt đầu với TA, vui lòng nhập lại: ");
-                maSP = sc.nextLine().trim();
+        while(true){
+            try{
+                String regexThucAn = "^(TA)[0-9]{3}$";
+                String regexNuocUong = "^(NU)[0-9]{3}$";
+                if(maSP == null || maSP.trim().isEmpty()) {
+                    System.out.println("Mã sản phẩm không được để trống, vui lòng nhập lại: ");
+                    maSP = sc.nextLine().trim();
+                }
+                if(this instanceof ThucAn){
+                    if(!maSP.matches(regexThucAn)){
+                        System.out.println("Mã thức ăn phải bắt đầu với TA, vui lòng nhập lại: ");
+                        maSP = sc.nextLine().trim();
+                    }
+                }
+                if(this instanceof NuocUong){
+                    if(!maSP.matches(regexNuocUong)){
+                        System.out.println("Mã nước uống phải bắt đầu với NU, vui lòng nhập lại: ");
+                        maSP = sc.nextLine().trim();
+                    }
+                }
+                break;
             }
-        }
-        if(this instanceof NuocUong){
-            while(!maSP.matches(regexNuocUong)){
-                System.out.println("Mã nước uống phải bắt đầu với NU, vui lòng nhập lại: ");
-                maSP = sc.nextLine().trim();
+            catch(Exception e){
+                System.out.println("Mã sản phẩm không hợp lệ, vui lòng nhập lại: ");
             }
         }
         this.maSP = maSP;
@@ -65,14 +73,18 @@ public class SanPham implements IThaoTac {
         return tenSP;
     }
     public void setTenSP(String tenSP) {
-        while(tenSP == null || tenSP.trim().isEmpty()) {
-            System.out.println("Tên của sản phẩm không được để trống, vui lòng nhập lại: ");
-            tenSP = sc.nextLine().trim();
-        }
-        String regex = "^[A-Za-zÀ-ỹ\\s]+$";
-        while(!tenSP.matches(regex)){
-            System.out.println("Tên của sản phẩm không hợp lệ, vui lòng nhập lại: ");
-            tenSP = sc.nextLine().trim();
+        while(true){
+            try{
+                String regex = "^[A-Za-zÀ-ỹ\\s]+$";
+                if(tenSP == null || tenSP.trim().isEmpty() || !tenSP.matches(regex)) {
+                    System.out.println("Tên của sản phẩm không được để trống và chỉ được chứa các chữ cái, vui lòng nhập lại: ");
+                    tenSP = sc.nextLine().trim();
+                }
+                break;
+            }
+            catch(Exception e){
+                System.out.println("Tên của sản phẩm không hợp lệ, vui lòng nhập lại. ");
+            }
         }
         this.tenSP = tenSP;
     }
@@ -82,16 +94,18 @@ public class SanPham implements IThaoTac {
     }
     public void setSoLuong(int soLuong) {
         String regex = "^[0-9]+$";
-        String inputSoLuong = Integer.toString(soLuong);
-        while(inputSoLuong.trim().isEmpty()){
-            System.out.println("Số lượng của sản phẩm không được để trống, vui lòng nhập lại: ");
-            soLuong = Integer.parseInt(sc.nextLine().trim());
-            inputSoLuong = Integer.toString(soLuong);
-        }
-        while(!inputSoLuong.matches(regex)){
-            System.out.println("Số lượng của sản phẩm không hợp lệ. Vui lòng nhập lại: ");
-            soLuong = Integer.parseInt(sc.nextLine().trim());
-            inputSoLuong = Integer.toString(soLuong);
+        while(true){
+            try{
+                String inputSoLuong = Integer.toString(soLuong);
+                if(inputSoLuong.trim().isEmpty() || !inputSoLuong.matches(regex)){
+                    System.out.println("Số lượng của sản phẩm không được để trống và phải là 1 số nguyên, vui lòng nhập lại: ");
+                    soLuong = Integer.parseInt(sc.nextLine().trim());
+                }
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại. ");
+            }
         }
         this.soLuong = soLuong;
     }
@@ -101,16 +115,18 @@ public class SanPham implements IThaoTac {
     }
     public void setGiaTien(double giaTien) {
         String regex = "^[1-9]\\d*\\.\\d+$";
-        String inputGiaTien = Double.toString(giaTien);
-        while(inputGiaTien.trim().isEmpty()){
-            System.out.println("Giá tiền của sản phẩm không được để trống, vui lòng nhập lại: ");
-            giaTien = Double.parseDouble(sc.nextLine().trim());
-            inputGiaTien = Double.toString(giaTien);
-        }
-        while(!inputGiaTien.matches(regex)){
-            System.out.println("Giá tiền của sản phẩm không hợp lệ. Vui lòng nhập lại: ");
-            giaTien = Double.parseDouble(sc.nextLine().trim());
-            inputGiaTien = Double.toString(giaTien);
+        while(true){
+            try{
+                String inputGiaTien = Double.toString(giaTien);
+                if(inputGiaTien.trim().isEmpty() || !inputGiaTien.matches(regex)){
+                    System.out.println("Giá tiền của sản phẩm không được để trống và phải là 1 số thực, vui lòng nhập lại: ");
+                    giaTien = Double.parseDouble(sc.nextLine().trim());
+                }
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập lại.");
+            }
         }
         this.giaTien = giaTien;
     }
@@ -120,16 +136,18 @@ public class SanPham implements IThaoTac {
     }
     public void setTienVon(double tienVon) {
         String regex = "^[1-9]\\d*\\.\\d+$";
-        String inputTienVon = Double.toString(tienVon);
-        while(inputTienVon.trim().isEmpty()){
-            System.out.println("Tiền vốn của sản phẩm không được để trống, vui lòng nhập lại: ");
-            tienVon = Double.parseDouble(sc.nextLine().trim());
-            inputTienVon = Double.toString(tienVon);
-        }
-        while(!inputTienVon.matches(regex)){
-            System.out.println("Tiền vốn của sản phẩm không hợp lệ. Vui lòng nhập lại: ");
-            tienVon = Double.parseDouble(sc.nextLine().trim());
-            inputTienVon = Double.toString(tienVon);
+        while(true){
+            try{
+                String inputTienVon = Double.toString(tienVon);
+                if(inputTienVon.trim().isEmpty() || !inputTienVon.matches(regex)){
+                    System.out.println("Tiền vốn của sản phẩm không được để trống và phải là 1 số thực, vui lòng nhập lại: ");
+                    tienVon = Double.parseDouble(sc.nextLine().trim());
+                }
+                break;
+            }
+            catch(NumberFormatException numberFormatException){
+                System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập lại.");
+            }
         }
         this.tienVon = tienVon;
     }
@@ -148,32 +166,32 @@ public class SanPham implements IThaoTac {
         setTenSP(sc.nextLine());
         while(true){
             try{
-                System.out.println("Nhập số lượng của sản phẩm: ");
-                setSoLuong(Integer.parseInt(sc.nextLine()));
+                System.out.println("Nhập số lượng: ");
+                setSoLuong(Integer.parseInt(sc.nextLine().trim()));
                 break;
             }
             catch(NumberFormatException numberFormatException){
-                System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+                System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại. ");
             }
         }
         while(true){
             try{
-                System.out.println("Nhập giá tiền của sản phẩm: ");
-                setGiaTien(Double.parseDouble(sc.nextLine()));
+                System.out.println("Nhập giá tiền: ");
+                setGiaTien(Double.parseDouble(sc.nextLine().trim()));
                 break;
             }
             catch(NumberFormatException numberFormatException){
-                System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+                System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập lại.");
             }
         }
         while(true){
             try{
-                System.out.println("Nhập tiền vốn của sản phẩm: ");
-                setTienVon(Double.parseDouble(sc.nextLine()));
+                System.out.println("Nhập tiền vốn: ");
+                setTienVon(Double.parseDouble(sc.nextLine().trim()));
                 break;
             }
             catch(NumberFormatException numberFormatException){
-                System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập 1 số: ");
+                System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập lại.");
             }
         }
     }
@@ -201,18 +219,17 @@ public class SanPham implements IThaoTac {
                     menuSuaSanPham();
                     System.out.print("Nhập lựa chọn sửa sản phẩm: ");
                     luaChon = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    String regex = "^[1-6]$";
+                    if(!inputLuaChon.matches(regex)){
+                        menuSuaSanPham();
+                        System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại. ");
+                    }
                     break;
                 }
                 catch(NumberFormatException numberFormatException){
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
-            }
-            String inputLuaChon = Integer.toString(luaChon);
-            String regex = "^[1-6]$";
-            while(!inputLuaChon.matches(regex)){
-                menuSuaSanPham();
-                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine());
             }
             switch(luaChon){
                 case 1:
@@ -224,16 +241,40 @@ public class SanPham implements IThaoTac {
                     setTenSP(sc.nextLine());
                     break;
                 case 3:
-                    System.out.println("Nhập số lượng mới: ");
-                    setSoLuong(Integer.parseInt(sc.nextLine()));
+                    while(true){
+                        try{
+                            System.out.println("Nhập số lượng mới: ");
+                            setSoLuong(Integer.parseInt(sc.nextLine().trim()));
+                            break;
+                        }
+                        catch(NumberFormatException numberFormatException){
+                            System.out.println("Số lượng của sản phẩm không hợp lệ, vui lòng nhập lại. ");
+                        }
+                    }
                     break;
                 case 4:
-                    System.out.println("Nhập giá tiền mới: ");
-                    setGiaTien(Double.parseDouble(sc.nextLine()));
+                    while(true){
+                        try{
+                            System.out.println("Nhập giá tiền mới: ");
+                            setGiaTien(Double.parseDouble(sc.nextLine().trim()));
+                            break;
+                        }
+                        catch(NumberFormatException numberFormatException){
+                            System.out.println("Giá tiền của sản phẩm không hợp lệ, vui lòng nhập lại.");
+                        }
+                    }
                     break;
                 case 5:
-                    System.out.println("Nhập tiền vốn mới: ");
-                    setTienVon(Double.parseDouble(sc.nextLine()));
+                    while(true){
+                        try{
+                            System.out.println("Nhập tiền vốn mới: ");
+                            setTienVon(Double.parseDouble(sc.nextLine().trim()));
+                            break;
+                        }
+                        catch(NumberFormatException numberFormatException){
+                            System.out.println("Tiền vốn của sản phẩm không hợp lệ, vui lòng nhập lại.");
+                        }
+                    }
                     break;
                 case 6:
                     System.out.println("Thoát sửa sản phẩm");
