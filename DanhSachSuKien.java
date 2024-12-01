@@ -84,13 +84,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
         String a;
         do {
             do {
-            System.out.printf("Nhập số lượng phần tử thêm vào : ");
+                System.out.printf("Nhập số lượng phần tử thêm vào : ");
                 a = sc.nextLine();
                 if ( !a.matches(regNumbers))
                     System.out.println("Vui lòng chỉ nhập số !");
             }while (!a.matches(regNumbers));
-                if (Integer.parseInt(a) <= 0)
-                    System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
+            if (Integer.parseInt(a) <= 0)
+                System.out.println("Vui lòng nhập số lượng lớn hơn 0 !!");
 
         } while (Integer.parseInt(a) <= 0);
 
@@ -218,17 +218,17 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.println();
 
             if (x == 1) {
-                String regex = "^SK\\d+$";
+                String regexMaSK = "^SK||Sk||sK||sk\\d+$";
                 String s;
                 do {
                     System.out.printf("Nhập vào mã sự kiện : ");
                     s = sc.nextLine();
-                    if (!s.matches(regex))
-                        System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
-                }while (!s.matches(regex));
+                    if (!s.matches(regexMaSK))
+                        System.out.println("Mã sự kiện phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+                }while (!s.matches(regexMaSK));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
-                    if (DSSK[i].getMaSK().equals(s)) {
+                    if (DSSK[i].getMaSK().equalsIgnoreCase(s)) {
                         isFind = true;
                         DSSK[i].Xuat();
                         System.out.println("\n \t--------------------");
@@ -248,7 +248,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 }while (!s.matches(regexLetters));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
-                    if (DSSK[i].getTenSK().equals(s)) {
+                    if (DSSK[i].getTenSK().equalsIgnoreCase(s)) {
                         isFind = true;
                         System.out.println("Sự kiện thứ " + i + 1 + " : ");
                         DSSK[i].Xuat();
