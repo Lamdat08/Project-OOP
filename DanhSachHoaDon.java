@@ -103,7 +103,7 @@ public class DanhSachHoaDon {
                 }
 
                 // Tạo hóa đơn và thêm vào mảng DSHD
-                HoaDon hd = new HoaDon(strings[0], df.parse(strings[1]), strings[2], n, ListSP, SL);
+                HoaDon hd = new HoaDon(strings[0], df.parse(strings[1]), strings[4], n, ListSP, SL);
                 DSHD[soLuongHoaDon] = hd;
                 soLuongHoaDon++;
             }
@@ -277,12 +277,13 @@ public class DanhSachHoaDon {
             System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
             return;
         }
-
+        while (true) {
         System.out.println("Chọn cách tìm kiếm:");
         System.out.println("1. Tìm theo mã hóa đơn");
         System.out.println("2. Tìm theo khách hàng");
         System.out.println("3. Tìm theo ngày");
-        while (true) {
+        System.out.println("4. Thoát");
+
             try {
                 int luaChon = Integer.parseInt(sc.nextLine());
 
@@ -296,11 +297,13 @@ public class DanhSachHoaDon {
                     case 3:
                         timTheoNgay();
                         break;
+                    case 4:
+                        return;
                     default:
                         System.out.println("Lựa chọn không hợp lệ.");
                 }
             } catch (Exception e) {
-                System.out.println(" Vui lòng nhập lựa chọn từ 1-3");
+                System.out.println(" Vui lòng nhập lựa chọn từ 1-4");
             }
         }
     }
@@ -357,6 +360,7 @@ public class DanhSachHoaDon {
                 }
                 if (!timThay) {
                     System.out.println("Không tìm thấy hóa đơn với số điện thoại khách hàng: " + sdt);
+                    break;
                 }
             }
             catch (Exception e){
@@ -380,7 +384,7 @@ public class DanhSachHoaDon {
 
                 for (HoaDon hd : DSHD) {
                     // Format the HoaDon date into the "dd-MM-yyyy" format
-                    String formattedHoaDonDate = df.format(hd.getThoiGian());
+                    String formattedHoaDonDate = hd.getThoiGian();
 
                     // Compare the formatted dates as strings
                     if (formattedHoaDonDate.equals(formattedInputDate)) {
@@ -396,6 +400,7 @@ public class DanhSachHoaDon {
                 break;
             } catch (ParseException e) {
                 System.out.println("Sai định dạng / Ngày không hợp lệ.");
+                break;
             }
         }
     }
