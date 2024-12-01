@@ -269,7 +269,7 @@ public class DanhSachHoaDon {
     }
 
     // Tìm kiếm hóa đơn
-   public void TimKiem() {
+    public void TimKiem() {
         System.out.println("\n \t \t---------TÌM KIẾM HÓA ĐƠN---------");
 
         if (DSHD == null || DSHD.length == 0) {
@@ -281,27 +281,29 @@ public class DanhSachHoaDon {
         System.out.println("1. Tìm theo mã hóa đơn");
         System.out.println("2. Tìm theo khách hàng");
         System.out.println("3. Tìm theo ngày");
-        try {
-            int luaChon = Integer.parseInt(sc.nextLine());
+        while (true) {
+            try {
+                int luaChon = Integer.parseInt(sc.nextLine());
 
-            switch (luaChon) {
-                case 1:
-                    timTheoMaHoaDon();
-                    break;
-                case 2:
-                    timTheoKhachHang();
-                    break;
-                case 3:
-                    timTheoNgay();
-                    break;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ.");
+                switch (luaChon) {
+                    case 1:
+                        timTheoMaHoaDon();
+                        break;
+                    case 2:
+                        timTheoKhachHang();
+                        break;
+                    case 3:
+                        timTheoNgay();
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ.");
+                }
+            } catch (Exception e) {
+                System.out.println(" Vui lòng nhập lựa chọn từ 1-3");
             }
         }
-        catch (Exception e){
-            System.out.println(" Vui lòng nhập lựa chọn từ 1-3");
-        }
     }
+  
 
     private void timTheoMaHoaDon() {
         System.out.println("Nhập mã hóa đơn cần tìm: ");
