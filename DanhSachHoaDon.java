@@ -189,60 +189,87 @@ public class DanhSachHoaDon {
     // Sửa hóa đơn
     public void Sua() {
         System.out.println("\n \t \t---------SỬA HÓA ĐƠN---------");
+        try{
 
-        if (DSHD == null || DSHD.length == 0) {
-            System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
-            return;
-        }
+            if (DSHD == null || DSHD.length == 0) {
+                System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
+                return;
+            }
 
-        System.out.println("Nhập mã hóa đơn cần sửa: ");
-        String maHD_Sua = sc.nextLine().trim();
+            System.out.println("Nhập mã hóa đơn cần sửa: ");
+            String maHD_Sua = sc.nextLine().trim();
+            while (maHD_Sua == null || maHD_Sua.trim().isEmpty()) {
+                System.out.println("Mã hóa đơn không được để trống. Vui lòng nhập lại mã hóa đơn: ");
+                maHD_Sua = sc.nextLine().trim();
+            }
+            String regex = "^HD\\d+$";
+            while (!Pattern.matches(regex, maHD_Sua)) {
+                System.out.println("Mã hóa đơn không hợp lệ. Vui lòng nhập lại mã hóa đơn (HDxxxx): ");
+                maHD_Sua = sc.nextLine().trim();
+            }
+            boolean timThay = false;
+            for (int i = 0; i < DSHD.length; i++) {
+                if (DSHD[i].getMaHD().equals(maHD_Sua)) {
+                    DSHD[i].Sua(); // Giả sử HoaDon có phương thức Sua()
+                    timThay = true;
+                    System.out.println("Sửa hóa đơn thành công!");
+                    break;
+                }
+            }
 
-        boolean timThay = false;
-        for (int i = 0; i < DSHD.length; i++) {
-            if (DSHD[i].getMaHD().equals(maHD_Sua)) {
-                DSHD[i].Sua(); // Giả sử HoaDon có phương thức Sua()
-                timThay = true;
-                System.out.println("Sửa hóa đơn thành công!");
-                break;
+            if (!timThay) {
+                System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Sua);
             }
         }
-
-        if (!timThay) {
-            System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Sua);
+        catch (Exception e){
+            System.out.println(" Vui lòng nhập đúng mã HD");
         }
     }
 
     // Xóa hóa đơn
-   public void Xoa() {
-       System.out.println("\n \t \t---------XÓA HÓA ĐƠN---------");
+    public void Xoa() {
+        System.out.println("\n \t \t---------XÓA HÓA ĐƠN---------");
+        try{
+            if (DSHD == null || DSHD.length == 0) {
+                System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
+                return;
+            }
 
-       if (DSHD == null || DSHD.length == 0) {
-           System.out.println("Danh sách hóa đơn trống hoặc chưa được khởi tạo.");
-           return;
-       }
+            System.out.println("Nhập mã hóa đơn cần xóa: ");
 
-       System.out.println("Nhập mã hóa đơn cần xóa: ");
-       String maHD_Xoa = sc.nextLine();
+            String maHD_Xoa = sc.nextLine();
+            while (maHD_Xoa == null || maHD_Xoa.trim().isEmpty()) {
+                System.out.println("Mã hóa đơn không được để trống. Vui lòng nhập lại mã hóa đơn: ");
+                maHD_Xoa = sc.nextLine().trim();
+            }
+            String regex = "^HD\\d+$";
+            while (!Pattern.matches(regex, maHD_Xoa)) {
+                System.out.println("Mã hóa đơn không hợp lệ. Vui lòng nhập lại mã hóa đơn (HDxxxx): ");
+                maHD_Xoa = sc.nextLine().trim();
+            }
+            boolean timThay = false;
+            for (int i = 0; i < DSHD.length; i++) {
+                if (DSHD[i].getMaHD().equals(maHD_Xoa)) {
+                    // Update the status of the HoaDon object instead of removing it
+                    DSHD[i].setStatus(false);  // This assumes HoaDon has a setStatus method
+                    timThay = true;
+                    System.out.println("Hóa đơn đã được đánh dấu là xóa thành công!");
+                    break;
+                }
+            }
 
-       boolean timThay = false;
-       for (int i = 0; i < DSHD.length; i++) {
-           if (DSHD[i].getMaHD().equals(maHD_Xoa)) {
-               // Update the status of the HoaDon object instead of removing it
-               DSHD[i].setStatus(false);  // This assumes HoaDon has a setStatus method
-               timThay = true;
-               System.out.println("Hóa đơn đã được đánh dấu là xóa thành công!");
-               break;
-           }
-       }
+            if (!timThay) {
+                System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Xoa);
+            }
+        }
+        catch (Exception e){
+            System.out.println(" Vui lòng nhập đúng Mã HD");
+        }
 
-       if (!timThay) {
-           System.out.println("Không tìm thấy hóa đơn có mã: " + maHD_Xoa);
-       }
-   }
+    }
 
     // Tìm kiếm hóa đơn
-    public void TimKiem() {
+   public void TimKiem() {
         System.out.println("\n \t \t---------TÌM KIẾM HÓA ĐƠN---------");
 
         if (DSHD == null || DSHD.length == 0) {
@@ -254,27 +281,41 @@ public class DanhSachHoaDon {
         System.out.println("1. Tìm theo mã hóa đơn");
         System.out.println("2. Tìm theo khách hàng");
         System.out.println("3. Tìm theo ngày");
+        try {
+            int luaChon = Integer.parseInt(sc.nextLine());
 
-        int luaChon = Integer.parseInt(sc.nextLine());
-
-        switch (luaChon) {
-            case 1:
-                timTheoMaHoaDon();
-                break;
-            case 2:
-                timTheoKhachHang();
-                break;
-            case 3:
-                timTheoNgay();
-                break;
-            default:
-                System.out.println("Lựa chọn không hợp lệ.");
+            switch (luaChon) {
+                case 1:
+                    timTheoMaHoaDon();
+                    break;
+                case 2:
+                    timTheoKhachHang();
+                    break;
+                case 3:
+                    timTheoNgay();
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ.");
+            }
+        }
+        catch (Exception e){
+            System.out.println(" Vui lòng nhập lựa chọn từ 1-3");
         }
     }
 
     private void timTheoMaHoaDon() {
         System.out.println("Nhập mã hóa đơn cần tìm: ");
         String maHD = sc.nextLine();
+        while (maHD == null || maHD.trim().isEmpty()) {
+            System.out.println("Mã hóa đơn không được để trống. Vui lòng nhập lại mã hóa đơn: ");
+            maHD = sc.nextLine().trim();
+        }
+        String regex = "^HD\\d+$";
+        while (!Pattern.matches(regex, maHD)) {
+            System.out.println("Mã hóa đơn không hợp lệ. Vui lòng nhập lại mã hóa đơn (HDxxxx): ");
+            maHD = sc.nextLine().trim();
+        }
+
 
         boolean timThay = false;
         for (HoaDon hd : DSHD) {
@@ -291,36 +332,68 @@ public class DanhSachHoaDon {
     }
 
     private void timTheoKhachHang() {
+        String regex = "^[0-9]{10,11}$";
         System.out.println("Nhập SDT khách hàng cần tìm: ");
-        String sdt = sc.nextLine();
-
-        boolean timThay = false;
-        for (HoaDon hd : DSHD) {
-            if (hd.getKhachhangtheodon().getSDT().equalsIgnoreCase(sdt)) {
-                hd.Xuat();
-                timThay = true;
-                break;
+        while(true) {
+            try {
+                String sdt = sc.nextLine();
+                if ( sdt.isEmpty() ){
+                    System.out.println("Không được để trống . Vui lòng nhâp số điện thoại");
+                }
+                if (!Pattern.matches(regex, sdt)) {
+                    System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại (10 chữ số): ");
+                    continue;  // Ask for input again
+                }
+                boolean timThay = false;
+                for (HoaDon hd : DSHD) {
+                    if (hd.getKhachhangtheodon().getSDT().equalsIgnoreCase(sdt)) {
+                        hd.Xuat();
+                        timThay = true;
+                        break;
+                    }
+                }
+                if (!timThay) {
+                    System.out.println("Không tìm thấy hóa đơn với số điện thoại khách hàng: " + sdt);
+                }
+            }
+            catch (Exception e){
+                System.out.println(" Vui lòng chỉ nhập số");
             }
         }
-        if (!timThay) {
-            System.out.println("Không tìm thấy hóa đơn với số điện thoại khách hàng: " + sdt);
-        }
+
     }
 
     private void timTheoNgay() {
-        System.out.println("Nhập thời gian cần tìm: ");
-        String tg = sc.nextLine();
+        df.setLenient(false); // Set lenient to false for strict parsing
+        while (true) {
+            try {
+                System.out.printf("Nhập vào thời gian bắt đầu (dd-mm-yyyy) : ");
+                Date tg = df.parse(sc.nextLine()); // User input date
 
-        boolean timThay = false;
-        for (HoaDon hd : DSHD) {
-            if (hd.getThoiGian().equalsIgnoreCase(tg)) {
-                hd.Xuat();
-                timThay = true;
+                boolean timThay = false;
+
+                // Format the user input date into the "dd-MM-yyyy" format
+                String formattedInputDate = df.format(tg);
+
+                for (HoaDon hd : DSHD) {
+                    // Format the HoaDon date into the "dd-MM-yyyy" format
+                    String formattedHoaDonDate = df.format(hd.getThoiGian());
+
+                    // Compare the formatted dates as strings
+                    if (formattedHoaDonDate.equals(formattedInputDate)) {
+                        hd.Xuat();  // Call Xuat() method if found
+                        timThay = true;
+                        break;
+                    }
+                }
+
+                if (!timThay) {
+                    System.out.println("Không tìm thấy hóa đơn được tạo vào " + df.format(tg));
+                }
                 break;
+            } catch (ParseException e) {
+                System.out.println("Sai định dạng / Ngày không hợp lệ.");
             }
-        }
-        if (!timThay) {
-            System.out.println("Không tìm thấy hóa đơn được tạo vào " + tg);
         }
     }
 
