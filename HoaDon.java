@@ -319,7 +319,14 @@ public class HoaDon implements IThaoTac {
             int s = -1;
             while (s < 1 || s > sanpham.length) {
                 System.out.printf("Chọn sản phẩm qua số thứ tự hoặc bấm 0 để kết thúc: ");
-                s = Integer.parseInt(sc.nextLine());
+                String regexsp = "-?\\d+";
+                String input = sc.nextLine();
+                if (Pattern.matches(regexsp, input)){
+                    s = Integer.parseInt(input);
+                }
+                else {
+                    s=-1;
+                }
                 if (s == 0)
                     break;
                 if (s < 1 || s > sanpham.length)
@@ -449,7 +456,14 @@ public class HoaDon implements IThaoTac {
                         // Yêu cầu người dùng chọn sản phẩm theo số thứ tự
                         while (s < 1 || s > sanpham.length) {
                             System.out.printf("Chọn sản phẩm qua số thứ tự hoặc bấm 0 để kết thúc: ");
-                            s = Integer.parseInt(sc.nextLine());
+                            String regexsp = "-?\\d+";
+                            String input = sc.nextLine();
+                            if (Pattern.matches(regexsp, input)){
+                                s = Integer.parseInt(input);
+                            }
+                            else {
+                            s=-1;
+                            }
                             if (s == 0)
                                 break; // Nếu người dùng chọn 0, kết thúc việc thêm sản phẩm
                             if (s < 1 || s > sanpham.length)
