@@ -375,7 +375,7 @@ public class HoaDon implements IThaoTac {
     }
 
     // Sua method
-    public void Sua() {
+   public void Sua() {
         System.out.println("Chọn thông tin cần sửa:");
         System.out.println("1. Mã hóa đơn");
         System.out.println("2. Thời gian");
@@ -389,79 +389,138 @@ public class HoaDon implements IThaoTac {
         switch (luaChon) {
             case 1:
                 System.out.print("Nhập lại mã hóa đơn: ");
-                setMaHD(sc.nextLine());
+                setMaHD(sc.nextLine().trim());
                 break;
+
             case 2:
                 System.out.print("Nhập lại thời gian: ");
                 setThoiGian();
                 break;
+
             case 3:
-                System.out.println("Nhập lại số điện thoại khách hàng (SDT): ");
-                String sdtKH = sc.nextLine();
+                String regex = "^[0-9]{10,11}$";
+                String sdtKH;
+                do {
+                    System.out.println("Nhập SDT khách hàng: ");
+                    sdtKH = sc.nextLine();
+                    if (sdtKH == null || sdtKH.trim().isEmpty())
+                        System.out.println("Số điện thoại không được để trống. Vui lòng nhập số điện thoại: ");
+                    while (!Pattern.matches(regex, sdtKH)) {
+                        System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại: ");
+                        sdtKH = sc.nextLine().trim();
+                    }
+                } while (sdtKH == null || sdtKH.trim().isEmpty());
+
+                boolean isFind = false;
+                // Tìm khách hàng theo số điện thoại
                 for (KhachHang x : khachHang) {
                     if (sdtKH.equalsIgnoreCase(x.getSDT())) {
-                        khachhangtheodon=x;
+                        khachhangtheodon = x;
+                        isFind = true;
+                        System.out.println("Đã tìm thấy khách hàng. Họ và tên: " + khachhangtheodon.getTenKH());
+                        break;  // Dừng lại khi tìm thấy khách hàng
                     }
                 }
-                break;
+
+                if (!isFind) {
+                    System.out.println("Không tìm thấy khách hàng theo SDT. Vui lòng nhập tên khách hàng: ");
+                    String TenKH = sc.nextLine();
+                    khachhangtheodon.setSDT(sdtKH);
+                    khachhangtheodon.setTenKH(TenKH);
+                }
+                break; // Thêm `break` để kết thúc case 3
+
             case 4:
+                System.out.println("\n------------------------\n Chọn sản phẩm qua stt ");
+                for (int j = 0; j < sanpham.length; j++) {
+                    System.out.println(j + 1 + "." + sanpham[j].getMaSP() + " - " + sanpham[j].getTenSP() + " - $ : " + sanpham[j].getGiaTien() + " || ");
+                }
+
+                int index = sanphamtheodon.length;  // Bắt đầu thêm sản phẩm vào cuối mảng sanphamtheodon
                 while (true) {
-                    System.out.println("Nhập tên sản phẩm: ");
-                    String tenSP = sc.nextLine();  // Read product name
-                    boolean timSP = false;
+                    boolean isExist = false;
+                    int s = -1;
 
-                    System.out.println("Nhập số lượng sản phẩm: ");
-                    int sl = Integer.parseInt(sc.nextLine());  // Read quantity
-                    soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Resize quantity array to match new product
-                    soLuongSP[soLuongSP.length - 1] = sl;  // Store the quantity
+                    // Yêu cầu người dùng chọn sản phẩm theo số thứ tự
+                    while (s < 1 || s > sanpham.length) {
+                        System.out.printf("Chọn sản phẩm qua số thứ tự hoặc bấm 0 để kết thúc: ");
+                        s = Integer.parseInt(sc.nextLine());
+                        if (s == 0)
+                            break; // Nếu người dùng chọn 0, kết thúc việc thêm sản phẩm
+                        if (s < 1 || s > sanpham.length)
+                            System.out.println("Vui lòng nhập đúng thứ tự.");
+                    }
 
-                    // Look for the product by name
-                    for (SanPham x : sanpham) {
-                        if (tenSP.equalsIgnoreCase(x.getTenSP())) {
-                            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Resize sanphamtheodon array
-                            sanphamtheodon[sanphamtheodon.length - 1] = x;  // Add selected product to the order list
-                            timSP = true;
-                            break;
+                    if (s == 0) {
+                        break;  // Kết thúc vòng lặp nếu người dùng không muốn thêm sản phẩm
+                    } else {
+                        // Kiểm tra xem sản phẩm đã có trong danh sách chưa
+                        for (int i = 0; i < sanphamtheodon.length; i++) {
+                            if (sanpham[s - 1].getTenSP().equals(sanphamtheodon[i].getTenSP())) {
+                                isExist = true;  // Sản phẩm đã có, không cần thêm nữa
+                                break;
+                            }
+                        }
+
+                        // Nếu sản phẩm chưa có trong danh sách, thêm vào cuối mảng
+                        if (!isExist) {
+                            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length + 1);  // Mở rộng mảng sản phẩm
+                            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length + 1);  // Mở rộng mảng số lượng sản phẩm
+
+                            // Thêm sản phẩm mới vào cuối mảng
+                            sanphamtheodon[index] = sanpham[s - 1];
+                            System.out.printf("Nhập vào số lượng sản phẩm %s: ", sanpham[s - 1].getTenSP());
+                            int sl = Integer.parseInt(sc.nextLine());
+                            soLuongSP[index] = sl;
+
+                            index++;  // Tăng chỉ số để thêm vào vị trí tiếp theo
+                        } else {
+                            // Nếu sản phẩm đã có trong danh sách, tăng số lượng sản phẩm đó
+                            int sl;
+                            System.out.printf("Sản phẩm %s đã có, nhập vào số lượng thêm: ", sanpham[s - 1].getTenSP());
+                            sl = Integer.parseInt(sc.nextLine());
+                            // Tìm sản phẩm trong danh sách và cộng thêm số lượng
+                            for (int i = 0; i < sanphamtheodon.length; i++) {
+                                if (sanpham[s - 1].getTenSP().equals(sanphamtheodon[i].getTenSP())) {
+                                    soLuongSP[i] += sl;
+                                    break;
+                                }
+                            }
                         }
                     }
-
-                    if (!timSP) {
-                        System.out.println("Không tìm thấy sản phẩm.");
-                    }
-
-                    // Ask the user if they want to add another product
-                    System.out.println("Bạn muốn thêm sản phẩm không?");
-                    System.out.println("1. Có");
-                    System.out.println("2. Không");
-                    luaChon = Integer.parseInt(sc.nextLine());  // Read user's choice
-
-                    if (luaChon == 2) {
-                        break;  // Exit the loop if the user doesn't want to add more products
-                    }
                 }
-                break;
-
+                break;  // Thêm `break` để kết thúc case 4
 
             case 5:
-                System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanphamtheodon.length - 1) + "): ");
-                int chiSoXoa = Integer.parseInt(sc.nextLine());
-                if (chiSoXoa >= 0 && chiSoXoa < sanphamtheodon.length && sanphamtheodon[chiSoXoa] != null) {
-                    for (int i = chiSoXoa; i < sanphamtheodon.length - 1; i++) {
-                        sanphamtheodon[i] = sanphamtheodon[i + 1];
-                        soLuongSP[i] = soLuongSP[i + 1];
+                while (true) {
+                    try {
+
+                        System.out.println("Nhập chỉ số sản phẩm cần xóa (0 - " + (sanphamtheodon.length - 1) + "): ");
+                        int chiSoXoa = Integer.parseInt(sc.nextLine());
+                        if (chiSoXoa >= 0 && chiSoXoa < sanphamtheodon.length && sanphamtheodon[chiSoXoa] != null) {
+                            for (int i = chiSoXoa; i < sanphamtheodon.length - 1; i++) {
+                                sanphamtheodon[i] = sanphamtheodon[i + 1];
+                                soLuongSP[i] = soLuongSP[i + 1];
+                            }
+                            sanphamtheodon = Arrays.copyOf(sanphamtheodon, sanphamtheodon.length - 1);
+                            soLuongSP = Arrays.copyOf(soLuongSP, soLuongSP.length - 1);
+
+                            System.out.println("Sản phẩm đã được xóa.");
+                            break;
+                        } else {
+                            System.out.println("Chỉ số sản phẩm không hợp lệ. Vui lòng nhập lại");
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println("  Vui lòng nhập chỉ số");
                     }
-                    sanphamtheodon=Arrays.copyOf(sanphamtheodon,sanphamtheodon.length-1);
-                    soLuongSP=Arrays.copyOf(soLuongSP,soLuongSP.length-1);
-                    
-                    System.out.println("Sản phẩm đã được xóa.");
-                } else {
-                    System.out.println("Chỉ số sản phẩm không hợp lệ.");
                 }
                 break;
             case 6:
                 System.out.print("Nhập lại phương thức thanh toán: ");
                 setPhuongThucThanhToan(sc.nextLine());
                 break;
+
             default:
                 System.out.println("Lựa chọn không hợp lệ!");
         }
