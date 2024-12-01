@@ -135,10 +135,15 @@ public class DanhSachHoaDon {
 
         int slHD;
         do {
-            System.out.println("Nhập số lượng hóa đơn muốn thêm: ");
-            slHD = Integer.parseInt(sc.nextLine());
-            if (slHD <= 0) {
-                System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0: ");
+                 System.out.println("Nhập số lượng hóa đơn muốn thêm: ");
+            try {
+                slHD = Integer.parseInt(sc.nextLine());
+                if (slHD <= 0) {
+                    System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0: ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Vui lòng nhập một số hợp lệ!");
+                slHD = -1; 
             }
         } while (slHD <= 0);
 
