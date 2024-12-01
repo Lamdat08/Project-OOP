@@ -25,7 +25,7 @@ public class QuanLySuKien {
 
                     if ( b < 1 || b > 4) {
                         validInput = false;
-                        System.out.println("0 < b < 4");
+                        System.out.println("Vui lòng nhập từ 1 -> 4");
                     }
                     else
                         validInput = true;

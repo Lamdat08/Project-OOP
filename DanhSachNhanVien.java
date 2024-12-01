@@ -33,13 +33,13 @@ public class DanhSachNhanVien implements IThaoTac_2{
         String regexNV = "^NV\\d+$";
         String regexQL = "^QL\\d+$";
         while(true){
-            System.out.printf("Nhập vào mã nhan vien : ");
+            System.out.printf("Nhập vào mã nhân viên : ");
             maXoa = sc.nextLine();
             if (maXoa.matches(regexNV) || maXoa.matches(regexQL)){
                 break;
             }
             else{
-                System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+                System.out.println("Mã nhân viên bắt đầu là QL hoặc NV, sau đó là các chữ số,\n  vui lòng nhập lại mã nhân viên.");
 
             }
         }
@@ -144,12 +144,15 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 String maTimKiem;
                 String regexNV = "^NV\\d+$";
                 String regexQL = "^QL\\d+$";
-                do {
-                    System.out.printf("Nhập vào mã nhan vien : ");
+                while (true) {
+                    System.out.printf("Nhập vào mã nhân viên : ");
                     maTimKiem = sc.nextLine();
-                    if (!maTimKiem.matches(regexNV) || !maTimKiem.matches(regexQL))
-                        System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
-                }while (!maTimKiem.matches(regexNV) || !maTimKiem.matches(regexQL));
+                    if (maTimKiem.matches(regexNV) || maTimKiem.matches(regexQL))
+                        break;
+                    else
+                        System.out.println("Mã nhân viên bắt đầu là QL hoặc NV, sau đó là các chữ số,\n  vui lòng nhập lại mã nhân viên.");
+
+                }
                 boolean find = false;
                 for(int i = 0;i< arrNhanVien.length;i++){
                     if(arrNhanVien[i].getMaNhanVien().equals(maTimKiem) && arrNhanVien[i].isTrangThai() == true){
@@ -157,12 +160,12 @@ public class DanhSachNhanVien implements IThaoTac_2{
                        find = true;
                     }
                 }
-                if(!find) System.out.println("Không tìm thấy mã " + maTimKiem);
+                if(!find) System.out.println("Không tìm thấy nhân viên có mã là " + maTimKiem);
             }
             if(n == 2){
                 String tenTimKiem;
                 do {
-                    System.out.printf("Nhập vào ten : ");
+                    System.out.printf("Nhập vào tên : ");
                     tenTimKiem = sc.nextLine();
                     if (!tenTimKiem.matches(regexLetters))
                         System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
@@ -175,21 +178,21 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("Không tìm thấy " + tenTimKiem);
+                if(!find) System.out.println("Không tìm thấy nhân viên có tên " + tenTimKiem);
             }
             if(n == 3){
                 String soDienThoaiTimKiem;
                 do {
                     do {
-                        System.out.printf("Nhập vào SDT : ");
+                        System.out.printf("Nhập vào SĐT : ");
                         soDienThoaiTimKiem = sc.nextLine();
                         if (!soDienThoaiTimKiem.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Sai định dạng");
                     }while (!soDienThoaiTimKiem.matches(regNumbers));
 
                     if ( soDienThoaiTimKiem.length() != 10)
-                        System.out.println("SDT co 10 so");
-                }while (soDienThoaiTimKiem.length() == 10 );
+                        System.out.println("SĐT phải có 10 số");
+                }while (soDienThoaiTimKiem.length() != 10 );
 
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
@@ -198,21 +201,21 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("Không tìm thấy " + soDienThoaiTimKiem);
+                if(!find) System.out.println("Không tìm thấy nhân viên có SĐT : " + soDienThoaiTimKiem);
             }
             if(n == 4){
                 String gioiTinhTimKiem;
                 while (true){
                     do {
-                        System.out.printf("Nhập vào gioi tinh : ");
+                        System.out.printf("Nhập vào giới tính : ");
                         gioiTinhTimKiem = sc.nextLine();
                         if (!gioiTinhTimKiem.matches(regexLetters))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Sai định dạng");
                     }while (!gioiTinhTimKiem.matches(regexLetters));
                     if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
                         break;
                     else
-                        System.out.println("Nhap nam hoac nu.");
+                        System.out.println("Nhập 'nam' hoặc 'nu'.");
 
 
                 }
@@ -225,16 +228,16 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("Không tìm thấy " + gioiTinhTimKiem);
+                if(!find) System.out.println("Không tìm thấy nhân viên có giới tính là " + gioiTinhTimKiem);
             }
             if(n == 5){
                 String luongCoBanTimKiem;
                 do {
                     do {
-                        System.out.printf("Nhập vào luong co ban : ");
+                        System.out.printf("Nhập vào lương cơ bản : ");
                         luongCoBanTimKiem = sc.nextLine();
                         if (!luongCoBanTimKiem.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Sai định dạng");
                     }while (!luongCoBanTimKiem.matches(regNumbers));
 
                     if (Double.parseDouble(luongCoBanTimKiem) < 0)
@@ -248,7 +251,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                         find = true;
                     }
                 }
-                if(!find) System.out.println("Không tìm thấy " + luongCoBanTimKiem);
+                if(!find) System.out.println("Không tìm thấy nhân viên có lương cơ bản = " + luongCoBanTimKiem);
             }
 
             if(n == 6){
@@ -470,6 +473,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
             System.out.println("Danh sách nhân viên trống.");
             return;
         }
+        System.out.println("\n Danh sách nhân viên : \n");
         for(int i = 0;i<arrNhanVien.length;i++){
            if(arrNhanVien[i].isTrangThai() == true){
                arrNhanVien[i].Xuat();
@@ -487,7 +491,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
         String regexNV = "^NV\\d+$";
         String regexQL = "^QL\\d+$";
         while (true){
-            System.out.printf("Nhập vào mã nhan vien : ");
+            System.out.printf("Nhập vào mã nhân viên : ");
             maSua = sc.nextLine();
             if (maSua.matches(regexNV) || maSua.matches(regexQL))
                 break;
@@ -504,7 +508,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                 find = true;
             }
         }
-        if(!find) System.out.println("Không tìm thấy mã" + maSua + " trong danh sách");
+        if(!find) System.out.println("Không tìm thấy mã " + maSua + " trong danh sách");
     }
 
 
@@ -543,8 +547,9 @@ public class DanhSachNhanVien implements IThaoTac_2{
             }
 
         }
-        System.out.println("Số lượng nhân viên :  " + soLuongNhanVien);
+        System.out.println("Số lượng nhân viên parttime :  " + soLuongNhanVien);
         System.out.println("Số lượng quản lý : " + soLuongQuanLy);
+        System.out.println("Tổng nhân viên : " + soLuong);
 
         System.out.println("các quản lý và nhân viên có lương lớn nhất : \n");
 

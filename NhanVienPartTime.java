@@ -147,6 +147,7 @@ public class NhanVienPartTime extends NhanVien{
         System.out.println("Lương cơ bản : " + getLuongCoBan());
         System.out.println("Số giờ làm : " + getGioLam());
         System.out.println("Tổng lương : " + tinhLuong());
+        System.out.println("--------------------------------------------------");
     }
 
 
@@ -232,7 +233,7 @@ public class NhanVienPartTime extends NhanVien{
                     if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
                         break;
                     else
-                        System.out.println("Vui lòng nhập giới tính hợp lý ( nam hoac nu ).");
+                        System.out.println("Vui lòng nhập giới tính hợp lý ( nam hoặc nu ).");
                 }
                 setGioiTinh(gioiTinhTimKiem.toLowerCase());
             }

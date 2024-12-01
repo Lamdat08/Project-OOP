@@ -130,6 +130,7 @@ public class QuanLy extends NhanVien {
         System.out.println("Lương cơ bản : " + getLuongCoBan());
         System.out.println("Phụ cấp : " + getPhuCap());
         System.out.println("Tổng lương : " + tinhLuong());
+        System.out.println("--------------------------------------------------");
     }
 
     public void Sua() {

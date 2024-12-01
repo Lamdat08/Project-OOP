@@ -79,7 +79,7 @@ public class QuanLyHoaDon {
                     break;
                 case 0:
                     System.out.println("Thoát chương trình.");
-                    break;
+                    return;
                 default:
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
                     break;
