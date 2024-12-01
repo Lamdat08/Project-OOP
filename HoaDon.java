@@ -257,14 +257,14 @@ public class HoaDon implements IThaoTac {
             if (sdtKH.equalsIgnoreCase(x.getSDT())) {
                 khachhangtheodon = x;
                 isFind = true;
-                System.out.println("Da tim thay khach hang. Ho va ten : " + khachhangtheodon.getTenKH());
+                System.out.println("Đã tìm thấy khách hàng. Họ và tên : " + khachhangtheodon.getTenKH());
                 break;  // Exit the loop as soon as the customer is found
             }
 
         }
 
         if (!isFind) {
-            System.out.println("Khong tim thay khach hang theo sdt. Vui long nhap vao ten khach hang : ");
+            System.out.println("Không tim thấy khách hàng theo SDT. Vui lòng nhập tên khách hàng : ");
             String TenKH = sc.nextLine();
             khachhangtheodon.setSDT(sdtKH);
             khachhangtheodon.setTenKH(TenKH);
@@ -308,7 +308,7 @@ public class HoaDon implements IThaoTac {
 //                System.out.println("Danh sách sản phẩm đã đầy.");
 //                break;  // Exit the loop if the product list is full
 //            }
-        System.out.println("\n------------------------\n Chon san pham qua stt : ");
+        System.out.println("\n------------------------\n Chọn sản phẩm qua stt: ");
         for (int j = 0; j < sanpham.length; j++) {
             System.out.println(j + 1 + "." + sanpham[j].getMaSP() + " - " + sanpham[j].getTenSP() + " - $ : " + sanpham[j].getGiaTien() + " || ");
         }
@@ -318,12 +318,12 @@ public class HoaDon implements IThaoTac {
             boolean isExist = false;
             int s = -1;
             while (s < 1 || s > sanpham.length) {
-                System.out.printf("Chon san pham qua thu tu  hoac bam 0 de ket thuc : ");
+                System.out.printf("Chọn sản phẩm qua số thứ tự hoặc bấm 0 để kết thúc: ");
                 s = Integer.parseInt(sc.nextLine());
                 if (s == 0)
                     break;
                 if (s < 1 || s > sanpham.length)
-                    System.out.println("Vui long nhap dung thu tu.");
+                    System.out.println("Vui lòng nhập đúng thứ tự.");
             }
             if (s == 0) {
                 break;
@@ -343,14 +343,14 @@ public class HoaDon implements IThaoTac {
                     sanphamtheodon[index] = sanpham[s - 1];
                     //            System.out.println(sanpham[s-1]);
                     int sl;
-                    System.out.printf("Nhap vao so luong " + sanpham[s - 1].getTenSP() + " : ");
+                    System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
                     sl = Integer.parseInt(sc.nextLine());
                     soLuongSP[index] = sl;
                     index++;
                 }
                 else {
                     int sl;
-                    System.out.printf("Nhap vao so luong " + sanpham[s - 1].getTenSP() + " : ");
+                    System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
                     sl = Integer.parseInt(sc.nextLine());
                     soLuongSP[Exist_Index] += sl;
                 }
@@ -492,13 +492,13 @@ public class HoaDon implements IThaoTac {
     @Override
     public void Xuat() {
         String ChiTiet = String.format(" %-20s | %-15s | %-10s | %-10s |", "Ten san pham", "Gia tien", "SL", "Tong" );
-        System.out.println("\nThong tin hoa don : ");
+        System.out.println("\nThông tin hóa đơn : ");
         System.out.println("--------------------------------------------------------------------------");
-        System.out.println("\t \t \t \t \t \t Ma hoa don : "+this.getMaHD());
-        System.out.println("Thoi gian : " + this.getThoiGian());
-        System.out.println("Khach hang : " + getKhachhangtheodon().getTenKH() + "\t SDT : " + getKhachhangtheodon().getSDT());
+        System.out.println("\t \t \t \t \t \t Mã hóa đơn : "+this.getMaHD());
+        System.out.println("Thời gian : " + this.getThoiGian());
+        System.out.println("Khách hàng : " + getKhachhangtheodon().getTenKH() + "\t SDT : " + getKhachhangtheodon().getSDT());
         System.out.println("--------------------------------------------------------------------------");
-        System.out.println("\t \t \t \t \t \t CHI TIET");
+        System.out.println("\t \t \t \t \t \t CHI TIẾT");
 
         for ( int i = 0 ; i < getSanphamtheodon().length ; i++ ){
             ChiTiet += "\n" + String.format(" %-20s | %-15s | %-10s | %-10s |", getSanphamtheodon()[i].getTenSP(),
@@ -506,8 +506,8 @@ public class HoaDon implements IThaoTac {
         }
         System.out.println(ChiTiet);
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Phuong thuc thanh toan : " + this.getPhuongThucThanhToan());
-        System.out.println("Tong cong : " + this.TongTien());
+        System.out.println("Phuơng thức thanh toán : " + this.getPhuongThucThanhToan());
+        System.out.println("Tỏng cộng: " + this.TongTien());
     }
 
 }
