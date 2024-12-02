@@ -30,7 +30,7 @@ public class QuanLySuKien {
                     else
                         validInput = true;
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.out.println("Vui lòng chỉ nhập số !");
                 }
             }
              x = b;

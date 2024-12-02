@@ -51,6 +51,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
             if(arrNhanVien[i].getMaNhanVien().equals(maXoa) && arrNhanVien[i].isTrangThai() == true){
                 arrNhanVien[i].setTrangThai(false);
                 soLuong--;
+                System.out.println("Xóa thành công !!");
                 find = true;
             }
         }
@@ -267,9 +268,10 @@ public class DanhSachNhanVien implements IThaoTac_2{
         try{
             BufferedReader reader = new BufferedReader(new FileReader("NhanVien.txt"));
             String line;
-
+            System.out.println("Đọc file NhanVien : \n ");
             while((line = reader.readLine()) != null){
 //                System.out.println(line);
+                System.out.println();
                 String arr[] = line.split(";");
                 if(arr[0].substring(0,2).equals("NV")){
                     System.out.println("Mã nhân viên : " + arr[0]);
@@ -290,6 +292,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
                     System.out.println("Tổng lương quản lý : " + arr[6]);
 
                 }
+                System.out.println("\n-----------------------------");
             }
 
             reader.close();
@@ -382,7 +385,8 @@ public class DanhSachNhanVien implements IThaoTac_2{
 //            }
 
             for(NhanVien x : arrNhanVien){
-               writer.write(x.toString() + "\n");
+                if (x.isTrangThai())
+                    writer.write(x.toString() + "\n");
             }
             System.out.println("file written successful");
         } catch (IOException e) {

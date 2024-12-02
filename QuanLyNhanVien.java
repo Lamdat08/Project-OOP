@@ -46,7 +46,7 @@ public class QuanLyNhanVien {
 
 
         while (true) {
-
+            System.out.println("\n \t------------Quản lý nhân viên------------");
             System.out.println("1 - Chọn xuất");
             System.out.println("2 - Chọn sửa");
             System.out.println("3 - Chọn ghi file");

@@ -24,7 +24,10 @@ public class NhanVienPartTime extends NhanVien{
     public NhanVienPartTime() {
         super();
     }
-
+    public NhanVienPartTime(String maNhanVien, String tenNhanVien, String soDienThoai, String gioiTinh, double luongCoBan, double gioLam) {
+        super(maNhanVien, tenNhanVien, soDienThoai, gioiTinh, luongCoBan);
+        this.gioLam = gioLam;
+    }
     //    public NhanVienPartTime(double gioLam) {
 //        this.gioLam = gioLam;
 //    }

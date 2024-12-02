@@ -22,6 +22,7 @@ public class QLCuaHang {
         while (true)
         {
             boolean isValid = false;
+            System.out.println("\n \t ------------Quản lý cửa hàng thức ăn nhanh------------");
             System.out.println("1.Quản lý sản phẩm.");
             System.out.println("2.Quản lý hóa đơn.");
             System.out.println("3.Quản lý khách hàng.");

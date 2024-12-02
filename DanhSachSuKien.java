@@ -218,7 +218,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.println();
 
             if (x == 1) {
-                String regexMaSK = "^SK||Sk||sK||sk\\d+$";
+                String regexMaSK = "^SK\\d+$";
                 String s;
                 do {
                     System.out.printf("Nhập vào mã sự kiện : ");
@@ -248,7 +248,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 }while (!s.matches(regexLetters));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
-                    if (DSSK[i].getTenSK().equalsIgnoreCase(s)) {
+                    if (DSSK[i].getTenSK().equals(s)) {
                         isFind = true;
                         System.out.println("Sự kiện thứ " + i + 1 + " : ");
                         DSSK[i].Xuat();
@@ -326,7 +326,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                         System.out.printf("Nhập vào doanh thu : ");
                         DT = sc.nextLine();
                         if (!DT.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Sai định dạng !");
                     }while (!DT.matches(regNumbers));
 
                     if (Double.parseDouble(DT) < 0)
@@ -355,7 +355,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                         System.out.printf("Nhập vào tiền vốn : ");
                         TV = sc.nextLine();
                         if (!TV.matches(regNumbers))
-                            System.out.println("Sai dinh dang");
+                            System.out.println("Sai định dạng !");
                     }while (!TV.matches(regNumbers));
 
                     if (Double.parseDouble(TV) < 0)
