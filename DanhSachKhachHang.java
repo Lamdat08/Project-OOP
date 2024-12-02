@@ -119,7 +119,9 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             kh = new ThanhVien();
             kh.Nhap();
             DSKH[i] = kh;
+            System.out.println("Thêm khách hàng thành công !\n-----------------------");
         }
+
     }
 
     public void Xoa() {
@@ -135,15 +137,23 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
 
         System.out.println("Nhập mã khách hàng muốn xóa: ");
-        String maKH_Xoa = sc.nextLine();
+        String maKH_Xoa = sc.nextLine().trim();
+        while (maKH_Xoa.isEmpty()) {
+            System.out.println("Mã khách hàng muốn xóa không được để trống, vui lòng nhập lại: ");
+            maKH_Xoa = sc.nextLine().trim();
+        }
+        String regex = "^KH|kH|Kh|kh\\d+$";
+        while (!maKH_Xoa.matches(regex)) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các chữ số, vui lòng nhập lại: ");
+            maKH_Xoa = sc.nextLine().trim();
+        }
         boolean kq = false;
         for (int i = 0; i < DSKH.length; i++) {
-            if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_Xoa)) {
+            if (maKH_Xoa.equalsIgnoreCase(DSKH[i].getMaKH())) {
                 kq = true;
                 DSKH[i].setStatus(false);
                 System.out.println("Xóa khách hàng thành công !\n----------------");
                 soLuongKhachHang--;
-                break;
             }
         }
         if (!kq) {
@@ -186,12 +196,12 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                 case 1:
                     System.out.println("Nhập mã khách hàng cần tìm: ");
                     String maKH_TimKiem = sc.nextLine().trim();
-                    while (maKH_TimKiem.trim().isEmpty()) {
+                    while (maKH_TimKiem.isEmpty()) {
                         System.out.println("Mã khách hàng không được để trống, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
                     String regexMaKH = "^KH|kH|Kh|kh\\d+$";
-                    while (!Pattern.matches(regexMaKH, maKH_TimKiem)) {
+                    while (!maKH_TimKiem.matches(regexMaKH)) {
                         System.out.println("Mã khách hàng phải bắt đầu là KH và sau đó là các chữ số, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
@@ -212,21 +222,18 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                 case 2:
                     System.out.println("Nhập tên khách hàng cần tìm: ");
                     String tenKhachHang_TimKiem = sc.nextLine().trim();
-                    while (tenKhachHang_TimKiem.isEmpty()) {
-                        System.out.println("Tên khách hàng không được để trống, vui lòng nhập lại: ");
-                        tenKhachHang_TimKiem = sc.nextLine().trim();
-                    }
                     String regexTen = "^[A-Za-zÀ-ỹ\\s]+$";
-                    while (!Pattern.matches(regexTen, tenKhachHang_TimKiem)) {
+                    while (tenKhachHang_TimKiem.isEmpty() || !tenKhachHang_TimKiem.matches(regexTen)) {
                         System.out.println("Tên khách hàng không hợp lệ, vui lòng nhập lại: ");
                         tenKhachHang_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getTenKH().equalsIgnoreCase(tenKhachHang_TimKiem)) {
-                            DSKH[i].Xuat();
-                            kq = true;
-                            System.out.println("\n \t--------------------");
+                        if (DSKH[i].getStatus()) {
+                            if (tenKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getTenKH())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if (!kq) {
@@ -236,21 +243,18 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                 case 3:
                     System.out.println("Nhập số điện thoại của khách hàng cần tìm: ");
                     String soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
-                    while (soDienThoaiKhachHang_TimKiem.trim().isEmpty()) {
-                        System.out.println("Số điện thoại không được để trống, vui lòng nhập lại: ");
-                        soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
-                    }
                     String regexSDT = "^[0-9]{10,11}$";
-                    while (!Pattern.matches(regexSDT, soDienThoaiKhachHang_TimKiem)) {
-                        System.out.println("Số điện thoại không hợp lệ, hãy nhập số điện thoại chỉ có 10 hoặc 11 chữ số");
+                    while (soDienThoaiKhachHang_TimKiem.isEmpty() || !soDienThoaiKhachHang_TimKiem.matches(regexSDT)) {
+                        System.out.println("Số điện thoại không hợp lệ, vui lòng nhập lại: ");
                         soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getSDT().equals(soDienThoaiKhachHang_TimKiem)) {
-                            DSKH[i].Xuat();
-                            kq = true;
-                            System.out.println("\n \t--------------------");
+                        if (DSKH[i].getStatus()) {
+                            if (soDienThoaiKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getSDT())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if (!kq) {
@@ -260,7 +264,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                 case 4:
                     System.out.println("Nhập địa chỉ khách hàng cần tìm: ");
                     String diaChiKhachHang_TimKiem = sc.nextLine().trim();
-                    while (diaChiKhachHang_TimKiem.trim().isEmpty()) {
+                    while (diaChiKhachHang_TimKiem.isEmpty()) {
                         System.out.println("Địa chỉ không được để trống, vui lòng nhập địa chỉ khách hàng: ");
                         diaChiKhachHang_TimKiem = sc.nextLine().trim();
                     }
@@ -272,10 +276,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getDiaChi().equalsIgnoreCase(diaChiKhachHang_TimKiem)) {
-                            DSKH[i].Xuat();
-                            kq = true;
-                            System.out.println("\n \t--------------------");
+                        if (DSKH[i].getStatus()) {
+                            if (diaChiKhachHang_TimKiem.equalsIgnoreCase(diaChiKhachHang_TimKiem)) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if (!kq) {
@@ -296,10 +301,11 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     }
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
-                        if (DSKH[i].getGioiTinh().equalsIgnoreCase(gioiTinhKhachHang_TimKiem)) {
-                            DSKH[i].Xuat();
-                            kq = true;
-                            System.out.println("\n \t--------------------");
+                        if (DSKH[i].getStatus()) {
+                            if (gioiTinhKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getGioiTinh())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
                         }
                     }
                     if (!kq) {
@@ -350,21 +356,17 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
 
         System.out.println("Nhập mã của khách hàng cần sửa: ");
-        String maKH_Sua = sc.nextLine().trim();
-        while (maKH_Sua.isEmpty()) {
-            System.out.println("Mã khách hàng cần sửa không được để trống, vui lòng nhập mã khách hàng !");
-            maKH_Sua = sc.nextLine().trim();
-        }
         String regex = "^KH|kH|Kh|kh\\d+$";
-        while (!Pattern.matches(regex, maKH_Sua)) {
-            System.out.println("Mã khách phải phải bắt đầu bằng KH và sau đó là các số, vui lòng nhập lại !");
+        String maKH_Sua = sc.nextLine().trim();
+        while (maKH_Sua.isEmpty() || !maKH_Sua.matches(regex)) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các số, vui lòng nhập lại: ");
             maKH_Sua = sc.nextLine().trim();
         }
         boolean kq = false;
 
         for (int i = 0; i < DSKH.length; i++) {
             if (DSKH[i].getStatus()) {
-                if (DSKH[i].getMaKH().equalsIgnoreCase(maKH_Sua)) {
+                if (maKH_Sua.equalsIgnoreCase(DSKH[i].getMaKH())) {
                     DSKH[i].Sua();
                     DSKH[i].Xuat();
                     kq = true;
@@ -393,14 +395,13 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     System.out.println("------------------------------\n");
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Lỗi xuất KhachHang.txt \n");
                 }
             }
             br.close();
             fr.close();
         } catch (Exception e) {
             System.out.println("Lỗi đọc file KhachHang.txt\n");
-            e.printStackTrace();
         }
     }
 
@@ -427,7 +428,6 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
         } catch (IOException ioException) {
             System.out.println("Lỗi ghi file KhachHang.txt: ");
-            ioException.printStackTrace();
         }
     }
 
