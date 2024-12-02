@@ -19,9 +19,9 @@ public class HoaDon implements IThaoTac {
 
     private String maHD;
     private Date thoiGian;
-    static KhachHang[] khachHang=new KhachHang[0];
+    public static KhachHang[] khachHang=new KhachHang[0];
     private KhachHang khachhangtheodon=new KhachHang();
-    static SanPham[] sanpham=new SanPham[0];
+    public static SanPham[] sanpham=new SanPham[0];
     private SanPham[] sanphamtheodon=new SanPham[0];
     private int[] soLuongSP=new int[0];
     private String phuongThucThanhToan;

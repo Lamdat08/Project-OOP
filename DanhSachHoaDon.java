@@ -16,8 +16,8 @@ public class DanhSachHoaDon {
     private HoaDon[] DSHD_File;    // Mảng lưu trữ hóa đơn lấy từ file
     static Scanner sc = new Scanner(System.in);
     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-    static KhachHang[] DSKH;
-    static SanPham[] DSSP;
+    public static KhachHang[] DSKH;
+    public static SanPham[] DSSP;
 
     public DanhSachHoaDon() {
         this.DSHD = new HoaDon[1]; // Khởi tạo mảng hóa đơn với dung lượng ban đầu là 5
