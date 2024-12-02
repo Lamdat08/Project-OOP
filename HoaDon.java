@@ -325,7 +325,9 @@ public class HoaDon implements IThaoTac {
                     s = Integer.parseInt(input);
                 }
                 else {
+                    System.out.println("Vui lòng nhập số");
                     s=-1;
+                    continue;
                 }
                 if (s == 0)
                     break;
@@ -462,7 +464,9 @@ public class HoaDon implements IThaoTac {
                                 s = Integer.parseInt(input);
                             }
                             else {
+                            System.out.println("Vui lòng nhập số");
                             s=-1;
+                            continue;
                             }
                             if (s == 0)
                                 break; // Nếu người dùng chọn 0, kết thúc việc thêm sản phẩm
