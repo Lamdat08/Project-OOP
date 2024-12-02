@@ -30,13 +30,15 @@ public class NuocUong extends SanPham{
             try{
                 String regex = "^[A-Za-zÀ-ỹ\\s]+$";
                 if(loaiNuoc == null ||loaiNuoc.trim().isEmpty() || !loaiNuoc.matches(regex)) {
-                    System.out.println("Loại nước uống không được để trống và phải là 1 chuỗi, vui lòng nhập lại: ");
+                    System.out.println("Loại nước uống không được để trống và phải là 1 chuỗi kí tự, vui lòng nhập lại: ");
                     loaiNuoc = sc.nextLine().trim();
+                    continue;
                 }
                 break;
             }
             catch(Exception e){
                 System.out.println("Loại nước không hợp lệ, vui lòng nhập lại.");
+                loaiNuoc = sc.nextLine().trim();
             }
         }
         this.loaiNuoc = loaiNuoc;
@@ -68,18 +70,17 @@ public class NuocUong extends SanPham{
                     menuSuaNuocUong();
                     System.out.print("Nhập lựa chọn sửa nước uống: ");
                     luaChon = Integer.parseInt(sc.nextLine().trim());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    String regex = "^[1-3]$";
+                    if(!inputLuaChon.matches(regex)){
+                        System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                        continue;
+                    }
                     break;
                 }
                 catch(NumberFormatException numberFormatException){
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
-            }
-            String inputLuaChon = Integer.toString(luaChon);
-            String regex = "^[1-3]$";
-            while(!inputLuaChon.matches(regex)){
-                menuSuaNuocUong();
-                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine().trim());
             }
             switch(luaChon){
                 case 1:
