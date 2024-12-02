@@ -51,7 +51,6 @@ public class ThanhVien extends KhachHang {
     }
 
 
-
     public String rank() {
         if (getDiemTichLuy() >= 20)
             return "Gold";
