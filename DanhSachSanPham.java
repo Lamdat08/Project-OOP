@@ -500,11 +500,13 @@ public class DanhSachSanPham implements IThaoTac_2 {
         }
 
         try{
-            FileWriter fw = new FileWriter("SanPham.txt", true);
+            FileWriter fw = new FileWriter("SanPham.txt");
             BufferedWriter bw = new BufferedWriter(fw);
-            for(int i = DSSP_File.length; i < DSSP.length; i++){
-                bw.write(DSSP[i].toString());
-                bw.newLine();
+            for(int i = 0; i < DSSP.length; i++){
+                if(DSSP[i].getStatus()){
+                    bw.write(DSSP[i].toString());
+                    bw.newLine();
+                }
             }
             bw.close();
             fw.close();
@@ -675,58 +677,68 @@ public class DanhSachSanPham implements IThaoTac_2 {
             int indexMaxSL = 0;
 
             for (int i = 0; i < DSSP_File.length; i++) {
-                tongLoiNhuan += DSSP_File[i].LoiNhuan();
-                if (DSSP_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
-                    minSP_LoiNhuan = DSSP_File[i];
-                }
-                if (DSSP_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()){
-                    maxSP_LoiNhuan = DSSP_File[i];
-                }
+                if(DSSP_File[i].getStatus()){
+                    tongLoiNhuan += DSSP_File[i].LoiNhuan();
+                    if (DSSP_File[i].LoiNhuan() < minSP_LoiNhuan.LoiNhuan()){
+                        minSP_LoiNhuan = DSSP_File[i];
+                    }
+                    if (DSSP_File[i].LoiNhuan() > maxSP_LoiNhuan.LoiNhuan()){
+                        maxSP_LoiNhuan = DSSP_File[i];
+                    }
 
-                tongSoLuong += DSSP_File[i].getSoLuong();
-                if(DSSP_File[i].getSoLuong() < minSP_SoLuong.getSoLuong()){
-                    minSP_SoLuong = DSSP_File[i];
-                }
-                if(DSSP_File[i].getSoLuong() > maxSP_SoLuong.getSoLuong()){
-                    maxSP_SoLuong = DSSP_File[i];
+                    tongSoLuong += DSSP_File[i].getSoLuong();
+                    if(DSSP_File[i].getSoLuong() < minSP_SoLuong.getSoLuong()){
+                        minSP_SoLuong = DSSP_File[i];
+                    }
+                    if(DSSP_File[i].getSoLuong() > maxSP_SoLuong.getSoLuong()){
+                        maxSP_SoLuong = DSSP_File[i];
+                    }
                 }
             }
 
             for (int i = 0; i < DSSP_File.length; i++) {
-                if (DSSP_File[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
-                    if(indexMinLN == minDSSP_LoiNhuan.length){
-                        minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
+                if(DSSP_File[i].getStatus()){
+                    if (DSSP_File[i].LoiNhuan() == minSP_LoiNhuan.LoiNhuan()) {
+                        if(indexMinLN == minDSSP_LoiNhuan.length){
+                            minDSSP_LoiNhuan = Arrays.copyOf(minDSSP_LoiNhuan, minDSSP_LoiNhuan.length + 1);
+                        }
+                        minDSSP_LoiNhuan[indexMinLN] = DSSP_File[i];
+                        indexMinLN++;
                     }
-                    minDSSP_LoiNhuan[indexMinLN] = DSSP_File[i];
-                    indexMinLN++;
-                }
-                if (DSSP_File[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
-                    if(indexMaxLN == maxDSSP_LoiNhuan.length){
-                        maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
+                    if (DSSP_File[i].LoiNhuan() == maxSP_LoiNhuan.LoiNhuan()) {
+                        if(indexMaxLN == maxDSSP_LoiNhuan.length){
+                            maxDSSP_LoiNhuan = Arrays.copyOf(maxDSSP_LoiNhuan, maxDSSP_LoiNhuan.length + 1);
+                        }
+                        maxDSSP_LoiNhuan[indexMaxLN] = DSSP_File[i];
+                        indexMaxLN++;
                     }
-                    maxDSSP_LoiNhuan[indexMaxLN] = DSSP_File[i];
-                    indexMaxLN++;
-                }
 
-                if (DSSP_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
-                    if(indexMinSL == minDSSP_SoLuong.length){
-                        minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
+                    if (DSSP_File[i].getSoLuong() == minSP_SoLuong.getSoLuong()) {
+                        if(indexMinSL == minDSSP_SoLuong.length){
+                            minDSSP_SoLuong = Arrays.copyOf(minDSSP_SoLuong, minDSSP_SoLuong.length + 1);
+                        }
+                        minDSSP_SoLuong[indexMinSL] = DSSP_File[i];
+                        indexMinSL++;
                     }
-                    minDSSP_SoLuong[indexMinSL] = DSSP_File[i];
-                    indexMinSL++;
-                }
-                if (DSSP_File[i].getSoLuong() == maxSP_SoLuong.getSoLuong()) {
-                    if(indexMaxSL == maxDSSP_SoLuong.length){
-                        maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
+                    if (DSSP_File[i].getSoLuong() == maxSP_SoLuong.getSoLuong()) {
+                        if(indexMaxSL == maxDSSP_SoLuong.length){
+                            maxDSSP_SoLuong = Arrays.copyOf(maxDSSP_SoLuong, maxDSSP_SoLuong.length + 1);
+                        }
+                        maxDSSP_SoLuong[indexMaxSL] = DSSP_File[i];
+                        indexMaxSL++;
                     }
-                    maxDSSP_SoLuong[indexMaxSL] = DSSP_File[i];
-                    indexMaxSL++;
                 }
             }
 
-
+            //Đếm số lượng sản phẩm chưa bị xoá trong file SanPham.txt
+            int slSP_File = 0;
+            for(int i = 0; i < DSSP_File.length; i++){
+                if(DSSP_File[i].getStatus()){
+                    slSP_File++;
+                }
+            }
             System.out.println("\n --------THỐNG KÊ DANH SÁCH SẢN PHẨM CỦA FILE SanPham.txt--------");
-            System.out.println("1. Tổng số lượng sản phẩm : " + DSSP_File.length);
+            System.out.println("1. Tổng số lượng sản phẩm : " + slSP_File);
 
             System.out.println("2.Các sản phẩm có lợi nhuận thấp nhất : ");
             for ( int i = 0 ; i < minDSSP_LoiNhuan.length ; i++ ){
@@ -742,7 +754,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
             System.out.println("\t \t -----xxxxx----- ");
 
-            System.out.println("4.Lợi nhuận trung bình của 1 sản phẩm : " + tongLoiNhuan/soLuongSanPham);
+            System.out.println("4.Lợi nhuận trung bình của 1 sản phẩm : " + tongLoiNhuan/slSP_File);
 
             System.out.println("5.Các sản phẩm có số lượng nhỏ nhất : " );
             for ( int i = 0 ; i < minDSSP_SoLuong.length ; i++ ){
