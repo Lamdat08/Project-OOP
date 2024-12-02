@@ -40,7 +40,7 @@ public class ThanhVien extends KhachHang {
                 if (!inputDiemTichLuy.matches(regex)) {
                     System.out.println("Điểm tích lũy của khách hàng không hợp lệ, vui lòng nhập lại: ");
                     diemTichLuy = Integer.parseInt(sc.nextLine().trim());
-
+                    continue;
                 }
                 break;
             } catch (NumberFormatException e) {
@@ -94,18 +94,18 @@ public class ThanhVien extends KhachHang {
                     menuSuaThanhVien();
                     System.out.println("Nhập lựa chọn sửa thành viên: ");
                     luaChon = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    String regex = "^[1-3]$";
+                    if (!inputLuaChon.matches(regex)) {
+                        System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                        continue;
+                    }
                     break;
                 } catch (NumberFormatException e) {
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
             }
-            String inputLuaChon = Integer.toString(luaChon);
-            String regex = "^[1-3]$";
-            while (!inputLuaChon.matches(regex)) {
-                menuSuaThanhVien();
-                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine());
-            }
+
             switch (luaChon) {
                 case 1:
                     while (true) {

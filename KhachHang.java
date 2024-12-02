@@ -94,7 +94,7 @@ public class KhachHang implements IThaoTac {
 
     public void setDiaChi(String diaChi) {
         diaChi = diaChi.trim();
-        if (diaChi == null || diaChi.isEmpty()) {
+        if (diaChi.isEmpty()) {
             this.diaChi = "Không xác định";
             return;
         }
@@ -113,7 +113,7 @@ public class KhachHang implements IThaoTac {
     public void setGioiTinh(String gioiTinh) {
         while (true) {
             gioiTinh = gioiTinh.trim();
-            if (gioiTinh == null || gioiTinh.isEmpty()) {
+            if (gioiTinh.isEmpty()) {
                 this.gioiTinh = "Nam";
             }
             if (gioiTinh.equalsIgnoreCase("Nam") || gioiTinh.equalsIgnoreCase("Nữ") || gioiTinh.equalsIgnoreCase("Khác")) {
@@ -169,17 +169,16 @@ public class KhachHang implements IThaoTac {
                     menuSuaKhachHang();
                     System.out.println("Nhập lựa chọn sửa khách hàng: ");
                     luaChon = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    String regex = "^[1-6]$";
+                    if(!inputLuaChon.matches(regex)) {
+                        System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                        continue;
+                    }
                     break;
                 } catch (NumberFormatException e) {
                     System.out.println("Vui lòng lựa chọn là một số nguyên hợp lệ");
                 }
-            }
-            String inputLuaChon = Integer.toString(luaChon);
-            String regex = "^[1-6]$";
-            while (!inputLuaChon.matches(regex)) {
-                menuSuaKhachHang();
-                System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine());
             }
 
             switch (luaChon) {

@@ -97,17 +97,16 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             try {
                 System.out.println("Nhập số lượng khách hàng muốn thêm: ");
                 slKH = Integer.parseInt(sc.nextLine());
+                String inputSLKH = Integer.toString(slKH);
+                String regex = "^[1-9]+$";
+                if(!inputSLKH.matches(regex)) {
+                    System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0");
+                    continue;
+                }
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Vui lòng nhập một số nguyên hợp lệ: ");
             }
-        }
-        String inputSLKH = Integer.toString(slKH);
-        String regex = "^[1-9]+$";
-        while(!inputSLKH.matches(regex)) {
-            System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0");
-            slKH = Integer.parseInt(sc.nextLine());
-            inputSLKH = Integer.toString(slKH);
         }
 
         soLuongKhachHang += slKH;
@@ -180,18 +179,17 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     menuTimKiem();
                     System.out.println("Nhập lựa chọn tìm kiếm: ");
                     luaChon = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    if(!inputLuaChon.matches(regex)){
+                        System.out.println("Không có lựa chọn này, mời nhập lại: ");
+                        continue;
+                    }
                     break;
                 } catch (NumberFormatException e) {
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
             }
             boolean kq;
-            String inputLuaChon = Integer.toString(luaChon);
-            while(!inputLuaChon.matches(regex)){
-                System.out.println("Không có lựa chọn này, mời nhập lại: ");
-                luaChon = Integer.parseInt(sc.nextLine().trim());
-                inputLuaChon = Integer.toString(luaChon);
-            }
             switch (luaChon) {
                 case 1:
                     System.out.println("Nhập mã khách hàng cần tìm: ");
@@ -277,7 +275,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                     kq = false;
                     for (int i = 0; i < DSKH.length; i++) {
                         if (DSKH[i].getStatus()) {
-                            if (diaChiKhachHang_TimKiem.equalsIgnoreCase(diaChiKhachHang_TimKiem)) {
+                            if (diaChiKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getDiaChi())) {
                                 DSKH[i].Xuat();
                                 kq = true;
                             }
