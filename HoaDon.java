@@ -19,9 +19,9 @@ public class HoaDon implements IThaoTac {
 
     private String maHD;
     private Date thoiGian;
-    private KhachHang[] khachHang=new KhachHang[0];
+    static KhachHang[] khachHang=new KhachHang[0];
     private KhachHang khachhangtheodon=new KhachHang();
-    private SanPham[] sanpham=new SanPham[0];
+    static SanPham[] sanpham=new SanPham[0];
     private SanPham[] sanphamtheodon=new SanPham[0];
     private int[] soLuongSP=new int[0];
     private String phuongThucThanhToan;
@@ -29,8 +29,8 @@ public class HoaDon implements IThaoTac {
 
     public HoaDon() {
         this.setStatus(true);
-        this.loadKhachHangFromFile();
-        this.loadSanPhamFromFile();
+        this.khachHang = Arrays.copyOf(DanhSachHoaDon.DSKH, DanhSachHoaDon.DSKH.length);
+        this.sanpham = Arrays.copyOf(DanhSachHoaDon.DSSP, DanhSachHoaDon.DSSP.length);
 
     }
 
@@ -144,91 +144,92 @@ public class HoaDon implements IThaoTac {
     }
 
     // Method to load KhachHang data from file
-    public void loadKhachHangFromFile() {
-        String fileName = "KhachHang.txt";
-        File file = new File(fileName);
+//    public void loadKhachHangFromFile() {
+//        String fileName = "KhachHang.txt";
+//        File file = new File(fileName);
+//
+//        if (!file.exists()) {
+//            System.out.println("File không tồn tại: " + fileName);
+//            return;
+//        }
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//            String line;
+//            int index = 0;
+//            // Initial empty array (can grow as needed)
+//            khachHang = new KhachHang[0];
+//
+//            while ((line = br.readLine()) != null) {
+//                System.out.println(line);
+//                try {
+//                    // Create a new KhachHang object
+//                    String[] strings = line.split(";");
+//                    KhachHang kh = new ThanhVien(strings[0], strings[1], strings[2], strings[3], strings[4], Integer.parseInt(strings[5]));
+//
+//                    // Resize the array by copying the existing array to a new one with 1 additional space
+//                    khachHang = Arrays.copyOf(khachHang, khachHang.length + 1);
+//
+//                    // Add the new KhachHang at the last index of the array
+//                    khachHang[khachHang.length - 1] = kh;
+//
+//                    index++;
+//                } catch (Exception e) {
+//                    System.out.println("Lỗi khi xử lý dòng: " + line);
+//                    e.printStackTrace();
+//                }
+//            }
+//
+////            System.out.println("Đọc thành công dữ liệu khách hàng từ file.");
+//
+//        } catch (IOException e) {
+//            System.out.println("Lỗi khi đọc file: " + e.getMessage());
+//        }
+//    }
 
-        if (!file.exists()) {
-            System.out.println("File không tồn tại: " + fileName);
-            return;
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            int index = 0;
-            // Initial empty array (can grow as needed)
-            khachHang = new KhachHang[0];
-
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(";");
-                try {
-                    // Create a new KhachHang object
-                    KhachHang kh = new ThanhVien(strings[0], strings[1], strings[2], strings[3], strings[4], Integer.parseInt(strings[5]));
-
-                    // Resize the array by copying the existing array to a new one with 1 additional space
-                    khachHang = Arrays.copyOf(khachHang, khachHang.length + 1);
-
-                    // Add the new KhachHang at the last index of the array
-                    khachHang[khachHang.length - 1] = kh;
-
-                    index++;
-                } catch (Exception e) {
-                    System.out.println("Lỗi khi xử lý dòng: " + line);
-                    e.printStackTrace();
-                }
-            }
-
-//            System.out.println("Đọc thành công dữ liệu khách hàng từ file.");
-
-        } catch (IOException e) {
-            System.out.println("Lỗi khi đọc file: " + e.getMessage());
-        }
-    }
-
-
-    // Method to load SanPham data from file
-    public void loadSanPhamFromFile() {
-        String fileName = "SanPham.txt";
-        File file = new File(fileName);
-
-        if (!file.exists()) {
-            System.out.println("File không tồn tại: " + fileName);
-            return;
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            int index = 0;
-            // Initial empty array for sanpham
-            sanpham = new SanPham[0];
-
-            while ((line = br.readLine()) != null) {
-                String[] strings = line.split(";");
-                try {
-                    // Resize the array as needed
-                    sanpham = Arrays.copyOf(sanpham, sanpham.length + 1); // Add one more space
-
-                    // Add the appropriate SanPham object
-                    if (strings[0].startsWith("TA")) {
-                        sanpham[sanpham.length - 1] = new ThucAn(strings[0], strings[1], Integer.parseInt(strings[2]),
-                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
-                    } else if (strings[0].startsWith("NU")) {
-                        sanpham[sanpham.length - 1] = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]),
-                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
-                    }
-                    index++;
-                } catch (Exception e) {
-                    System.out.println("Lỗi khi xử lý dòng: " + line);
-                    e.printStackTrace();
-                }
-            }
-
-//            System.out.println("Đọc thành công dữ liệu sản phẩm từ file.");
-
-        } catch (IOException e) {
-            System.out.println("Lỗi khi đọc file: " + e.getMessage());
-        }
-    }
+//
+//    // Method to load SanPham data from file
+//    public void loadSanPhamFromFile() {
+//        String fileName = "SanPham.txt";
+//        File file = new File(fileName);
+//
+//        if (!file.exists()) {
+//            System.out.println("File không tồn tại: " + fileName);
+//            return;
+//        }
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//            String line;
+//            int index = 0;
+//            // Initial empty array for sanpham
+//            sanpham = new SanPham[0];
+//
+//            while ((line = br.readLine()) != null) {
+//                String[] strings = line.split(";");
+//                try {
+//                    // Resize the array as needed
+//                    sanpham = Arrays.copyOf(sanpham, sanpham.length + 1); // Add one more space
+//
+//                    // Add the appropriate SanPham object
+//                    if (strings[0].startsWith("TA")) {
+//                        sanpham[sanpham.length - 1] = new ThucAn(strings[0], strings[1], Integer.parseInt(strings[2]),
+//                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+//                    } else if (strings[0].startsWith("NU")) {
+//                        sanpham[sanpham.length - 1] = new NuocUong(strings[0], strings[1], Integer.parseInt(strings[2]),
+//                                Double.parseDouble(strings[3]), Double.parseDouble(strings[4]), strings[5]);
+//                    }
+//                    index++;
+//                } catch (Exception e) {
+//                    System.out.println("Lỗi khi xử lý dòng: " + line);
+//                    e.printStackTrace();
+//                }
+//            }
+//
+////            System.out.println("Đọc thành công dữ liệu sản phẩm từ file.");
+//
+//        } catch (IOException e) {
+//            System.out.println("Lỗi khi đọc file: " + e.getMessage());
+//        }
+//    }
 
     // Nhap method
     @Override
@@ -352,15 +353,31 @@ public class HoaDon implements IThaoTac {
                     sanphamtheodon[index] = sanpham[s - 1];
                     //            System.out.println(sanpham[s-1]);
                     int sl;
-                    System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
-                    sl = Integer.parseInt(sc.nextLine());
+                    String st = "";
+                    do {
+                        do {
+                            System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
+                            st = sc.nextLine();
+                            if (!st.matches(regNumbers))
+                                System.out.println("Vui lòng nhập số dương !");
+                        }while (!st.matches(regNumbers));
+                    }while (Integer.parseInt(st) <= 0 );
+                    sl = Integer.parseInt(st);
                     soLuongSP[index] = sl;
                     index++;
                 }
                 else {
                     int sl;
-                    System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
-                    sl = Integer.parseInt(sc.nextLine());
+                    String st = "";
+                    do {
+                        do {
+                            System.out.printf("Nhập vào só lượng  " + sanpham[s - 1].getTenSP() + " : ");
+                            st = sc.nextLine();
+                            if (!st.matches(regNumbers))
+                                System.out.println("Vui lòng nhập số dương !");
+                        }while (!st.matches(regNumbers));
+                    }while (Integer.parseInt(st) <= 0 );
+                    sl = Integer.parseInt(st);
                     soLuongSP[Exist_Index] += sl;
                 }
             }
@@ -384,7 +401,7 @@ public class HoaDon implements IThaoTac {
     }
 
     // Sua method
-   public void Sua() {
+    public void Sua() {
         while (true) {
             System.out.println("Chọn thông tin cần sửa:");
             System.out.println("1. Mã hóa đơn");
@@ -395,8 +412,6 @@ public class HoaDon implements IThaoTac {
             System.out.println("6. Phương thức thanh toán");
             System.out.println("7. Sửa số lượng các sản phẩm trong chi tiết");
             System.out.println("8. Thoát");
-            loadKhachHangFromFile();
-            loadSanPhamFromFile();
             int luaChon = Integer.parseInt(sc.nextLine());
 
             switch (luaChon) {
@@ -464,9 +479,9 @@ public class HoaDon implements IThaoTac {
                                 s = Integer.parseInt(input);
                             }
                             else {
-                            System.out.println("Vui lòng nhập số");
-                            s=-1;
-                            continue;
+                                System.out.println("Vui lòng nhập số");
+                                s=-1;
+                                continue;
                             }
                             if (s == 0)
                                 break; // Nếu người dùng chọn 0, kết thúc việc thêm sản phẩm
@@ -587,10 +602,10 @@ public class HoaDon implements IThaoTac {
                                         System.out.println("Vui lòng chỉ nhập số dương !");
                                 }while (!giam.matches(regNumbers));
 
-                                    if (soLuongSP[x-1] - Integer.parseInt(giam) <= 0)
-                                        System.out.println("Số lượng giảm phải nhỏ hơn " + soLuongSP[x-1]);
-                                     if (Integer.parseInt(giam) == 0 )
-                                         System.out.println("Số lượng thêm vào phải lớn hơn 0!");
+                                if (soLuongSP[x-1] - Integer.parseInt(giam) <= 0)
+                                    System.out.println("Số lượng giảm phải nhỏ hơn " + soLuongSP[x-1]);
+                                if (Integer.parseInt(giam) == 0 )
+                                    System.out.println("Số lượng thêm vào phải lớn hơn 0!");
                             }while (Integer.parseInt(giam) >= soLuongSP[x-1] || Integer.parseInt(giam) <= 0);
 
                             soLuongSP[x-1] -= Integer.parseInt(giam);

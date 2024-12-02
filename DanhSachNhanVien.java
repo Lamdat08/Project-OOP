@@ -96,11 +96,13 @@ public class DanhSachNhanVien implements IThaoTac_2{
             NhanVienPartTime x = new NhanVienPartTime();
             x.Nhap();
             arrNhanVien[arrNhanVien.length-1] = x;
+            soLuong++;
         }
         if(luaChon == 2){
             QuanLy x = new QuanLy();
             x.Nhap();
             arrNhanVien[arrNhanVien.length-1] = x;
+            soLuong++;
         }
 
     }
@@ -197,7 +199,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(soDienThoaiTimKiem) && arrNhanVien[i].isTrangThai() == true){
+                    if(arrNhanVien[i].getSoDienThoai().equals(soDienThoaiTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }
@@ -224,7 +226,7 @@ public class DanhSachNhanVien implements IThaoTac_2{
 
                 boolean find = false;
                 for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(gioiTinhTimKiem) && arrNhanVien[i].isTrangThai() == true){
+                    if(arrNhanVien[i].getGioiTinh().toLowerCase().equals(gioiTinhTimKiem) && arrNhanVien[i].isTrangThai() == true){
                         arrNhanVien[i].Xuat();
                         find = true;
                     }

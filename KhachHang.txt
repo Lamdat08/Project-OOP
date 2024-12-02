@@ -1,4 +1,4 @@
-KH001;Nguyễn Văn A;09689999999; 273 An Dương Vương, phường 2, quận 5, TPHCM;Nam;25
+KH001;Nguyễn Văn A;09689999999;273 An Dương Vương, phường 2, quận 5, TPHCM;Nam;25
 KH002;Trần Quốc B;09689888888;273 Nguyễn Văn Cừ, Phường 1, Quận 1, TPHCM;Nữ;10
 KH003;Lê Thị C;09686667777;273 Lý Thường Kiệt, Phường 3, Quận 9, TPHCM;Nữ;9
 KH004;Phan Văn D;09685556666;273 Cách Mạng Tháng Tám, Phường 4, Quận 7, TPHCM;Nam;40

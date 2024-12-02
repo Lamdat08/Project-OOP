@@ -189,7 +189,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             }
         }
         if(!kq){
-            System.out.println("Không tìm thấy mã sản phẩm" + maSP_Xoa + " muốn xoá");
+            System.out.println("Không tìm thấy mã sản phẩm " + maSP_Xoa + " muốn xoá");
         }
     }
 
@@ -510,6 +510,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
             fw.close();
             System.out.println("Ghi dữ liệu vào SanPham.txt thành công");
             DSSP_File = Arrays.copyOf(DSSP,DSSP.length);
+            DanhSachHoaDon.DSSP = Arrays.copyOf(DSSP_File, DSSP_File.length);
+            HoaDon.sanpham = Arrays.copyOf(DSSP_File, DSSP_File.length);
         }
         catch (IOException ioException) {
             System.out.println("Lỗi ghi file SanPham.txt ");
