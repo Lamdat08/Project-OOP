@@ -141,7 +141,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
             System.out.println("Mã khách hàng muốn xóa không được để trống, vui lòng nhập lại: ");
             maKH_Xoa = sc.nextLine().trim();
         }
-        String regex = "^KH|kH|Kh|kh\\d+$";
+        String regex = "^(KH|kH|Kh|kh)\\d+$";
         while (!maKH_Xoa.matches(regex)) {
             System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các chữ số, vui lòng nhập lại: ");
             maKH_Xoa = sc.nextLine().trim();
@@ -198,7 +198,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
                         System.out.println("Mã khách hàng không được để trống, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
                     }
-                    String regexMaKH = "^KH|kH|Kh|kh\\d+$";
+                    String regexMaKH = "^(KH|kH|Kh|kh)\\d+$";
                     while (!maKH_TimKiem.matches(regexMaKH)) {
                         System.out.println("Mã khách hàng phải bắt đầu là KH và sau đó là các chữ số, vui lòng nhập lại: ");
                         maKH_TimKiem = sc.nextLine().trim();
@@ -354,7 +354,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
 
         System.out.println("Nhập mã của khách hàng cần sửa: ");
-        String regex = "^KH|kH|Kh|kh\\d+$";
+        String regex = "^(KH|kH|Kh|kh)\\d+$";
         String maKH_Sua = sc.nextLine().trim();
         while (maKH_Sua.isEmpty() || !maKH_Sua.matches(regex)) {
             System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các số, vui lòng nhập lại: ");
