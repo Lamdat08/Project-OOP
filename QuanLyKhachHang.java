@@ -40,20 +40,18 @@ public class QuanLyKhachHang {
                     menuQLKH();
                     System.out.println("Nhập lựa chọn quản lý khách hàng từ 1 - 4");
                     luaChon1 = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon1 = Integer.toString(luaChon1);
+                    String regex1 = "[1-4]$";
+                    if (!inputLuaChon1.matches(regex1)) {
+                        System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4");
+                    }
                     break;
                 }
                 catch (NumberFormatException e) {
                     System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
                 }
             }
-            String inputLuaChon1 = Integer.toString(luaChon1);
-            String regex1 = "^[1-4]$";
-            while (!inputLuaChon1.matches(regex1)) {
-                menuKhachHang();
-                System.out.println("Không có lựa chọn này, vui lòng nhập lại các lựa chọn từ 1 - 4: ");
-                luaChon1 = Integer.parseInt(sc.nextLine().trim());
-                inputLuaChon1 = Integer.toString(luaChon1);
-            }
+
             if (luaChon1 == 1) {
                 DanhSachKhachHang.docFile();
             } else if (luaChon1 == 2) {
@@ -99,7 +97,7 @@ public class QuanLyKhachHang {
                         int exit;
                         while (true) {
                             try {
-                                menuKhachHang();
+                                menuThoat();
                                 System.out.println("Nhập lựa chọn từ 1 - 3");
                                 exit = Integer.parseInt(sc.nextLine().trim());
                                 break;
