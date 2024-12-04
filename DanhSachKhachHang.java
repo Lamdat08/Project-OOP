@@ -86,6 +86,7 @@ public class DanhSachKhachHang implements IThaoTac_2 {
         }
         //Copy mảng hiện tại đang chỉnh sửa vào mảng lấy dữ liệu từ file
         DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
+        HoaDon.khachHang = Arrays.copyOf(DSKH_File,DSKH_File.length);
         DanhSachHoaDon.DSKH = Arrays.copyOf(DSKH_File, DSKH_File.length);
     }
 

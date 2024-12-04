@@ -89,7 +89,8 @@ public class DanhSachSanPham implements IThaoTac_2 {
 
         //Copy mảng hiện tại đang chỉnh sửa vào mảng lấy dữ liệu từ File
         DSSP_File = Arrays.copyOf(DSSP, DSSP.length);
-        
+
+        HoaDon.sanpham = Arrays.copyOf(DSSP_File, DSSP_File.length);
         DanhSachHoaDon.DSSP = Arrays.copyOf(DSSP_File, DSSP_File.length);
     }
     public void Them(){
@@ -512,6 +513,7 @@ public class DanhSachSanPham implements IThaoTac_2 {
             fw.close();
             System.out.println("Ghi dữ liệu vào SanPham.txt thành công");
             DSSP_File = Arrays.copyOf(DSSP,DSSP.length);
+
             DanhSachHoaDon.DSSP = Arrays.copyOf(DSSP_File, DSSP_File.length);
             HoaDon.sanpham = Arrays.copyOf(DSSP_File, DSSP_File.length);
         }

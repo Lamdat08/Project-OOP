@@ -29,8 +29,6 @@ public class HoaDon implements IThaoTac {
 
     public HoaDon() {
         this.setStatus(true);
-        this.khachHang = Arrays.copyOf(DanhSachHoaDon.DSKH, DanhSachHoaDon.DSKH.length);
-        this.sanpham = Arrays.copyOf(DanhSachHoaDon.DSSP, DanhSachHoaDon.DSSP.length);
 
     }
 

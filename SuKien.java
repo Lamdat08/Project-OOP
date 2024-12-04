@@ -96,9 +96,8 @@ public class SuKien implements  IThaoTac{
                 if (!DT.matches(regNumbers))
                 System.out.println("Sai định dạng, vui lòng chỉ nhập số");
             }while (!DT.matches(regNumbers));
-
                 if (Double.parseDouble(DT) < 0)
-                    System.out.println("DT > 0");
+                    System.out.println("Doanh thu >= 0");
         }while (Double.parseDouble(DT) < 0 );
             DoanhThu = Double.parseDouble(DT);
     }
@@ -114,7 +113,7 @@ public class SuKien implements  IThaoTac{
             }while (!TV.matches(regNumbers));
 
             if (Double.parseDouble(TV) < 0)
-                System.out.println("DT > 0");
+                System.out.println("Tien von >= 0");
         }while (Double.parseDouble(TV) < 0 );
         TienVon = Double.parseDouble(TV);
     }
@@ -210,6 +209,7 @@ public class SuKien implements  IThaoTac{
 //                c = sc.nextInt();
 //                sc.nextLine();
 //            }while (c < 1 || c > 7);
+
             int b = 0;
             boolean validInput= false;
             while (!validInput)

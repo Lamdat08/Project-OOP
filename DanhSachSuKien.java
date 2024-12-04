@@ -65,11 +65,10 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             return;
         }
 
-        int count = 0;
+
         System.out.println("\t   Thông tin của danh sách \n--------------------------");
         for (int i = 0; i < DSSK.length; i++) {
             if (DSSK[i].getStatus() == true) {
-                count++;
                 DSSK[i].Xuat();
                 System.out.println("\t--------------");
             }
@@ -121,7 +120,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
             System.out.printf("Nhập vào mã sự kiện : ");
             s = sc.nextLine();
             if (!s.matches(regex))
-                System.out.println("Mã sự kiện  phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
+                System.out.println("Mã sự kiện phải bắt đầu bằng SK và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
         }while (!s.matches(regex));
 
         boolean isFind = false;
@@ -228,10 +227,12 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 }while (!s.matches(regexMaSK));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
-                    if (DSSK[i].getMaSK().equalsIgnoreCase(s)) {
-                        isFind = true;
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if (DSSK[i].getMaSK().equalsIgnoreCase(s)) {
+                            isFind = true;
+                            DSSK[i].Xuat();
+                            System.out.println("\n \t--------------------");
+                        }
                     }
                 }
                 if (isFind == false)
@@ -248,11 +249,14 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 }while (!s.matches(regexLetters));
                 boolean isFind = false;
                 for (int i = 0; i < DSSK.length; i++) {
-                    if (DSSK[i].getTenSK().equals(s)) {
-                        isFind = true;
-                        System.out.println("Sự kiện thứ " + i + 1 + " : ");
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if(DSSK[i].getStatus()) {
+                            if (DSSK[i].getTenSK().equals(s)) {
+                                isFind = true;
+                                DSSK[i].Xuat();
+                                System.out.println("\n \t--------------------");
+                            }
+                        }
                     }
                 }
                 if (isFind == false)
@@ -276,11 +280,12 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 }
 
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
-                    if (DSSK[i].getThoiGianBatDau().equals(df.format(s))){
-                        isFind = true;
-                        System.out.println("Sự kiện thứ " + i + " :");
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if (DSSK[i].getThoiGianBatDau().equals(df.format(s))) {
+                            isFind = true;
+                            DSSK[i].Xuat();
+                            System.out.println("\n \t--------------------");
+                        }
                     }
                 }
 
@@ -304,11 +309,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                     }
                 }
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
-                    if (DSSK[i].getThoiGianKetThuc().equals(df.format(s))){
-                        isFind = true;
-                        System.out.println("Sự kiện thứ " + i+1 + " : ");
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if (DSSK[i].getThoiGianKetThuc().equals(df.format(s))) {
+                            isFind = true;
+                            System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                            DSSK[i].Xuat();
+                            System.out.println("\n \t--------------------");
+                        }
                     }
                 }
 
@@ -335,11 +342,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 s = Double.parseDouble(DT);
 
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
-                    if (DSSK[i].getDoanhThu() == s ){
-                        isFind = true;
-                        System.out.println("Sự kiện thứ " + i+1 + " : ");
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if (DSSK[i].getDoanhThu() == s) {
+                            isFind = true;
+                            System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                            DSSK[i].Xuat();
+                            System.out.println("\n \t--------------------");
+                        }
                     }
                 }
 
@@ -365,11 +374,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 boolean isFind = false;
 
                 for ( int i = 0 ; i < DSSK.length ; i++ ){
-                    if (DSSK[i].getTienVon() == s ){
-                        isFind = true;
-                        System.out.println("Sự kiện thứ " + i+1 + " : ");
-                        DSSK[i].Xuat();
-                        System.out.println("\n \t--------------------");
+                    if(DSSK[i].getStatus()) {
+                        if (DSSK[i].getTienVon() == s) {
+                            isFind = true;
+                            System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                            DSSK[i].Xuat();
+                            System.out.println("\n \t--------------------");
+                        }
                     }
                 }
 
@@ -402,11 +413,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
                 if ( s == 1 ){
                     for (int i = 0 ; i < DSSK.length ; i++ ){
-                        if(DSSK[i].DanhGia().equals("Thiệt hại")){
-                            isFind = true;
-                            System.out.println("Sự kiện thứ " + i+1 + " : ");
-                            DSSK[i].Xuat();
-                            System.out.println("\n \t--------------------");
+                        if(DSSK[i].getStatus()) {
+                            if (DSSK[i].DanhGia().equals("Thiệt hại")) {
+                                isFind = true;
+                                System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                                DSSK[i].Xuat();
+                                System.out.println("\n \t--------------------");
+                            }
                         }
                     }
                     if (!isFind)
@@ -415,11 +428,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
                 else if ( s == 2 ){
                     for (int i = 0 ; i < DSSK.length ; i++ ){
-                        if(DSSK[i].DanhGia().equals("Bình thường")){
-                            isFind = true;
-                            System.out.println("Sự kiện thứ " + i+1 + " : ");
-                            DSSK[i].Xuat();
-                            System.out.println("\n \t--------------------");
+                        if(DSSK[i].getStatus()) {
+                            if (DSSK[i].DanhGia().equals("Bình thường")) {
+                                isFind = true;
+                                System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                                DSSK[i].Xuat();
+                                System.out.println("\n \t--------------------");
+                            }
                         }
                     }
                     if (!isFind)
@@ -428,11 +443,13 @@ public class DanhSachSuKien implements  IThaoTac_2 {
 
                 else if ( s== 3 ){
                     for (int i = 0 ; i < DSSK.length ; i++ ){
-                        if(DSSK[i].DanhGia().equals("Lời")){
-                            isFind = true;
-                            System.out.println("Sự kiện thứ " + i+1 + " : ");
-                            DSSK[i].Xuat();
-                            System.out.println("\n \t--------------------");
+                        if(DSSK[i].getStatus()) {
+                            if (DSSK[i].DanhGia().equals("Lời")) {
+                                isFind = true;
+                                System.out.println("Sự kiện thứ " + i + 1 + " : ");
+                                DSSK[i].Xuat();
+                                System.out.println("\n \t--------------------");
+                            }
                         }
                     }
                     if (!isFind)
@@ -536,7 +553,7 @@ public class DanhSachSuKien implements  IThaoTac_2 {
                 //Cac su kien = maxSK;
                 if (DSSK[i].getStatus()) {
                     if (DSSK[i].LoiNhuan() == maxSK.LoiNhuan()) {       // Tim thay su kien co loi nhuan = maxSK.
-                        if (indexMax == maxList.length)   // Mo rong maxList neu index = chieu dai mang? .
+                        if (indexMax == maxList.length)                // Mo rong maxList neu index = chieu dai mang? .
                             maxList = Arrays.copyOf(maxList, maxList.length + 1);
                         maxList[indexMax] = DSSK[i];
                         indexMax++;
