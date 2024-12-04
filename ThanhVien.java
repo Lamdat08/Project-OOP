@@ -117,6 +117,7 @@ public class ThanhVien extends KhachHang {
                             System.out.println("Điểm tích lũy của khách hàng không hợp lệ, vui lòng nhập lại: ");
                         }
                     }
+                    break;
                 case 2:
                     super.Sua();
                     break;
