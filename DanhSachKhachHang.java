@@ -1,600 +1,478 @@
 package Project_OOP;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
-public class DanhSachNhanVien implements IThaoTac_2{
-    Scanner sc = new Scanner(System.in);
-    //    private int soLuongPhanTuThemVao;
-    private NhanVien[] arrNhanVien;
-    private static int soLuong;
-//    public DanhSachNhanVien() {
-//        arrNhanVien = new NhanVien[0];
-//    }
+public class DanhSachKhachHang implements IThaoTac_2 {
 
-    private NhanVien[]arrNhanVienFile;
+    static Scanner sc = new Scanner(System.in);
 
+    private static int soLuongKhachHang;
+    private KhachHang[] DSKH;
+    private KhachHang[] DSKH_File;
 
-    public DanhSachNhanVien() {
-        soLuong = 0;
-        this.arrNhanVien = new NhanVien[5];
+    public DanhSachKhachHang() {
+        this.DSKH = new KhachHang[5]; //ít nhất 5 khách hàng
         this.Nhap();
     }
 
-    @Override
-    public void Xoa() {
-        if(soLuong == 0){
-            System.out.println("Danh sách trống \n");
-            return;
-        }
-
-        String maXoa;
-        String regexNV = "^NV\\d+$";
-        String regexQL = "^QL\\d+$";
-        while(true){
-            System.out.printf("Nhập vào mã nhân viên : ");
-            maXoa = sc.nextLine();
-            if (maXoa.matches(regexNV) || maXoa.matches(regexQL)){
-                break;
-            }
-            else{
-                System.out.println("Mã nhân viên bắt đầu là QL hoặc NV, sau đó là các chữ số,\n  vui lòng nhập lại mã nhân viên.");
-
-            }
-        }
-
-
-        boolean find = false;
-
-        for(int i = 0;i< arrNhanVien.length;i++){
-            if(arrNhanVien[i].getMaNhanVien().equals(maXoa) && arrNhanVien[i].isTrangThai() == true){
-                arrNhanVien[i].setTrangThai(false);
-                soLuong--;
-                System.out.println("Xóa thành công !!");
-                find = true;
-            }
-        }
-        if(!find){
-            System.out.println("Không tìm thấy ");
-        }
+    public int getSoLuongKhachHang() {
+        return soLuongKhachHang;
     }
 
-    @Override
-    public void Them() {
-        arrNhanVien = Arrays.copyOf(arrNhanVien,arrNhanVien.length+1);
-        System.out.println("1 - Nhập danh sách nhân viên");
-        System.out.println("2 - Nhập danh sách quản lý");
-
-        int luaChon = 0;
-        boolean isValid = false;
-//
-//        do{
-//
-//            luaChon = Integer.parseInt(sc.nextLine());
-//
-//        }while(luaChon != 1 && luaChon != 2);
-        while(!isValid){
-            try{
-                luaChon = Integer.parseInt(sc.nextLine());
-                if(luaChon == 1 || luaChon == 2){
-                    isValid = true;
-                }
-                else{
-                    System.out.println("Lựa chọn phải là 1 hoặc 2");
-                }
-            }catch(Exception e){
-//                System.out.println(e);
-                System.out.println("Chỉ nhập số");
-            }
-        }
-
-
-
-
-        if(luaChon == 1){
-            NhanVienPartTime x = new NhanVienPartTime();
-            x.Nhap();
-            arrNhanVien[arrNhanVien.length-1] = x;
-            soLuong++;
-        }
-        if(luaChon == 2){
-            QuanLy x = new QuanLy();
-            x.Nhap();
-            arrNhanVien[arrNhanVien.length-1] = x;
-            soLuong++;
-        }
-
+    public void setSoLuongKhachHang(int soLuongKhachHang) {
+        this.soLuongKhachHang = soLuongKhachHang;
     }
 
-    @Override
-    public void TimKiem() {
-        if(soLuong == 0){
-            System.out.println("Danh sách trống \n");
-            return;
-        }
-        while(true){
-            System.out.println("1 - Tìm kiếm theo mã");
-            System.out.println("2 - Tìm kiếm theo tên");
-            System.out.println("3 - Tìm kiếm theo SĐT");
-            System.out.println("4 - Tìm kiếm theo giới tính");
-            System.out.println("5 - Tìm kiếm theo lương cơ bản");
-            System.out.println("6 - Thoat");
-
-            int b = 0;
-            boolean validInput= false;
-            while (!validInput)
-            {
-                try {
-                    System.out.printf("Nhập lựa chọn : ");
-                    b = Integer.parseInt(sc.nextLine());
-
-                    if ( b < 1 || b > 6) {
-                        validInput = false;
-                        System.out.println("Nhập từ 1 đến 6");
-                    }
-                    else
-                        validInput = true;
-                } catch (Exception e) {
-//                    System.out.println(e);
-                    System.out.println("Chỉ được nhập số");
-                }
-            }
-            int n = b;
-
-
-            if(n == 1){
-                String maTimKiem;
-                String regexNV = "^NV\\d+$";
-                String regexQL = "^QL\\d+$";
-                while (true) {
-                    System.out.printf("Nhập vào mã nhân viên : ");
-                    maTimKiem = sc.nextLine();
-                    if (maTimKiem.matches(regexNV) || maTimKiem.matches(regexQL))
-                        break;
-                    else
-                        System.out.println("Mã nhân viên bắt đầu là QL hoặc NV, sau đó là các chữ số,\n  vui lòng nhập lại mã nhân viên.");
-
-                }
-                boolean find = false;
-                for(int i = 0;i< arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getMaNhanVien().equals(maTimKiem) && arrNhanVien[i].isTrangThai() == true){
-                        arrNhanVien[i].Xuat();
-                        find = true;
-                    }
-                }
-                if(!find) System.out.println("Không tìm thấy nhân viên có mã là " + maTimKiem);
-            }
-            if(n == 2){
-                String tenTimKiem;
-                do {
-                    System.out.printf("Nhập vào tên : ");
-                    tenTimKiem = sc.nextLine();
-                    if (!tenTimKiem.matches(regexLetters))
-                        System.out.println("Vui lòng nhập đúng định dạng (chỉ nhập chữ) ");
-                }while (!tenTimKiem.matches(regexLetters));
-
-                boolean find = false;
-                for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(tenTimKiem) && arrNhanVien[i].isTrangThai() == true){
-                        arrNhanVien[i].Xuat();
-                        find = true;
-                    }
-                }
-                if(!find) System.out.println("Không tìm thấy nhân viên có tên " + tenTimKiem);
-            }
-            if(n == 3){
-                String soDienThoaiTimKiem;
-                do {
-                    do {
-                        System.out.printf("Nhập vào SĐT : ");
-                        soDienThoaiTimKiem = sc.nextLine();
-                        if (!soDienThoaiTimKiem.matches(regNumbers))
-                            System.out.println("Sai định dạng");
-                    }while (!soDienThoaiTimKiem.matches(regNumbers));
-
-                    if ( soDienThoaiTimKiem.length() != 10)
-                        System.out.println("SĐT phải có 10 số");
-                }while (soDienThoaiTimKiem.length() != 10 );
-
-                boolean find = false;
-                for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getSoDienThoai().equals(soDienThoaiTimKiem) && arrNhanVien[i].isTrangThai() == true){
-                        arrNhanVien[i].Xuat();
-                        find = true;
-                    }
-                }
-                if(!find) System.out.println("Không tìm thấy nhân viên có SĐT : " + soDienThoaiTimKiem);
-            }
-            if(n == 4){
-                String gioiTinhTimKiem;
-                while (true){
-                    do {
-                        System.out.printf("Nhập vào giới tính : ");
-                        gioiTinhTimKiem = sc.nextLine();
-                        if (!gioiTinhTimKiem.matches(regexLetters))
-                            System.out.println("Sai định dạng");
-                    }while (!gioiTinhTimKiem.matches(regexLetters));
-                    if (gioiTinhTimKiem.toLowerCase().equals("nam") || gioiTinhTimKiem.equals("nu"))
-                        break;
-                    else
-                        System.out.println("Nhập 'nam' hoặc 'nu'.");
-
-
-                }
-
-
-                boolean find = false;
-                for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getGioiTinh().toLowerCase().equals(gioiTinhTimKiem) && arrNhanVien[i].isTrangThai() == true){
-                        arrNhanVien[i].Xuat();
-                        find = true;
-                    }
-                }
-                if(!find) System.out.println("Không tìm thấy nhân viên có giới tính là " + gioiTinhTimKiem);
-            }
-            if(n == 5){
-                String luongCoBanTimKiem;
-                do {
-                    do {
-                        System.out.printf("Nhập vào lương cơ bản : ");
-                        luongCoBanTimKiem = sc.nextLine();
-                        if (!luongCoBanTimKiem.matches(regNumbers))
-                            System.out.println("Sai định dạng");
-                    }while (!luongCoBanTimKiem.matches(regNumbers));
-
-                    if (Double.parseDouble(luongCoBanTimKiem) < 0)
-                        System.out.println("LCB > 0");
-                }while (Double.parseDouble(luongCoBanTimKiem) < 0 );
-
-                boolean find = false;
-                for(int i = 0;i<arrNhanVien.length;i++){
-                    if(arrNhanVien[i].getTenNhanVien().equals(luongCoBanTimKiem) && arrNhanVien[i].isTrangThai() == true){
-                        arrNhanVien[i].Xuat();
-                        find = true;
-                    }
-                }
-                if(!find) System.out.println("Không tìm thấy nhân viên có lương cơ bản = " + luongCoBanTimKiem);
-            }
-
-            if(n == 6){
-                break;
-            }
-        }
-
+    public KhachHang[] getDSKH() {
+        return DSKH;
     }
 
-    //    @Override
-    public void docFile() {
-
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("NhanVien.txt"));
-            String line;
-            System.out.println("Đọc file NhanVien : \n ");
-            while((line = reader.readLine()) != null){
-//                System.out.println(line);
-                System.out.println();
-                String arr[] = line.split(";");
-                if(arr[0].substring(0,2).equals("NV")){
-                    System.out.println("Mã nhân viên : " + arr[0]);
-                    System.out.println("Tên nhân viên : : " + arr[1]);
-                    System.out.println("Số điện thoại : " +  arr[2]);
-                    System.out.println("Giới tính : " + arr[3]);
-                    System.out.println("Lương cơ bản : " + arr[4]);
-                    System.out.println("Giờ làm : " + arr[5]);
-                    System.out.println("Tổng lương nhân viên: " + arr[6]);
-                }
-                if(arr[0].substring(0,2).equals("QL")){
-                    System.out.println("Mã quản lý :" + arr[0]);
-                    System.out.println("Tên quản lý : " + arr[1]);
-                    System.out.println("Số điện thoại : " + arr[2]);
-                    System.out.println("Giới tính : " + arr[3]);
-                    System.out.println("Lương cơ bản : " + arr[4]);
-                    System.out.println("Phụ cấp : " + arr[5]);
-                    System.out.println("Tổng lương quản lý : " + arr[6]);
-
-                }
-                System.out.println("\n-----------------------------");
-            }
-
-            reader.close();
-        }catch(IOException e){
-            e.printStackTrace();
-//            System.out.println();
-        }
+    public void setDSKH(KhachHang[] DSKH) {
+        this.DSKH = DSKH;
     }
 
-//    @Override
-//    public void ghiFile() {
-//
-//        try(BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))){
-//
-//            System.out.println("00- neu nhap nhan vien");
-//            System.out.println("10- neu nhap quan ly");
-//            System.out.println("11- thoat");
-//
-//
-//            while (true) {
-//                String maXacDinh = sc.nextLine();
-//                if (maXacDinh.equals("11")) break;
-//                if (maXacDinh.equals("00")) {
-//                    NhanVienPartTime nvpt = new NhanVienPartTime();
-//                    nvpt.Nhap();
-//                    writer.write(nvpt.getMaNhanVien()+ " ,");
-//                    writer.write(nvpt.getTenNhanVien()+ " ,");
-//                    writer.write(nvpt.getSoDienThoai()+ " ,");
-//                    writer.write(nvpt.getGioiTinh()+" ,");
-//                    writer.write(String.valueOf(nvpt.getLuongCoBan())+" ,");
-//                    writer.write(String.valueOf(nvpt.getGioLam())+ ",");
-//                    writer.newLine();
-//                }
-//                if (maXacDinh.equals("10")) {
-//                    QuanLy ql = new QuanLy();
-//                    ql.Nhap();
-//                    writer.write(ql.getMaNhanVien() + " ,");
-//                    writer.write(ql.getTenNhanVien() + " ,");
-//                    writer.write(ql.getSoDienThoai() + " ,");
-//                    writer.write(ql.getGioiTinh() + " ,");
-//                    writer.write(String.valueOf(ql.getLuongCoBan()) + " ,");
-//                    writer.write(String.valueOf(ql.getPhuCap()) + " ,");
-//                    writer.newLine();
-//                }
-//
-//            }
-//            System.out.println("file written successful");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    @Override
-    public void ghiFile() {
-        if(soLuong == 0){
-            System.out.println("Danh sách trống \n");
-            return;
-        }
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("NhanVien.txt"))){
-
-
-
-
-//            while (true) {
-//                String maXacDinh = sc.nextLine();
-//                if (maXacDinh.equals("11")) break;
-//                if (maXacDinh.equals("00")) {
-//                    NhanVienPartTime nvpt = new NhanVienPartTime();
-//                    nvpt.Nhap();
-//                    writer.write(nvpt.getMaNhanVien()+ " ,");
-//                    writer.write(nvpt.getTenNhanVien()+ " ,");
-//                    writer.write(nvpt.getSoDienThoai()+ " ,");
-//                    writer.write(nvpt.getGioiTinh()+" ,");
-//                    writer.write(String.valueOf(nvpt.getLuongCoBan())+" ,");
-//                    writer.write(String.valueOf(nvpt.getGioLam())+ ",");
-//                    writer.newLine();
-//                }
-//                if (maXacDinh.equals("10")) {
-//                    QuanLy ql = new QuanLy();
-//                    ql.Nhap();
-//                    writer.write(ql.getMaNhanVien() + " ,");
-//                    writer.write(ql.getTenNhanVien() + " ,");
-//                    writer.write(ql.getSoDienThoai() + " ,");
-//                    writer.write(ql.getGioiTinh() + " ,");
-//                    writer.write(String.valueOf(ql.getLuongCoBan()) + " ,");
-//                    writer.write(String.valueOf(ql.getPhuCap()) + " ,");
-//                    writer.newLine();
-//                }
-//
-//            }
-
-            for(NhanVien x : arrNhanVien){
-                if (x.isTrangThai())
-                    writer.write(x.toString() + "\n");
-            }
-            System.out.println("file written successful");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public KhachHang[] getDSKH_File() {
+        return DSKH_File;
     }
 
-    @Override
+    public void setDSKH_File(KhachHang[] DSKH_File) {
+        this.DSKH_File = DSKH_File;
+    }
+
+
+    public void menuTimKiem() {
+        System.out.println("1 - Tìm kiếm theo mã khách hàng.");
+        System.out.println("2 - Tìm kiếm theo tên khách hàng.");
+        System.out.println("3 - Tìm kiếm theo số điện thoại.");
+        System.out.println("4 - Tìm kiếm theo địa chỉ.");
+        System.out.println("5 - Tìm kiếm theo giới tính.");
+        System.out.println("6 - Thoát tìm kiếm khách hàng.");
+    }
+
+    //Lấy dữ liệu từ file KhachHang.txt
     public void Nhap() {
-//        if(arrNhanVien == null){
-//            System.out.println("Nhap so luong phan tu khoi tao ban dau");
+        System.out.println("\n \t \t--------TẠO DANH SÁCH KHÁCH HÀNG TỪ FILE KhachHang.txt--------");
 
-//            soLuongPhanTuThemVao = Integer.parseInt(sc.nextLine());
-//            arrNhanVien = new NhanVien[soLuongPhanTuThemVao];
-
-//            for(int i = 0;i<soLuongPhanTuThemVao;i++){
-//                System.out.println("1-Nhap danh sach nhan vien");
-//                System.out.println("2-Nhap danh sach quan ly");
-
-//                int luaChon;
-
-//                do{
-
-//                    luaChon = Integer.parseInt(sc.nextLine());
-
-//                }while(luaChon != 1 && luaChon != 2);
-//
-//                if(luaChon == 1){
-//                    NhanVienPartTime x = new NhanVienPartTime();
-//                    x.Nhap();
-//                    arrNhanVien[i] = x;
-//                }
-//                if(luaChon == 2){
-//                    QuanLy x = new QuanLy();
-//                    x.Nhap();
-//                    arrNhanVien[i] = x;
-//                }
-//
-//            }
-//        }
-//        else{
-//            System.out.println("Danh sach tao roi");
-//        }
-        try{
-            BufferedReader reader =  new BufferedReader(new FileReader("NhanVien.txt"));
-            String line;
-//            int i = 0;
-            while((line =reader.readLine())!=null){
-                if(soLuong == arrNhanVien.length){
-                    arrNhanVien = Arrays.copyOf(arrNhanVien,arrNhanVien.length+1);
+        String line;
+        String[] strings = new String[6];
+        try {
+            FileReader fr = new FileReader("KhachHang.txt");
+            BufferedReader br = new BufferedReader(fr);
+            while ((line = br.readLine()) != null) {
+                if (soLuongKhachHang == DSKH.length) {
+                    DSKH = Arrays.copyOf(DSKH, DSKH.length + 5);
                 }
-                String arr[] = line.split(";");
-                if(arr[0].substring(0,2).equals("NV")){
-                    NhanVienPartTime nvpt = new NhanVienPartTime();
-                    nvpt.setMaNhanVien(arr[0]);
-                    nvpt.setTenNhanVien(arr[1]);
-                    nvpt.setSoDienThoai(arr[2]);
-                    nvpt.setGioiTinh(arr[3]);
-                    nvpt.setLuongCoBan(Double.parseDouble(arr[4]));
-                    nvpt.setGioLam(Double.parseDouble(arr[5]));
 
-                    arrNhanVien[soLuong++] = nvpt;
-                }
-                if(arr[0].substring(0,2).equals("QL")){
-                    QuanLy ql = new QuanLy(arr[0],arr[1],arr[2],arr[3],Double.parseDouble(arr[4]),Double.parseDouble(arr[5]));
-                    arrNhanVien[soLuong++] = ql;
+                strings = line.split(";");
+                try {
+                    KhachHang kh = new ThanhVien(strings[0],strings[1],strings[2],strings[3],strings[4],Integer.parseInt(strings[5]));
+                    DSKH[soLuongKhachHang] = kh;
+                    soLuongKhachHang++;
+                } catch (Exception e) {
+                    System.out.println("Lỗi tạo danh sách khách hàng từ file KhachHang.txt");
                 }
             }
 
-            if (soLuong < arrNhanVien.length){
-                arrNhanVien = Arrays.copyOf(arrNhanVien, soLuong);
-            }
-
-            arrNhanVienFile = Arrays.copyOf(arrNhanVien,arrNhanVien.length);
-        }catch(IOException e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Lỗi đọc file KhachHang.txt: ");
         }
-
-
+        //Thu hẹp mảng nếu mảng chưa đầy
+        if (soLuongKhachHang < DSKH.length) {
+            DSKH = Arrays.copyOf(DSKH, soLuongKhachHang);
+        }
+        //Copy mảng hiện tại đang chỉnh sửa vào mảng lấy dữ liệu từ file
+        DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
+        HoaDon.khachHang = Arrays.copyOf(DSKH_File,DSKH_File.length);
+        DanhSachHoaDon.DSKH = Arrays.copyOf(DSKH_File, DSKH_File.length);
     }
 
+    public void Them() {
+        System.out.println("\n \t \t---------THÊM KHÁCH HÀNG--------");
 
-
-
-    @Override
-    public void Xuat() {
-        if (arrNhanVien == null || arrNhanVien.length == 0) {
-            System.out.println("Danh sách nhân viên trống.");
-            return;
-        }
-        System.out.println("\n Danh sách nhân viên : \n");
-        for(int i = 0;i<arrNhanVien.length;i++){
-            if(arrNhanVien[i].isTrangThai() == true){
-                arrNhanVien[i].Xuat();
-            }
-        }
-    }
-
-    @Override
-    public void Sua() {
-        if(soLuong == 0){
-            System.out.println("Danh sách nhân viên trống.");
-            return;
-        }
-        String maSua;
-        String regexNV = "^NV\\d+$";
-        String regexQL = "^QL\\d+$";
-        while (true){
-            System.out.printf("Nhập vào mã nhân viên : ");
-            maSua = sc.nextLine();
-            if (maSua.matches(regexNV) || maSua.matches(regexQL))
+        int slKH;
+        while (true) {
+            try {
+                System.out.println("Nhập số lượng khách hàng muốn thêm: ");
+                slKH = Integer.parseInt(sc.nextLine());
+                String inputSLKH = Integer.toString(slKH);
+                String regex = "^[1-9]+$";
+                if(!inputSLKH.matches(regex)) {
+                    System.out.println("Không hợp lệ, vui lòng nhập số lượng > 0");
+                    continue;
+                }
                 break;
-            else
-                System.out.println("Mã xoa bat dau QL hoac NV và sau đó là các chữ số, vui lòng nhập lại mã sự kiện .");
-        }
-
-
-        boolean find = false;
-        for(int i = 0;i< arrNhanVien.length;i++){
-            if(arrNhanVien[i].getMaNhanVien().equals(maSua) && arrNhanVien[i].isTrangThai() == true){
-                arrNhanVien[i].Sua();
-                arrNhanVien[i].Xuat();
-                find = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số nguyên hợp lệ: ");
             }
         }
-        if(!find) System.out.println("Không tìm thấy mã " + maSua + " trong danh sách");
+
+        soLuongKhachHang += slKH;
+        DSKH = Arrays.copyOf(DSKH, DSKH.length + slKH);
+        KhachHang kh;
+
+        int slKHBanDau = DSKH.length - slKH;
+        for (int i = slKHBanDau; i < DSKH.length; i++) {
+            kh = new ThanhVien();
+            kh.Nhap();
+            DSKH[i] = kh;
+            System.out.println("Thêm khách hàng thành công !\n-----------------------");
+        }
+
     }
 
+    public void Xoa() {
+        System.out.println("\n-------XÓA KHÁCH HÀNG--------");
 
-    public void thongKe(){
-        int soLuongQuanLy = 0;
-        int soLuongNhanVien = 0;
-        double luongLonNhatCuaQuanLy = (int)Integer.MIN_VALUE;
-        double luongNhoNhatCuaQuanLy = (int)Integer.MAX_VALUE;
-        double luongLonNhatCuaNhanVien = (int)Integer.MIN_VALUE;
-        double luongNhoNhatCuaNhanVien = (int)Integer.MAX_VALUE;
-        double tongLuongNhanVien = 0;
-        double tongLuongQuanLy = 0;
-        for(int i = 0;i<arrNhanVienFile.length;i++){
-            if(arrNhanVienFile[i] instanceof QuanLy){
-                soLuongQuanLy++;
-            }
-            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
-                soLuongNhanVien++;
-            }
+        if (DSKH == null) {
+            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng khởi tạo danh sách khách hàng trước !");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+            return;
         }
 
-        for(int i =0;i<arrNhanVienFile.length;i++){
-
-            if(arrNhanVienFile[i] instanceof QuanLy){
-                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
-                tongLuongQuanLy += currentLuong;
-                luongLonNhatCuaQuanLy = Math.max(luongLonNhatCuaQuanLy,currentLuong);
-                luongNhoNhatCuaQuanLy = Math.min(luongNhoNhatCuaQuanLy,currentLuong);
-            }
-
-            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
-                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
-                tongLuongNhanVien+= currentLuong;
-                luongLonNhatCuaNhanVien = Math.max(luongLonNhatCuaNhanVien,currentLuong);
-                luongNhoNhatCuaNhanVien = Math.max(luongNhoNhatCuaNhanVien,currentLuong);
-            }
-
+        System.out.println("Nhập mã khách hàng muốn xóa: ");
+        String maKH_Xoa = sc.nextLine().trim();
+        while (maKH_Xoa.isEmpty()) {
+            System.out.println("Mã khách hàng muốn xóa không được để trống, vui lòng nhập lại: ");
+            maKH_Xoa = sc.nextLine().trim();
         }
-        System.out.println("Số lượng nhân viên parttime :  " + soLuongNhanVien);
-        System.out.println("Số lượng quản lý : " + soLuongQuanLy);
-        System.out.println("Tổng nhân viên : " + soLuong);
-
-        System.out.println("các quản lý và nhân viên có lương lớn nhất : \n");
-
-        for(int i = 0;i<arrNhanVienFile.length;i++){
-            if(arrNhanVienFile[i] instanceof QuanLy){
-                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
-                if(currentLuong == luongLonNhatCuaQuanLy){
-                    arrNhanVienFile[i].Xuat();
-                }
-            }
-            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
-                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
-                if(currentLuong == luongLonNhatCuaNhanVien){
-                    arrNhanVienFile[i].Xuat();
-                }
+        String regex = "^(KH|kH|Kh|kh)\\d+$";
+        while (!maKH_Xoa.matches(regex)) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các chữ số, vui lòng nhập lại: ");
+            maKH_Xoa = sc.nextLine().trim();
+        }
+        boolean kq = false;
+        for (int i = 0; i < DSKH.length; i++) {
+            if (maKH_Xoa.equalsIgnoreCase(DSKH[i].getMaKH())) {
+                kq = true;
+                DSKH[i].setStatus(false);
+                System.out.println("Xóa khách hàng thành công !\n----------------");
+                soLuongKhachHang--;
             }
         }
-
-        System.out.println("các quản lý và nhân viên có lương nhỏ nhất : \n");
-
-        for(int i = 0;i<arrNhanVienFile.length;i++){
-            if(arrNhanVienFile[i] instanceof QuanLy){
-                double currentLuong = ((QuanLy) arrNhanVienFile[i]).tinhLuong();
-                if(currentLuong == luongNhoNhatCuaQuanLy){
-                    arrNhanVienFile[i].Xuat();
-                }
-            }
-            if(arrNhanVienFile[i] instanceof NhanVienPartTime){
-                double currentLuong = ((NhanVienPartTime) arrNhanVienFile[i]).tinhLuong();
-                if(currentLuong == luongNhoNhatCuaNhanVien){
-                    arrNhanVienFile[i].Xuat();
-                }
-            }
+        if (!kq) {
+            System.out.println("Không tìm thấy mã khách hàng" + maKH_Xoa + " muốn xóa");
         }
-
-        System.out.println("Tổng lương của quản lý : " + tongLuongQuanLy + "\n");
-        System.out.println("Tổng lương của nhân viên : " + tongLuongNhanVien + "\n");
-        System.out.println("Lương trung bình của quản lý : " + tongLuongQuanLy/soLuongQuanLy + "\n");
-        System.out.println("Lương trung bình của nhân viên  :" + tongLuongNhanVien/soLuongNhanVien + "\n");
     }
 
+    public void TimKiem() {
+        System.out.println("\n---------TÌM KIẾM KHÁCH HÀNG--------");
+
+        if (DSKH == null) {
+            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng tạo danh sách khách hàng trước ! !");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+            return;
+        }
+        String regex = "^[1-6]$";
+        while (true) {
+            int luaChon;
+            while (true) {
+                try {
+                    menuTimKiem();
+                    System.out.println("Nhập lựa chọn tìm kiếm: ");
+                    luaChon = Integer.parseInt(sc.nextLine());
+                    String inputLuaChon = Integer.toString(luaChon);
+                    if(!inputLuaChon.matches(regex)){
+                        System.out.println("Không có lựa chọn này, mời nhập lại: ");
+                        continue;
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Lựa chọn không hợp lệ, vui lòng nhập lại: ");
+                }
+            }
+            boolean kq;
+            switch (luaChon) {
+                case 1:
+                    System.out.println("Nhập mã khách hàng cần tìm: ");
+                    String maKH_TimKiem = sc.nextLine().trim();
+                    while (maKH_TimKiem.isEmpty()) {
+                        System.out.println("Mã khách hàng không được để trống, vui lòng nhập lại: ");
+                        maKH_TimKiem = sc.nextLine().trim();
+                    }
+                    String regexMaKH = "^(KH|kH|Kh|kh)\\d+$";
+                    while (!maKH_TimKiem.matches(regexMaKH)) {
+                        System.out.println("Mã khách hàng phải bắt đầu là KH và sau đó là các chữ số, vui lòng nhập lại: ");
+                        maKH_TimKiem = sc.nextLine().trim();
+                    }
+                    kq = false;
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getStatus()) {
+                            if (maKH_TimKiem.equalsIgnoreCase(DSKH[i].getMaKH())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                                System.out.println("\n \t--------------------");
+                            }
+                        }
+                    }
+                    if (!kq) {
+                        System.out.println("Không tìm thấy mã khách hàng " + maKH_TimKiem + " trong danh sách khách hàng !");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Nhập tên khách hàng cần tìm: ");
+                    String tenKhachHang_TimKiem = sc.nextLine().trim();
+                    String regexTen = "^[A-Za-zÀ-ỹ\\s]+$";
+                    while (tenKhachHang_TimKiem.isEmpty() || !tenKhachHang_TimKiem.matches(regexTen)) {
+                        System.out.println("Tên khách hàng không hợp lệ, vui lòng nhập lại: ");
+                        tenKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+                    kq = false;
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getStatus()) {
+                            if (tenKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getTenKH())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
+                        }
+                    }
+                    if (!kq) {
+                        System.out.println("Không tìm thấy khách hàng có tên: " + tenKhachHang_TimKiem + " trong danh sách");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Nhập số điện thoại của khách hàng cần tìm: ");
+                    String soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
+                    String regexSDT = "^[0-9]{10,11}$";
+                    while (soDienThoaiKhachHang_TimKiem.isEmpty() || !soDienThoaiKhachHang_TimKiem.matches(regexSDT)) {
+                        System.out.println("Số điện thoại không hợp lệ, vui lòng nhập lại: ");
+                        soDienThoaiKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+                    kq = false;
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getStatus()) {
+                            if (soDienThoaiKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getSDT())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
+                        }
+                    }
+                    if (!kq) {
+                        System.out.println("Không tìm thấy khách hàng có số điện thoại: " + soDienThoaiKhachHang_TimKiem);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Nhập địa chỉ khách hàng cần tìm: ");
+                    String diaChiKhachHang_TimKiem = sc.nextLine().trim();
+                    while (diaChiKhachHang_TimKiem.isEmpty()) {
+                        System.out.println("Địa chỉ không được để trống, vui lòng nhập địa chỉ khách hàng: ");
+                        diaChiKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+                    String regaxDiaChi = "^[a-zA-Z0-9À-ỹ\\s,./-]+$";
+                    while (!Pattern.matches(regaxDiaChi, diaChiKhachHang_TimKiem)) {
+                        System.out.println("Địa chỉ bạn nhập vào không hợp lệ, chỉ được phép chứa các kí tự chữ cái và các kí tự , . / - \n");
+                        System.out.println("Vui lòng nhập lại địa chỉ: ");
+                        diaChiKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+                    kq = false;
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getStatus()) {
+                            if (diaChiKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getDiaChi())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
+                        }
+                    }
+                    if (!kq) {
+                        System.out.println("Không tìm thấy khách hàng có địa chỉ: " + diaChiKhachHang_TimKiem);
+                    }
+                    break;
+                case 5:
+                    System.out.println("Nhập giới tính khách hàng cần tìm: ");
+                    String gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
+                    while (gioiTinhKhachHang_TimKiem.isEmpty()) {
+                        System.out.println("Giới tính khách hàng không được để trống, vui lòng nhập giới tính: ");
+                        gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+
+                    while (!gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nam") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Nữ") && !gioiTinhKhachHang_TimKiem.equalsIgnoreCase("Khác")) {
+                        System.out.println("Giới tính không hợp lệ, chỉ được phép nhập vào Nam Nữ hoặc Khác");
+                        gioiTinhKhachHang_TimKiem = sc.nextLine().trim();
+                    }
+                    kq = false;
+                    for (int i = 0; i < DSKH.length; i++) {
+                        if (DSKH[i].getStatus()) {
+                            if (gioiTinhKhachHang_TimKiem.equalsIgnoreCase(DSKH[i].getGioiTinh())) {
+                                DSKH[i].Xuat();
+                                kq = true;
+                            }
+                        }
+                    }
+                    if (!kq) {
+                        System.out.println("Không tìm thấy khách hàng nào có giới tính: " + gioiTinhKhachHang_TimKiem);
+                    }
+                    break;
+                case 6:
+                    System.out.println("Thoát tìm kiếm khách hàng.");
+                    return;
+                default:
+                    System.out.println("Không có lựa chọn tìm kiếm này !");
+                    break;
+            }
+        }
+    }
+
+    public void Xuat() {
+        System.out.println("\n \t \t--------XUẤT DANH SÁCH KHÁCH HÀNG--------");
+
+        if (DSKH == null) {
+            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng tạo danh sách khách hàng trước !");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+            return;
+        }
+
+        System.out.println("\t   Thông tin của danh sách khách hàng \n--------------------------");
+        for (int i = 0; i < DSKH.length; i++) {
+            if (DSKH[i].getStatus()) {
+                DSKH[i].Xuat();
+                System.out.println("\t--------------");
+            }
+        }
+    }
+
+    public void Sua() {
+        System.out.println("\n \t \t---------SỬA KHÁCH HÀNG--------");
+
+        if (DSKH == null) {
+            System.out.println("Danh sách khách hàng chưa được khởi tạo.");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+            return;
+        }
+
+        System.out.println("Nhập mã của khách hàng cần sửa: ");
+        String regex = "^(KH|kH|Kh|kh)\\d+$";
+        String maKH_Sua = sc.nextLine().trim();
+        while (maKH_Sua.isEmpty() || !maKH_Sua.matches(regex)) {
+            System.out.println("Mã khách hàng phải bắt đầu bằng KH và sau đó là các số, vui lòng nhập lại: ");
+            maKH_Sua = sc.nextLine().trim();
+        }
+        boolean kq = false;
+
+        for (int i = 0; i < DSKH.length; i++) {
+            if (DSKH[i].getStatus()) {
+                if (maKH_Sua.equalsIgnoreCase(DSKH[i].getMaKH())) {
+                    DSKH[i].Sua();
+                    DSKH[i].Xuat();
+                    kq = true;
+                    System.out.println("Sửa khách hàng " + maKH_Sua + " thành công !");
+                }
+            }
+        }
+        if (!kq) {
+            System.out.println("Không tìm thấy mã " + maKH_Sua + " cần sửa trong danh sách khách hàng! \\n-----------------\"");
+        }
+    }
+
+    public static void docFile() {
+        System.out.println("\"\\n--------ĐỌC FILE KhachHang.txt--------\"");
+
+        String line;
+        String[] strings = new String[6];
+        try {
+            FileReader fr = new FileReader("KhachHang.txt");
+            BufferedReader br = new BufferedReader(fr);
+            while ((line = br.readLine()) != null) {
+                strings = line.split(";");
+                try {
+                    KhachHang kh = new ThanhVien(strings[0],strings[1],strings[2],strings[3],strings[4],Integer.parseInt(strings[5]));
+                    kh.Xuat();
+                    System.out.println("------------------------------\n");
+
+                } catch (Exception e) {
+                    System.out.println("Lỗi xuất KhachHang.txt \n");
+                }
+            }
+            br.close();
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi đọc file KhachHang.txt\n");
+        }
+    }
+
+    public void ghiFile() {
+        System.out.println("\n---------Ghi file---------");
+        if (DSKH == null) {
+            System.out.println("Vui lòng tạo danh sách trước !");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách hiện tại đang trống. Vui lòng thêm khách hàng. \n");
+            return;
+        }
+        try {
+            FileWriter fw = new FileWriter("KhachHang.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (int i = DSKH_File.length; i < DSKH.length; i++) {
+                bw.write(DSKH[i].toString());
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+            System.out.println("Ghi dữ liệu vào KhachHang.txt thành công.");
+            DSKH_File = Arrays.copyOf(DSKH, DSKH.length);
+            DanhSachHoaDon.DSKH = Arrays.copyOf(DSKH_File, DSKH_File.length);
+            HoaDon.khachHang = Arrays.copyOf(DSKH_File, DSKH_File.length);
+        } catch (IOException ioException) {
+            System.out.println("Lỗi ghi file KhachHang.txt: ");
+        }
+    }
+
+    public void thongKeKhachHang() {
+        System.out.println("\n--------THỐNG KÊ DANH SÁCH KHÁCH HÀNG THEO RANK--------");
+
+        if (DSKH == null) {
+            System.out.println("Danh sách khách hàng chưa được khởi tạo. Vui lòng khởi tạo danh sách khách hàng !");
+            return;
+        }
+        if (DSKH.length == 0) {
+            System.out.println("Danh sách khách hàng hiện tại đang trống. Vui lòng thêm khách hàng !");
+            return;
+        }
+
+        int bronzeCount = 0;
+        int silverCount = 0;
+        int goldCount = 0;
+
+        for (KhachHang kh : DSKH) {
+            if (kh instanceof ThanhVien) {
+                ThanhVien tv = (ThanhVien) kh;
+                switch (tv.rank()) {
+                    case "Bronze":
+                        bronzeCount++;
+                        break;
+                    case "Silver":
+                        silverCount++;
+                        break;
+                    case "Gold":
+                        goldCount++;
+                        break;
+                }
+            }
+        }
+
+        System.out.println("Số lượng thành viên rank Bronze: " + bronzeCount);
+        System.out.println("Số lượng thành viên rank Silver: " + silverCount);
+        System.out.println("Số lượng thành viên rank Gold: " + goldCount);
+
+        if (bronzeCount > silverCount + goldCount) {
+            System.out.println("Lượng khách hàng chủ yếu là người mới.");
+        } else {
+            System.out.println("Lượng khách hàng chủ yếu là người cũ.");
+        }
+    }
 }
